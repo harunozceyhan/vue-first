@@ -12,12 +12,15 @@
 		"vue": "^2.6.10"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^8.2.0",
+		"@commitlint/config-conventional": "^8.2.0",
 		"@vue/cli-plugin-babel": "^4.1.0",
 		"@vue/cli-plugin-eslint": "^4.1.0",
 		"@vue/cli-service": "^4.1.0",
 		"babel-eslint": "^10.0.3",
 		"eslint": "^5.16.0",
 		"eslint-plugin-vue": "^5.0.0",
+		"husky": "^3.1.0",
 		"vue-template-compiler": "^2.6.10"
 	},
 	"eslintConfig": {
@@ -37,6 +40,11 @@
 		},
 		"parserOptions": {
 			"parser": "babel-eslint"
+		}
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
 	},
 	"browserslist": [
