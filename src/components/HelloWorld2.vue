@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container fluid>
 		<v-layout text-center wrap>
 			<v-flex xs12>
 				<v-icon x-large>info</v-icon>
