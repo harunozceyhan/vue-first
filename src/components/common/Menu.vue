@@ -46,7 +46,7 @@
 			</v-list-group>
 		</v-list>
 	</div>
-</template>
+</template> 
 
 <script>
 export default {

@@ -71,7 +71,7 @@ export default {
 	components: { Menu, Notification, ChatUsers, Settings },
 
 	data: () => ({
-		components: ['Autocompletes', 'Comboboxes', 'Forms', 'Inputs', 'Overflow Buttons', 'Selects', 'Selection Controls', 'Sliders', 'Textareas', 'Text Fields'],
+		components: ['Sipariş Parametre İşlemleri - Makina Parametre İşlemleri', 'Sipariş Parametre İşlemleri - Makina Grup Parametre İşlemleri', 'Kullanıcı İşlemleri - Create'],
 		chatDrawer: false,
 		settingsDrawer: false,
 		miniDrawer: false,

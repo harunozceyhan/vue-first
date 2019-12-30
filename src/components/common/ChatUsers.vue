@@ -2,7 +2,7 @@
 	<div>
 		<v-list>
 			<v-list-item>
-				<v-list-item-avatar> <v-img src="@/assets/logo.png"></v-img> </v-list-item-avatar>
+				<v-list-item-avatar> <v-img src="@/assets/group.svg"></v-img> </v-list-item-avatar>
 				<v-list-item-title class="title">Kullanıcılar</v-list-item-title>
 			</v-list-item>
 		</v-list>
