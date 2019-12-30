@@ -100,6 +100,11 @@ export default {
 			this.setValueOfObj(10)
 			this.setUsernameOfObj('admin')
 		}
+	},
+	mounted() {
+		this.axios.get('operations').then(response => {
+			this.info = response
+		})
 	}
 }
 </script>
