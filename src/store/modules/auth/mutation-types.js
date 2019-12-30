@@ -1,0 +1,1 @@
+export const SET_USERNAME_OF_OBJ = 'SET_USERNAME_OF_OBJ'

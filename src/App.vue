@@ -7,7 +7,7 @@
 			<v-autocomplete label="Ara..." v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
 			<v-spacer></v-spacer>
 
-			<div style="width: 300px;">
+			<div style="width: 300px;" @click="changeTheme()">
 				<v-list-item dense two-line link style="height: 64px;">
 					<v-list-item-avatar> <v-img src="https://randomuser.me/api/portraits/men/95.jpg"></v-img> </v-list-item-avatar>
 					<v-list-item-content>
@@ -21,7 +21,9 @@
 				<template v-slot:activator="{ on }">
 					<v-btn icon v-on="on">
 						<v-badge v-model="show" color="red" right overlap>
-							<template v-slot:badge> <span>1</span> </template>
+							<template v-slot:badge>
+								<span>{{ getObj.value }}</span>
+							</template>
 							<v-icon>notifications</v-icon>
 						</v-badge>
 					</v-btn>
@@ -32,7 +34,9 @@
 			</v-menu>
 			<v-btn icon v-on:click="chatDrawer = !chatDrawer">
 				<v-badge v-model="show" color="green" right overlap>
-					<template v-slot:badge dense> <span>4</span> </template>
+					<template v-slot:badge dense>
+						<span>{{ getUser.notification }}</span>
+					</template>
 					<v-icon>group</v-icon>
 				</v-badge>
 			</v-btn>
@@ -64,6 +68,7 @@ import Menu from './components/common/Menu'
 import Notification from './components/common/Notification'
 import ChatUsers from './components/common/ChatUsers'
 import Settings from './components/common/Settings'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'App',
@@ -79,9 +84,21 @@ export default {
 		show: true,
 		menu: false
 	}),
+	computed: {
+		...mapGetters({
+			getObj: 'getObj',
+			getUser: 'getUser'
+		})
+	},
 	methods: {
+		...mapActions({
+			setValueOfObj: 'setValueOfObj',
+			addValueToObjValue: 'addValueToObjValue',
+			setUsernameOfObj: 'setUsernameOfObj'
+		}),
 		changeTheme() {
-			this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+			this.setValueOfObj(10)
+			this.setUsernameOfObj('admin')
 		}
 	}
 }
