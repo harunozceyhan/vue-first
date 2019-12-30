@@ -1,5 +1,5 @@
-import HelloWorld from '../components/HelloWorld'
-import HelloWorld2 from '../components/HelloWorld2'
+import HelloWorld from '../../components/HelloWorld'
+import HelloWorld2 from '../../components/HelloWorld2'
 
 const routes = [
 	{ path: '/hello', component: HelloWorld },

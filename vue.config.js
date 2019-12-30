@@ -2,7 +2,8 @@ module.exports = {
 	configureWebpack: {
 		devtool: 'source-map'
 	},
+	// fix: sockjs connection timeout
 	devServer: {
-		proxy: 'http://dev.smartiys.io:8083/api/v1/'
+		host: 'localhost'
 	}
 }

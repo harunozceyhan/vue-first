@@ -1,94 +1,32 @@
 <template>
 	<v-container fluid>
-		<v-layout text-center wrap>
-			<v-flex xs12>
-				<v-icon x-large>info</v-icon>
-			</v-flex>
-
-			<v-flex mb-4>
-				<h1 class="display-2 font-weight-bold mb-3">
-					Welcome to Vuetify 2
-				</h1>
-			</v-flex>
-
-			<v-flex xs12 mb-5>
-				<h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-				<v-layout justify-center>
-					<a v-for="(link, i) in importantLinks" :key="i" :href="link.href" class="subheading mx-3" target="_blank">
-						{{ link.text }}
-					</a>
-				</v-layout>
-			</v-flex>
-
-			<v-flex xs12 mb-5>
-				<h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-				<v-layout justify-center>
-					<a v-for="(eco, i) in ecosystem" :key="i" :href="eco.href" class="subheading mx-3" target="_blank">
-						{{ eco.text }}
-					</a>
-				</v-layout>
-			</v-flex>
-		</v-layout>
+		<div :v-if="getPage.mainList.length > 0" style="width: 220px; height: 80px; margin-top: 10px" v-for="(crud, i) in getPage.mainList" :key="i">
+			id: {{ crud.adi }}
+			<div>pageSize: {{ getPage.pageSize }}</div>
+			totalElements: {{ getPage.totalElements }}
+		</div>
 	</v-container>
 </template>
 
 <script>
-export default {
-	name: 'HelloWorld',
+import { mapGetters, mapActions } from 'vuex'
 
-	data: () => ({
-		ecosystem: [
-			{
-				text: 'vuetify-loader',
-				href: 'https://github.com/vuetifyjs/vuetify-loader'
-			},
-			{
-				text: 'github',
-				href: 'https://github.com/vuetifyjs/vuetify'
-			},
-			{
-				text: 'awesome-vuetify',
-				href: 'https://github.com/vuetifyjs/awesome-vuetify'
-			}
-		],
-		importantLinks: [
-			{
-				text: 'Documentation',
-				href: 'https://vuetifyjs.com'
-			},
-			{
-				text: 'Chat',
-				href: 'https://community.vuetifyjs.com'
-			},
-			{
-				text: 'Made with Vuetify',
-				href: 'https://madewithvuejs.com/vuetify'
-			},
-			{
-				text: 'Twitter',
-				href: 'https://twitter.com/vuetifyjs'
-			},
-			{
-				text: 'Articles',
-				href: 'https://medium.com/vuetify'
-			}
-		],
-		whatsNext: [
-			{
-				text: 'Explore components',
-				href: 'https://vuetifyjs.com/components/api-explorer'
-			},
-			{
-				text: 'Select a layout',
-				href: 'https://vuetifyjs.com/layout/pre-defined'
-			},
-			{
-				text: 'Frequently Asked Questions',
-				href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
-			}
-		]
-	})
+export default {
+	name: 'HelloWorld2',
+
+	data: () => ({}),
+	computed: {
+		...mapGetters({
+			getPage: 'getPage'
+		})
+	},
+	methods: {
+		...mapActions({
+			requestEmbeddedMainListOfPage: 'requestEmbeddedMainListOfPage'
+		})
+	},
+	mounted() {
+		this.requestEmbeddedMainListOfPage({ requestUri: 'operations', responseKey: 'operations' })
+	}
 }
 </script>

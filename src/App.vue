@@ -7,7 +7,7 @@
 			<v-autocomplete label="Ara..." v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
 			<v-spacer></v-spacer>
 
-			<div style="width: 300px;" @click="changeTheme()">
+			<div style="width: 300px;">
 				<v-list-item dense two-line link style="height: 64px;">
 					<v-list-item-avatar> <v-img src="https://randomuser.me/api/portraits/men/95.jpg"></v-img> </v-list-item-avatar>
 					<v-list-item-content>
@@ -22,20 +22,20 @@
 					<v-btn icon v-on="on">
 						<v-badge v-model="show" color="red" right overlap>
 							<template v-slot:badge>
-								<span>{{ getObj.value }}</span>
+								<span>1</span>
 							</template>
 							<v-icon>notifications</v-icon>
 						</v-badge>
 					</v-btn>
 				</template>
 				<v-card>
-					<Notification />
+					<s-notification />
 				</v-card>
 			</v-menu>
 			<v-btn icon v-on:click="chatDrawer = !chatDrawer">
 				<v-badge v-model="show" color="green" right overlap>
 					<template v-slot:badge dense>
-						<span>{{ getUser.notification }}</span>
+						<span>2</span>
 					</template>
 					<v-icon>group</v-icon>
 				</v-badge>
@@ -46,7 +46,7 @@
 		</v-app-bar>
 
 		<v-navigation-drawer :mini-variant.sync="miniDrawer" app permanent :clipped="true" width="320" mini-variant-width="60">
-			<Menu :mini="miniDrawer" />
+			<left-menu :mini="miniDrawer" />
 		</v-navigation-drawer>
 
 		<v-content style="height: 100%">
@@ -54,11 +54,11 @@
 		</v-content>
 
 		<v-navigation-drawer app v-model="settingsDrawer" temporary right :clipped="true">
-			<Settings />
+			<s-settings />
 		</v-navigation-drawer>
 
 		<v-navigation-drawer app v-model="chatDrawer" temporary right :clipped="true">
-			<ChatUsers />
+			<chat-users />
 		</v-navigation-drawer>
 	</v-app>
 </template>
@@ -68,12 +68,16 @@ import Menu from './components/common/Menu'
 import Notification from './components/common/Notification'
 import ChatUsers from './components/common/ChatUsers'
 import Settings from './components/common/Settings'
-import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'App',
 
-	components: { Menu, Notification, ChatUsers, Settings },
+	components: {
+		'left-menu': Menu,
+		's-notification': Notification,
+		'chat-users': ChatUsers,
+		's-settings': Settings
+	},
 
 	data: () => ({
 		components: ['Sipariş Parametre İşlemleri - Makina Parametre İşlemleri', 'Sipariş Parametre İşlemleri - Makina Grup Parametre İşlemleri', 'Kullanıcı İşlemleri - Create'],
@@ -83,29 +87,7 @@ export default {
 		selected: null,
 		show: true,
 		menu: false
-	}),
-	computed: {
-		...mapGetters({
-			getObj: 'getObj',
-			getUser: 'getUser'
-		})
-	},
-	methods: {
-		...mapActions({
-			setValueOfObj: 'setValueOfObj',
-			addValueToObjValue: 'addValueToObjValue',
-			setUsernameOfObj: 'setUsernameOfObj'
-		}),
-		changeTheme() {
-			this.setValueOfObj(10)
-			this.setUsernameOfObj('admin')
-		}
-	},
-	mounted() {
-		this.axios.get('operations').then(response => {
-			this.info = response
-		})
-	}
+	})
 }
 </script>
 <style>

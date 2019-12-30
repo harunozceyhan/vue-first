@@ -1,33 +1,63 @@
-import { SET_VALUE_OF_OBJ, ADD_NUMBER_TO_OBJ_VALUE } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE } from './mutation-types'
+
+const page = () => ({
+	metadata: null,
+	mainList: [],
+	pageSize: 0,
+	totalElements: 0,
+	totalPages: 0,
+	pageNumber: 0
+})
 
 export default {
 	state: {
-		obj: {
-			value: 1
-		}
+		page: page()
 	},
 	getters: {
-		getObj: state => {
-			return state.obj
+		getPage: state => {
+			return state.page
 		},
-		getIncrementedValue: state => incValue => {
-			return state.obj.value + incValue
+		getMetadataOfPage: state => {
+			return state.page.metadata
+		},
+		getMainListOfPage: state => {
+			return state.page.mainList
 		}
 	},
 	mutations: {
-		[SET_VALUE_OF_OBJ](state, payload) {
-			state.obj.value = payload.value
+		[CLEAR_PAGE_STATE](state) {
+			const initial = page()
+			Object.keys(initial).forEach(key => {
+				state.page[key] = initial[key]
+			})
 		},
-		[ADD_NUMBER_TO_OBJ_VALUE](state, payload) {
-			state.obj.value += payload.value
+		[SET_METADATA_OF_PAGE](state, payload) {
+			state.page.metadata = payload.metadata
+		},
+		[SET_MAINLIST_OF_PAGE](state, payload) {
+			state.page.mainList = payload.mainList
+			state.page.pageSize = payload.pageSize
+			state.page.totalElements = payload.totalElements
+			state.page.totalPages = payload.totalPages
+			state.page.pageNumber = payload.pageNumber
 		}
 	},
 	actions: {
-		setValueOfObj({ commit }, value) {
-			commit({ type: SET_VALUE_OF_OBJ, value: value })
+		clearPage({ commit }) {
+			commit({ type: CLEAR_PAGE_STATE })
 		},
-		addValueToObjValue({ commit }, addValue) {
-			commit({ type: ADD_NUMBER_TO_OBJ_VALUE, value: addValue })
+		setMetaDataOfPage({ commit }, metadata) {
+			commit({ type: SET_METADATA_OF_PAGE, metadata: metadata })
+		},
+		requestContentMainListOfPage({ commit }, requestUri) {
+			this.axios.get(requestUri).then(response => {
+				commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data.content, pageSize: response.data.size, totalElements: response.data.totalElements, totalPages: response.data.page.totalPages, pageNumber: response.data.number })
+			})
+		},
+		requestEmbeddedMainListOfPage({ commit }, payload) {
+			this.axios.get(payload.requestUri).then(response => {
+				commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, totalPages: response.data.page.totalPages, pageNumber: response.data.page.number })
+			})
 		}
 	}
 }
