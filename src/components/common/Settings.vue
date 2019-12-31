@@ -10,7 +10,7 @@
 		<v-list subheader dense>
 			<v-subheader>Dil</v-subheader>
 			<v-list-item>
-				<v-list-item-action style="margin-right: 0"><v-select dense hide-details="" item-color="secondary" color="secondary" :items="languages" label="Dil Seçiniz" outlined></v-select></v-list-item-action>
+				<v-list-item-action style="margin-right: 0"><v-select v-model="language" @change="onLanguageChanged" dense hide-details="" item-color="secondary" color="secondary" :items="languages" label="Dil Seçiniz" return-object outlined></v-select></v-list-item-action>
 			</v-list-item>
 			<v-subheader>Görünüm</v-subheader>
 			<v-list-item
@@ -46,6 +46,7 @@
 export default {
 	data: () => ({
 		darkMode: null,
+		language: { id: 'tr', text: 'Türkçe' },
 		items: [
 			{ active: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
 			{ active: true, title: 'Ranee Carlson', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
@@ -53,17 +54,29 @@ export default {
 			{ active: true, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
 		],
 		items2: [{ title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' }],
-		languages: ['Türkçe', 'English']
+		languages: [
+			{ id: 'tr', text: 'Türkçe' },
+			{ id: 'en', text: 'English' }
+		]
 	}),
 
 	mounted() {
+		this.language = localStorage.language === 'undefined' ? { id: 'tr', text: 'Türkçe' } : localStorage.language === 'tr' ? { id: 'tr', text: 'Türkçe' } : { id: 'en', text: 'English' }
 		this.darkMode = localStorage.dark === 'undefined' ? false : localStorage.dark === 'true' ? true : false
 		this.setTheme()
+		this.setLanguage()
 	},
 	methods: {
 		setTheme() {
 			this.$vuetify.theme.dark = this.darkMode
 			localStorage.dark = this.darkMode
+		},
+		setLanguage() {
+			this.$vuetify.lang.current = this.language.id
+			localStorage.language = this.language.id
+		},
+		onLanguageChanged() {
+			this.setLanguage()
 		}
 	}
 }

@@ -9,7 +9,7 @@
 
 			<div style="min-width: 100px; width: 300px">
 				<v-list-item dense two-line link style="height: 64px;">
-					<v-list-item-avatar> <v-img src="https://randomuser.me/api/portraits/men/95.jpg"></v-img> </v-list-item-avatar>
+					<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
 					<v-list-item-content>
 						<v-list-item-title>Harun Özceyhan</v-list-item-title>
 						<v-list-item-subtitle>harunozceyhan@gmail.com</v-list-item-subtitle>
@@ -20,7 +20,7 @@
 			<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="400" offset-y>
 				<template v-slot:activator="{ on }">
 					<v-btn icon v-on="on">
-						<v-badge v-model="show" color="red" right overlap>
+						<v-badge v-model="show" color="warning" right overlap>
 							<template v-slot:badge>
 								<span>1</span>
 							</template>
@@ -42,6 +42,9 @@
 			</v-btn>
 			<v-btn icon v-on:click="settingsDrawer = !settingsDrawer">
 				<v-icon>settings</v-icon>
+			</v-btn>
+			<v-btn icon>
+				<v-icon>mdi-logout-variant</v-icon>
 			</v-btn>
 		</v-app-bar>
 
