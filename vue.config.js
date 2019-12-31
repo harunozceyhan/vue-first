@@ -2,8 +2,30 @@ module.exports = {
 	configureWebpack: {
 		devtool: 'source-map'
 	},
+
 	// fix: sockjs connection timeout
 	devServer: {
 		host: 'localhost'
+	},
+
+	chainWebpack: config => {
+		config.module
+			.rule('i18n')
+			.resourceQuery(/blockType=i18n/)
+			.type('javascript/auto')
+			.use('i18n')
+			.loader('@kazupon/vue-i18n-loader')
+			.end()
+			.use('yaml')
+			.loader('yaml-loader')
+			.end()
+	},
+
+	pluginOptions: {
+		i18n: {
+			locale: 'tr',
+			fallbackLocale: 'tr',
+			enableInSFC: true
+		}
 	}
 }

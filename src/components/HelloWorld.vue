@@ -5,6 +5,7 @@
 			<div>pageSize: {{ getPage.pageSize }}</div>
 			totalElements: {{ getPage.totalElements }}
 		</div>
+		<div>{{ $t('hello') }}</div>
 	</v-container>
 </template>
 
@@ -30,3 +31,9 @@ export default {
 	}
 }
 </script>
+<i18n>
+tr:
+    hello: "Merhaba!!!"
+en:
+    hello: "hello world!"
+</i18n>

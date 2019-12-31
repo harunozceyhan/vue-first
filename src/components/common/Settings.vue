@@ -61,8 +61,8 @@ export default {
 	}),
 
 	mounted() {
-		this.language = localStorage.language === 'undefined' ? { id: 'tr', text: 'Türkçe' } : localStorage.language === 'tr' ? { id: 'tr', text: 'Türkçe' } : { id: 'en', text: 'English' }
-		this.darkMode = localStorage.dark === 'undefined' ? false : localStorage.dark === 'true' ? true : false
+		this.language = localStorage.language === undefined ? { id: 'tr', text: 'Türkçe' } : localStorage.language === 'tr' ? { id: 'tr', text: 'Türkçe' } : { id: 'en', text: 'English' }
+		this.darkMode = localStorage.dark === undefined ? false : localStorage.dark === 'true' ? true : false
 		this.setTheme()
 		this.setLanguage()
 	},
@@ -74,6 +74,7 @@ export default {
 		setLanguage() {
 			this.$vuetify.lang.current = this.language.id
 			localStorage.language = this.language.id
+			this.$i18n.locale = this.language.id
 		},
 		onLanguageChanged() {
 			this.setLanguage()

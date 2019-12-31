@@ -31,7 +31,7 @@ _axios.interceptors.response.use(
 		store.dispatch('setLoading', false)
 		// eslint-disable-next-line no-debugger
 		if (error.response.status === 403) {
-			store.dispatch('setErrorAlert', ' Yetkiniz Bulunmamaktadır!')
+			store.dispatch('setErrorAlert', 'Yetkiniz Bulunmamaktadır!')
 		}
 		return Promise.reject(error)
 	}
