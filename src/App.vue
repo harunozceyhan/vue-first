@@ -50,14 +50,6 @@
 		</v-navigation-drawer>
 
 		<v-content style="height: 100%">
-			<v-dialog v-model="getLoading" persistent width="500">
-				<v-card>
-					<v-card-title>Please Wait...</v-card-title>
-					<v-card-text> Please stand by while request and response </v-card-text>
-					<v-progress-linear indeterminate height="6" color="secondary"></v-progress-linear>
-				</v-card>
-			</v-dialog>
-
 			<router-view style="overflow-y: auto; height: 100%"></router-view>
 		</v-content>
 
@@ -68,6 +60,9 @@
 		<v-navigation-drawer app v-model="chatDrawer" temporary right :clipped="true">
 			<chat-users />
 		</v-navigation-drawer>
+
+		<s-alert />
+		<s-loading />
 	</v-app>
 </template>
 
@@ -76,7 +71,8 @@ import Menu from './components/common/Menu'
 import Notification from './components/common/Notification'
 import ChatUsers from './components/common/ChatUsers'
 import Settings from './components/common/Settings'
-import { mapGetters } from 'vuex'
+import Alert from './components/common/Alert'
+import Loading from './components/common/Loading'
 
 export default {
 	name: 'App',
@@ -85,7 +81,9 @@ export default {
 		'left-menu': Menu,
 		's-notification': Notification,
 		'chat-users': ChatUsers,
-		's-settings': Settings
+		's-settings': Settings,
+		's-loading': Loading,
+		's-alert': Alert
 	},
 
 	data: () => ({
@@ -96,12 +94,7 @@ export default {
 		selected: null,
 		show: true,
 		menu: false
-	}),
-	computed: {
-		...mapGetters({
-			getLoading: 'getLoading'
-		})
-	}
+	})
 }
 </script>
 <style>

@@ -9,7 +9,6 @@ const router = new VueRouter({
 	routes
 })
 
-// eslint-disable-next-line no-unused-vars
 router.beforeEach((_to, _from, _next) => {
 	store.dispatch('clearPage')
 	_next()

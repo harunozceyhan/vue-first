@@ -1,4 +1,4 @@
-import { SET_METADATA_OF_PAGE, SET_LOADING_STATE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE } from './mutation-types'
 
 const page = () => ({
 	metadata: null,
@@ -11,13 +11,9 @@ const page = () => ({
 
 export default {
 	state: {
-		loading: false,
 		page: page()
 	},
 	getters: {
-		getLoading: state => {
-			return state.loading
-		},
 		getPage: state => {
 			return state.page
 		},
@@ -35,9 +31,6 @@ export default {
 				state.page[key] = initial[key]
 			})
 		},
-		[SET_LOADING_STATE](state, payload) {
-			state.loading = payload.loading
-		},
 		[SET_METADATA_OF_PAGE](state, payload) {
 			state.page.metadata = payload.metadata
 		},
@@ -52,9 +45,6 @@ export default {
 	actions: {
 		clearPage({ commit }) {
 			commit({ type: CLEAR_PAGE_STATE })
-		},
-		setLoading({ commit }, loading) {
-			commit({ type: SET_LOADING_STATE, loading: loading })
 		},
 		setMetaDataOfPage({ commit }, metadata) {
 			commit({ type: SET_METADATA_OF_PAGE, metadata: metadata })
