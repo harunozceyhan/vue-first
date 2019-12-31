@@ -7,7 +7,7 @@
 			<v-autocomplete label="Ara..." v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
 			<v-spacer></v-spacer>
 
-			<div style="width: 300px;">
+			<div style="min-width: 100px; width: 300px">
 				<v-list-item dense two-line link style="height: 64px;">
 					<v-list-item-avatar> <v-img src="https://randomuser.me/api/portraits/men/95.jpg"></v-img> </v-list-item-avatar>
 					<v-list-item-content>
