@@ -1,11 +1,12 @@
 <template>
 	<v-container fluid>
+		<div>{{ $t('text') }}</div>
+		<div>{{ $t('hello.text') }}</div>
 		<div :v-if="getPage.mainList.length > 0" style="width: 220px; height: 80px; margin-top: 10px" v-for="(crud, i) in getPage.mainList" :key="i">
 			id: {{ crud.adi }}
 			<div>pageSize: {{ getPage.pageSize }}</div>
 			totalElements: {{ getPage.totalElements }}
 		</div>
-		<div>{{ $t('hello') }}</div>
 	</v-container>
 </template>
 
@@ -33,7 +34,11 @@ export default {
 </script>
 <i18n>
 tr:
-    hello: "Merhaba!!!"
+    text: "Merhaba!!!"
+    hello: 
+        text: "Merhaba!!!"
 en:
-    hello: "hello world!"
+    text: "hello!!!"
+    hello:
+        text:  "hello world!"
 </i18n>
