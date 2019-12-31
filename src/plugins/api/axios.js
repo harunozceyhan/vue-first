@@ -2,11 +2,7 @@
 
 import Vue from 'vue'
 import axios from 'axios'
-import store from '../../store'
-
-// Full config:  https://github.com/axios/axios#request-config
-// axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+import store from '@/store'
 
 let config = {
 	baseURL: process.env.VUE_APP_ROOT_API
@@ -28,25 +24,21 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
 	function(response) {
+		store.dispatch('setLoading', false)
 		return response
 	},
 	function(error) {
 		// Do something with response error
+		store.dispatch('setLoading', false)
 		return Promise.reject(error)
 	}
 )
 
 Plugin.install = function(Vue) {
 	Vue.axios = _axios
-	window.axios = _axios
 	store.axios = _axios
 	Object.defineProperties(Vue.prototype, {
 		axios: {
-			get() {
-				return _axios
-			}
-		},
-		$axios: {
 			get() {
 				return _axios
 			}
