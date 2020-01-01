@@ -9,7 +9,9 @@
 			"date": "Tarih",
 			"close": "Kapat",
 			"settings": "Ayarlar",
-			"search": "Ara"
+			"search": "Ara",
+			"please-wait": "Lütfen Bekleyiniz",
+			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız"
 		},
 		"message": {
 			"fillRequired": "Lütfen Tüm Zorun Alanları Doldurunuz"

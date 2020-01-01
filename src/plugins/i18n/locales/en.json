@@ -9,7 +9,9 @@
 			"date": "Date",
 			"close": "Close",
 			"settings": "Settings",
-			"search": "Search"
+			"search": "Search",
+			"please-wait": "Please Wait",
+			"standby": "Please Stand by While Request and Response"
 		},
 		"message": {
 			"fillRequired": "Please Fill All Required Fields"
