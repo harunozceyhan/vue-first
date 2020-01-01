@@ -2,11 +2,6 @@
 	<div>
 		<v-divider></v-divider>
 		<v-list dense :nav="true">
-			<v-list-item color="secondary" link>
-				<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }"> <v-icon color="success">home</v-icon> </v-list-item-icon>
-				<v-list-item-title>Ana Sayfa</v-list-item-title>
-			</v-list-item>
-
 			<v-list-group append-icon="" color="secondary">
 				<template v-slot:activator>
 					<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }"> <v-icon color="info">account_circle</v-icon> </v-list-item-icon>
@@ -46,7 +41,7 @@
 			</v-list-group>
 		</v-list>
 	</div>
-</template> 
+</template>
 
 <script>
 export default {

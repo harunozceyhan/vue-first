@@ -3,18 +3,25 @@
 	<v-app style="height: 100%">
 		<v-app-bar app clipped-left clipped-right color="primary" dark>
 			<v-app-bar-nav-icon @click="miniDrawer = !miniDrawer"></v-app-bar-nav-icon>
-			<div style="width: 260px"><v-img src="@/assets/smart_trans.png" max-width="220" max-height="50" style="margin-left: 16px"></v-img></div>
+
+			<div style="width: 260px">
+				<router-link :to="{ path: '/dashboard' }" replace><v-img src="@/assets/smart_trans.png" max-width="220" max-height="50" style="margin-left: 16px"></v-img></router-link>
+			</div>
+
 			<v-autocomplete label="Ara..." v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
+
 			<v-spacer></v-spacer>
 
 			<div style="min-width: 100px; width: 300px">
-				<v-list-item dense two-line link style="height: 64px;">
-					<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
-					<v-list-item-content>
-						<v-list-item-title>Harun Özceyhan</v-list-item-title>
-						<v-list-item-subtitle>harunozceyhan@gmail.com</v-list-item-subtitle>
-					</v-list-item-content>
-				</v-list-item>
+				<router-link :to="{ path: '/profile' }" replace>
+					<v-list-item dense two-line link style="height: 64px;">
+						<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
+						<v-list-item-content>
+							<v-list-item-title>Harun Özceyhan</v-list-item-title>
+							<v-list-item-subtitle>harunozceyhan@gmail.com</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</router-link>
 			</div>
 
 			<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="400" offset-y>
@@ -32,6 +39,7 @@
 					<s-notification />
 				</v-card>
 			</v-menu>
+
 			<v-btn icon v-on:click="chatDrawer = !chatDrawer">
 				<v-badge v-model="show" color="green" right overlap>
 					<template v-slot:badge dense>
@@ -40,9 +48,11 @@
 					<v-icon>group</v-icon>
 				</v-badge>
 			</v-btn>
+
 			<v-btn icon v-on:click="settingsDrawer = !settingsDrawer">
 				<v-icon>settings</v-icon>
 			</v-btn>
+
 			<v-btn icon>
 				<v-icon>mdi-logout-variant</v-icon>
 			</v-btn>
@@ -70,12 +80,12 @@
 </template>
 
 <script>
-import Menu from './components/common/Menu'
-import Notification from './components/common/Notification'
-import ChatUsers from './components/common/ChatUsers'
-import Settings from './components/common/Settings'
-import Alert from './components/common/Alert'
-import Loading from './components/common/Loading'
+import Menu from './components/common/layout/Menu'
+import Notification from './components/common/layout/Notification'
+import ChatUsers from './components/common/layout/ChatUsers'
+import Settings from './components/common/layout/Settings'
+import Alert from './components/common/layout/Alert'
+import Loading from './components/common/layout/Loading'
 
 export default {
 	name: 'App',

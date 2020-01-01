@@ -13,5 +13,4 @@ router.beforeEach((_to, _from, _next) => {
 	store.dispatch('clearPage')
 	_next()
 })
-
 export default router
