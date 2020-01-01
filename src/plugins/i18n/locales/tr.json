@@ -1,4 +1,20 @@
 {
+	"base": {
+		"label": {
+			"cancel": "İptal",
+			"ok": "Tamam",
+			"delete": "Sil",
+			"update": "Güncelle",
+			"add": "Ekle",
+			"date": "Tarih",
+			"close": "Kapat",
+			"settings": "Ayarlar",
+			"search": "Ara"
+		},
+		"message": {
+			"fillRequired": "Lütfen Tüm Zorun Alanları Doldurunuz"
+		}
+	},
 	"response": {
 		"error": {
 			"badrequest": "İstek Hatalı Biçimlendirilmiş! Lütfen Zorunlu Alanları Dolurarak Tekrar Deneyiniz",

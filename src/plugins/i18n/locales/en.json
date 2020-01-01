@@ -1,4 +1,20 @@
 {
+	"base": {
+		"label": {
+			"cancel": "Cancel",
+			"ok": "Ok",
+			"delete": "Delete",
+			"update": "Update",
+			"add": "Add",
+			"date": "Date",
+			"close": "Close",
+			"settings": "Settings",
+			"search": "Search"
+		},
+		"message": {
+			"fillRequired": "Please Fill All Required Fields"
+		}
+	},
 	"response": {
 		"error": {
 			"badrequest": "Malformed Request Syntax! Please Fill Required Fields And Try Again",
