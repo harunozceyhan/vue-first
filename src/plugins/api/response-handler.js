@@ -6,10 +6,27 @@ export const successResponseHandler = response => {
 	return response
 }
 
+const getMessageOfResponseStatus = status => {
+	switch (status) {
+		case 400: // Bad Request
+			return i18n.t('response.error.badrequest')
+		case 401: // Unauthenticated
+			return i18n.t('response.error.unauthenticated')
+		case 403: // Forbidden
+			return i18n.t('response.error.forbidden')
+		case 404: // Not Found
+			return i18n.t('response.error.notfound')
+		case 405: // Method Not Allowed
+			return i18n.t('response.error.notallowed')
+		case 500: // Internal Server Error
+			return i18n.t('response.error.internalerror')
+		default:
+			return i18n.t('response.error.unknown')
+	}
+}
+
 export const errorResponseHandler = error => {
 	store.dispatch('setLoading', false)
-	if (error.response.status === 403) {
-		store.dispatch('setErrorAlert', i18n.t('auth.permission'))
-	}
+	store.dispatch('setErrorAlert', getMessageOfResponseStatus(error.response.status) + '!')
 	return Promise.reject(error)
 }

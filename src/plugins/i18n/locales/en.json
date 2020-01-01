@@ -1,5 +1,13 @@
 {
-	"auth": {
-		"permission": "Permission Denied For This Resource!!!"
+	"response": {
+		"error": {
+			"badrequest": "Malformed Request Syntax! Please Fill Required Fields And Try Again",
+			"unauthenticated": "Authentication Required",
+			"forbidden": "You Are Not Authorized For This Resource or Need to be Re-authenticated",
+			"notfound": "Resource Not Found",
+			"notallowed": "This Request is Rejected by the Server",
+			"internalerror": "Unexpected Error Occured on Server",
+			"unknown": "Unknown Error Occured on Server"
+		}
 	}
 }

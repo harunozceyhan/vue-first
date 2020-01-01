@@ -1,5 +1,13 @@
 {
-	"auth": {
-		"permission": "Bu Kaynak İçin Yetkiniz Bulunmamaktadır!!!"
+	"response": {
+		"error": {
+			"badrequest": "İstek Hatalı Biçimlendirilmiş! Lütfen Zorunlu Alanları Dolurarak Tekrar Deneyiniz",
+			"unauthenticated": "Kimlik Doğrulaması Gerekmektedir",
+			"forbidden": "Bu Kaynak İçin Yetkiniz Bulunmamaktadır ya da Tekrar Kimlik Doğrulaması Gerekmektedir",
+			"notfound": "Kaynak Bulunamadı",
+			"notallowed": "Bu İstek Sunucu Tarafından Reddedilmiştir",
+			"internalerror": "Sunucu Tarafında Beklenmeyen Hata Oluştu",
+			"unknown": "Sunucu Tarafında Bilinmeyen Hata Oluştu"
+		}
 	}
 }
