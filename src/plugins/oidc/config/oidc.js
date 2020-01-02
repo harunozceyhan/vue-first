@@ -1,1 +1,10 @@
-export const oidcSettings = { authority: 'http://dev.smartiys.io:8080/auth/realms/master', clientId: 'auth', redirectUri: 'http://localhost:8081/oidc-callback', responseType: 'id_token token', scope: 'openid profile email', automaticSilentRenew: true, silentRedirectUri: 'http://localhost:8081/silent-renew-oidc.html', postLogoutRedirectUri: 'http://localhost:8081/' }
+export const oidcSettings = {
+	authority: process.env.VUE_APP_OIDC_AUTHORITY,
+	clientId: 'auth',
+	redirectUri: process.env.VUE_APP_OIDC_REDIRECT_URI + 'oidc-callback',
+	responseType: 'id_token token',
+	scope: 'openid profile email',
+	automaticSilentRenew: true,
+	silentRedirectUri: process.env.VUE_APP_OIDC_REDIRECT_URI + 'silent-renew-oidc.html',
+	postLogoutRedirectUri: process.env.VUE_APP_OIDC_REDIRECT_URI
+}

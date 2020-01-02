@@ -8,7 +8,7 @@
 				<router-link :to="{ path: '/dashboard' }" replace><v-img src="@/assets/smart_trans.png" max-width="220" max-height="50" style="margin-left: 16px"></v-img></router-link>
 			</div>
 
-			<v-autocomplete label="Ara..." v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
+			<v-autocomplete :label="$t('base.label.search') + '...'" v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
 
 			<v-spacer></v-spacer>
 
@@ -29,7 +29,7 @@
 					<v-btn icon v-on="on">
 						<v-badge v-model="show" color="warning" right overlap>
 							<template v-slot:badge>
-								<span>1</span>
+								<span v-if="getUnreadNotificationCount !== 0">{{ getUnreadNotificationCount }}</span>
 							</template>
 							<v-icon>notifications</v-icon>
 						</v-badge>
@@ -43,7 +43,7 @@
 			<v-btn icon v-on:click="chatDrawer = !chatDrawer">
 				<v-badge v-model="show" color="green" right overlap>
 					<template v-slot:badge dense>
-						<span>2</span>
+						<span v-if="getOnlineUserCount !== 0">{{ getOnlineUserCount }}</span>
 					</template>
 					<v-icon>group</v-icon>
 				</v-badge>
@@ -111,7 +111,7 @@ export default {
 		menu: false
 	}),
 	computed: {
-		...mapGetters(['oidcIsAuthenticated', 'oidcUser'])
+		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount'])
 	},
 	methods: {
 		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions']),

@@ -1,4 +1,4 @@
-import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS } from './mutation-types'
 
 const page = () => ({
 	metadata: null,
@@ -11,7 +11,19 @@ const page = () => ({
 
 export default {
 	state: {
-		page: page()
+		page: page(),
+		notifications: [
+			{ title: ' Yeni Güncellemeler', subtitle: 'Stok Takibi Eklendi.', read: true },
+			{ title: 'Recipes', subtitle: 'Jan 17, 2014', read: false },
+			{ title: 'Work', subtitle: 'Jan 28, 2014', read: true }
+		],
+		users: [
+			{ online: true, title: 'Jason Oner' },
+			{ online: true, title: 'Ranee Carlson' },
+			{ online: true, title: 'Cindy Baker' },
+			{ online: false, title: 'Ali Connors' },
+			{ online: false, title: 'Travis Howard' }
+		]
 	},
 	getters: {
 		getPage: state => {
@@ -22,6 +34,22 @@ export default {
 		},
 		getMainListOfPage: state => {
 			return state.page.mainList
+		},
+		getNotifications: state => {
+			return state.notifications
+		},
+		getUnreadNotificationCount: state => {
+			return state.notifications.filter(notification => {
+				return notification.read === false
+			}).length
+		},
+		getUsers: state => {
+			return state.users
+		},
+		getOnlineUserCount: state => {
+			return state.users.filter(user => {
+				return user.online === true
+			}).length
 		}
 	},
 	mutations: {
@@ -40,6 +68,12 @@ export default {
 			state.page.totalElements = payload.totalElements
 			state.page.totalPages = payload.totalPages
 			state.page.pageNumber = payload.pageNumber
+		},
+		[SET_STATE_NOTIFICATIONS](state, payload) {
+			state.notifications = payload.notifications
+		},
+		[SET_STATE_USERS](state, payload) {
+			state.users = payload.users
 		}
 	},
 	actions: {
@@ -60,6 +94,12 @@ export default {
 				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, totalPages: response.data.page.totalPages, pageNumber: response.data.page.number }),
 				() => {}
 			)
+		},
+		setNotifications({ commit }, notifications) {
+			commit({ type: SET_STATE_NOTIFICATIONS, notifications: notifications })
+		},
+		setUsers({ commit }, users) {
+			commit({ type: SET_STATE_USERS, users: users })
 		}
 	}
 }

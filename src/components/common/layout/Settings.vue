@@ -3,23 +3,23 @@
 		<v-list>
 			<v-list-item>
 				<v-list-item-avatar> <v-img src="@/assets/settings.svg" color="info"></v-img> </v-list-item-avatar>
-				<v-list-item-title class="title">Ayarlar</v-list-item-title>
+				<v-list-item-title class="title">{{ $t('base.label.settings') }}</v-list-item-title>
 			</v-list-item>
 		</v-list>
 		<v-divider></v-divider>
 		<v-list subheader dense>
-			<v-subheader>Dil</v-subheader>
+			<v-subheader>{{ $t('base.label.language') }}</v-subheader>
 			<v-list-item>
-				<v-list-item-action style="margin-right: 0"><v-select v-model="language" @change="onLanguageChanged" dense hide-details="" item-color="secondary" color="secondary" :items="languages" label="Dil Seçiniz" return-object outlined></v-select></v-list-item-action>
+				<v-list-item-action style="margin-right: 0"><v-select v-model="language" @change="onLanguageChanged" dense hide-details="" item-color="secondary" color="secondary" :items="languages" :label="$t('base.label.select-language')" return-object outlined></v-select></v-list-item-action>
 			</v-list-item>
-			<v-subheader>Görünüm</v-subheader>
+			<v-subheader>{{ $t('base.label.view') }}</v-subheader>
 			<v-list-item
 				@click="
 					darkMode = !darkMode
 					setTheme()
 				"
 			>
-				<v-list-item-title>Karanlık Mod</v-list-item-title>
+				<v-list-item-title>{{ $t('base.label.dark-mode') }}</v-list-item-title>
 				<v-list-item-action>
 					<v-switch
 						v-model="darkMode"

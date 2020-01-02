@@ -43,7 +43,9 @@ export default {
 	},
 	actions: {
 		setServices({ commit }, services) {
-			services instanceof Array ? commit({ type: SET_SERVICES_STATE, services: services }) : commit({ type: SET_SERVICES_STATE, services: [services] })
+			if (services !== undefined) {
+				services instanceof Array ? commit({ type: SET_SERVICES_STATE, services: services }) : commit({ type: SET_SERVICES_STATE, services: [services] })
+			}
 		},
 		setRoles({ commit }, roles) {
 			commit({ type: SET_ROLES_STATE, roles: roles })
