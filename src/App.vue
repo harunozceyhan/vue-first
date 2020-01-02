@@ -11,7 +11,6 @@
 			<v-autocomplete :label="$t('base.label.search') + '...'" v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
 
 			<v-spacer></v-spacer>
-
 			<div style="min-width: 100px; width: 300px" v-if="oidcIsAuthenticated">
 				<router-link :to="{ path: '/profile' }" replace>
 					<v-list-item dense two-line link style="height: 64px;">
