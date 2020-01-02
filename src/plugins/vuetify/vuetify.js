@@ -5,6 +5,7 @@ import Vuetify from 'vuetify/lib'
 import themes from './theme'
 
 Vue.use(Vuetify)
+
 const opts = {
 	icons: {
 		iconfont: 'mdi'

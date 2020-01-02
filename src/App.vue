@@ -12,13 +12,13 @@
 
 			<v-spacer></v-spacer>
 
-			<div style="min-width: 100px; width: 300px">
+			<div style="min-width: 100px; width: 300px" v-if="oidcIsAuthenticated">
 				<router-link :to="{ path: '/profile' }" replace>
 					<v-list-item dense two-line link style="height: 64px;">
 						<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
 						<v-list-item-content>
-							<v-list-item-title>{{ oidcUser === null ? '' : oidcUser.name }}</v-list-item-title>
-							<v-list-item-subtitle>{{ oidcUser === null ? '' : oidcUser.email }}</v-list-item-subtitle>
+							<v-list-item-title>{{ oidcUser.name }}</v-list-item-title>
+							<v-list-item-subtitle>{{ oidcUser.email }}</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
 				</router-link>
@@ -87,6 +87,7 @@ import Settings from './components/common/layout/Settings'
 import Alert from './components/common/layout/Alert'
 import Loading from './components/common/layout/Loading'
 import { mapGetters, mapActions } from 'vuex'
+import Jwt from '@/plugins/common/jwt'
 
 export default {
 	name: 'App',
@@ -113,7 +114,19 @@ export default {
 		...mapGetters(['oidcIsAuthenticated', 'oidcUser'])
 	},
 	methods: {
-		...mapActions(['signOutOidc'])
+		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions']),
+		userLoaded(user) {
+			const parsedJwt = Jwt.parseJwt(user.detail.access_token)
+			this.setServices(parsedJwt.aud)
+			this.setRoles(parsedJwt.realm_access === undefined ? [] : parsedJwt.realm_access.roles)
+			this.setPermissions(parsedJwt)
+		}
+	},
+	mounted() {
+		window.addEventListener('vuexoidc:userLoaded', this.userLoaded)
+	},
+	destroyed() {
+		window.removeEventListener('vuexoidc:userLoaded', this.userLoaded)
 	}
 }
 </script>

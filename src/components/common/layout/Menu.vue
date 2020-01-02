@@ -62,7 +62,7 @@ export default {
 	padding-left: 20px;
 }
 .v-list-group--sub-group.v-list-group--active .v-list-item__icon.v-list-group__header__prepend-icon .v-icon {
-	-webkit-transform: rotate(0deg);
-	transform: rotate(0);
+	-webkit-transform: rotate(0deg) !important;
+	transform: rotate(0) !important;
 }
 </style>
