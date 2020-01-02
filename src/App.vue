@@ -17,8 +17,8 @@
 					<v-list-item dense two-line link style="height: 64px;">
 						<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
 						<v-list-item-content>
-							<v-list-item-title>Harun Özceyhan</v-list-item-title>
-							<v-list-item-subtitle>harunozceyhan@gmail.com</v-list-item-subtitle>
+							<v-list-item-title>{{ oidcUser === null ? '' : oidcUser.name }}</v-list-item-title>
+							<v-list-item-subtitle>{{ oidcUser === null ? '' : oidcUser.email }}</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
 				</router-link>
@@ -53,7 +53,7 @@
 				<v-icon>settings</v-icon>
 			</v-btn>
 
-			<v-btn icon>
+			<v-btn icon v-on:click="signOutOidc">
 				<v-icon>mdi-logout-variant</v-icon>
 			</v-btn>
 		</v-app-bar>
@@ -86,6 +86,7 @@ import ChatUsers from './components/common/layout/ChatUsers'
 import Settings from './components/common/layout/Settings'
 import Alert from './components/common/layout/Alert'
 import Loading from './components/common/layout/Loading'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'App',
@@ -107,7 +108,13 @@ export default {
 		selected: null,
 		show: true,
 		menu: false
-	})
+	}),
+	computed: {
+		...mapGetters(['oidcIsAuthenticated', 'oidcUser'])
+	},
+	methods: {
+		...mapActions(['signOutOidc'])
+	}
 }
 </script>
 <style>

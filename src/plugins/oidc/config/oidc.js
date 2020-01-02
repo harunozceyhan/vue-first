@@ -1,0 +1,1 @@
+export const oidcSettings = { authority: 'http://dev.smartiys.io:8080/auth/realms/master', clientId: 'auth', redirectUri: 'http://localhost:8081/oidc-callback', responseType: 'id_token token', scope: 'openid profile email', automaticSilentRenew: true, silentRedirectUri: 'http://localhost:8081/silent-renew-oidc.html', postLogoutRedirectUri: 'http://localhost:8081/' }

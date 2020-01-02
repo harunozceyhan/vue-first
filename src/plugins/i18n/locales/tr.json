@@ -11,7 +11,8 @@
 			"settings": "Ayarlar",
 			"search": "Ara",
 			"please-wait": "Lütfen Bekleyiniz",
-			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız"
+			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız",
+			"authentication-error": "Kimlik Yetkilendirmesi Sırasında Hata Oluştu! Lütfen Tekrar Deneyiniz!"
 		},
 		"message": {
 			"fillRequired": "Lütfen Tüm Zorun Alanları Doldurunuz"

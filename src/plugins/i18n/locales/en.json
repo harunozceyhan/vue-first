@@ -11,7 +11,8 @@
 			"settings": "Settings",
 			"search": "Search",
 			"please-wait": "Please Wait",
-			"standby": "Please Stand by While Request and Response"
+			"standby": "Please Stand by While Request and Response",
+			"authentication-error": "An Error Has Ocuured While Authentication Process! Please Try Again!"
 		},
 		"message": {
 			"fillRequired": "Please Fill All Required Fields"
