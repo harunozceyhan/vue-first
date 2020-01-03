@@ -14,13 +14,13 @@ export default {
 		page: page(),
 		notifications: [
 			{ title: ' Yeni Güncellemeler', subtitle: 'Stok Takibi Eklendi.', read: true },
-			{ title: 'Recipes', subtitle: 'Jan 17, 2014', read: false },
+			{ title: 'Recipes', subtitle: 'Jan 17, 2014', read: true },
 			{ title: 'Work', subtitle: 'Jan 28, 2014', read: true }
 		],
 		users: [
-			{ online: true, title: 'Jason Oner' },
-			{ online: true, title: 'Ranee Carlson' },
-			{ online: true, title: 'Cindy Baker' },
+			{ online: false, title: 'Jason Oner' },
+			{ online: false, title: 'Ranee Carlson' },
+			{ online: false, title: 'Cindy Baker' },
 			{ online: false, title: 'Ali Connors' },
 			{ online: false, title: 'Travis Howard' }
 		]

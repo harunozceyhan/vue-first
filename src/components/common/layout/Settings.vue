@@ -53,7 +53,7 @@
 			</v-list-item>
 		</v-list>
 
-		<v-footer color="accent" :absolute="true">
+		<v-footer color="accent" :absolute="true" style="bottom: 64px">
 			<v-spacer></v-spacer>
 			<div class="white--text caption">
 				<span class="mr-12">Smartiys &copy; {{ new Date().getFullYear() }}</span> <span class="ml-10">v1.0.5</span>

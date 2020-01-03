@@ -12,6 +12,13 @@ export default [
 				active: false,
 				children: [
 					{
+						label: 'menu.parameter.operation',
+						icon: 'build',
+						container: false,
+						path: 'operation',
+						tags: 'operasyon, operation'
+					},
+					{
 						label: 'menu.parameter.makina',
 						icon: 'settings',
 						container: false,

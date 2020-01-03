@@ -5,6 +5,7 @@
 			"siparis": "Sipariş Parametre İşlemleri",
 			"makina": "Makina Parametre İşlemleri",
 			"makina-grup": "Makina Grup Parametre İşlemleri",
+			"operation": "Operasyon Parametre İşlemleri",
 			"stok": "Stok Parametre İşlemleri"
 		},
 		"user": {
@@ -31,8 +32,8 @@
 			"view": "Görünüm",
 			"dark-mode": "Karanlık Mod",
 			"select-language": "Dil Seçiniz",
-            "users": "Kullanıcılar",
-            "no-data-text": "Hiç Kayıt Bulunamadı",
+			"users": "Kullanıcılar",
+			"no-data-text": "Hiç Kayıt Bulunamadı",
 			"online-users": "Çevrimiçi Kullanıcılar",
 			"offline-users": "Çevrimdışı Kullanıcılar",
 			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız",

@@ -8,7 +8,7 @@
 				<router-link :to="{ path: '/dashboard' }" replace><v-img src="@/assets/smart_trans.png" max-width="220" max-height="50" style="margin-left: 16px"></v-img></router-link>
 			</div>
 
-			<v-autocomplete v-model="selectedMenuItem" :label="$t('base.label.search') + '...'" dense color="secondary" append-icon="" prepend-inner-icon="search" :clearable="true" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted return-object  :items="menuItems" :filter="searchMenuFilter" :no-data-text="$t('base.label.no-data-text') + '...'" >
+			<v-autocomplete v-model="selectedMenuItem" :label="$t('base.label.search') + '...'" dense color="secondary" append-icon="" prepend-inner-icon="search" :clearable="true" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted return-object :items="menuItems" :filter="searchMenuFilter" :no-data-text="$t('base.label.no-data-text') + '...'">
 				<template v-slot:selection="{ attr, on, item, selected }">
 					<v-chip v-bind="attr" :input-value="selected" color="white" class="primary--text" v-on="on">
 						<v-icon left>{{ item.icon }}</v-icon>
@@ -39,7 +39,7 @@
 			<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="400" offset-y>
 				<template v-slot:activator="{ on }">
 					<v-btn icon v-on="on">
-						<v-badge v-model="show" color="warning" right overlap>
+						<v-badge v-model="show" :color="getUnreadNotificationCount === 0 ? 'transparent' : 'warning'" right overlap>
 							<template v-slot:badge>
 								<span v-if="getUnreadNotificationCount !== 0">{{ getUnreadNotificationCount }}</span>
 							</template>
@@ -53,7 +53,7 @@
 			</v-menu>
 
 			<v-btn icon v-on:click="chatDrawer = !chatDrawer">
-				<v-badge v-model="show" color="green" right overlap>
+				<v-badge v-model="show" :color="getOnlineUserCount === 0 ? 'transparent' : 'green'" right overlap>
 					<template v-slot:badge dense>
 						<span v-if="getOnlineUserCount !== 0">{{ getOnlineUserCount }}</span>
 					</template>
@@ -70,7 +70,7 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer :mini-variant.sync="miniDrawer" app permanent :clipped="true" width="320" mini-variant-width="60" >
+		<v-navigation-drawer :mini-variant.sync="miniDrawer" app permanent :clipped="true" width="320" mini-variant-width="60">
 			<left-menu :mini="miniDrawer" />
 		</v-navigation-drawer>
 
@@ -129,8 +129,7 @@ export default {
 				this.$router.push({ path: val.path })
 			}
 		},
-		// eslint-disable-next-line no-unused-vars
-		$route(to, from) {
+		$route(to) {
 			if (this.selectedMenuItem != null && '/' + this.selectedMenuItem.path != to.path) {
 				this.selectedMenuItem = null
 			}

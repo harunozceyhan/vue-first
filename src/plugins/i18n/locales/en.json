@@ -5,6 +5,7 @@
 			"siparis": "Order Parameter Operations",
 			"makina": "Machine Parameter Operations",
 			"makina-grup": "Machine Group Parameter Operations",
+			"operation": "Operation Parameter Operations",
 			"stok": "Stock Parameter Operations"
 		},
 		"user": {
@@ -32,7 +33,7 @@
 			"dark-mode": "Dark Mode",
 			"select-language": "Select Language",
 			"users": "Users",
-            "no-data-text": "No Data Available",
+			"no-data-text": "No Data Available",
 			"online-users": "Online Users",
 			"offline-users": "Offline Users",
 			"standby": "Please Stand by While Request and Response",
