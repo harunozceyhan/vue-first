@@ -1,4 +1,18 @@
 {
+	"menu": {
+		"parameter": {
+			"operations": "Parametre İşlemleri",
+			"siparis": "Sipariş Parametre İşlemleri",
+			"makina": "Makina Parametre İşlemleri",
+			"makina-grup": "Makina Grup Parametre İşlemleri",
+			"stok": "Stok Parametre İşlemleri"
+		},
+		"user": {
+			"operations": "Kullanıcı İşlemleri",
+			"create": "Oluştur"
+		},
+		"profile": "Profil İşlemleri"
+	},
 	"base": {
 		"label": {
 			"cancel": "İptal",
@@ -17,7 +31,8 @@
 			"view": "Görünüm",
 			"dark-mode": "Karanlık Mod",
 			"select-language": "Dil Seçiniz",
-			"users": "Kullanıcılar",
+            "users": "Kullanıcılar",
+            "no-data-text": "Hiç Kayıt Bulunamadı",
 			"online-users": "Çevrimiçi Kullanıcılar",
 			"offline-users": "Çevrimdışı Kullanıcılar",
 			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız",

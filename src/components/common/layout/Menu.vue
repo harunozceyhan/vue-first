@@ -2,74 +2,60 @@
 	<div>
 		<v-divider></v-divider>
 		<v-list dense :nav="true">
-			<v-list-group append-icon="" color="secondary">
-				<template v-slot:activator>
-					<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }"> <v-icon color="info">account_circle</v-icon> </v-list-item-icon>
-					<v-list-item-title>{{ $t('parameter.operations') }}</v-list-item-title>
-				</template>
-
-				<v-list-group sub-group prepend-icon="chat" color="secondary" v-model="subactive1" @click="subactive2 = false">
+			<div v-for="(menu, menuIndex) in menuItems" :key="menuIndex">
+				<v-list-group no-action append-icon="" color="secondary" v-if="menu.container">
 					<template v-slot:activator>
-						<v-list-item-title>{{ $t('parameter.siparis') }}</v-list-item-title>
+						<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }">
+							<v-icon :color="menu.color">{{ menu.icon }}</v-icon>
+						</v-list-item-icon>
+						<v-list-item-title>{{ $t(menu.label) }}</v-list-item-title>
 					</template>
-					<v-list-item v-for="(admin, i) in admins" :key="i" link color="secondary" :to="{ path: admin[2] }" :replace="true">
-						<v-list-item-icon> <v-icon v-text="admin[1]"></v-icon> </v-list-item-icon>
-						<v-list-item-title v-text="$t(admin[0])"></v-list-item-title>
-					</v-list-item>
+
+					<div v-for="(menuChild, menuChildIndex) in menu.children" :key="menuChildIndex">
+						<v-list-group sub-group :prepend-icon="menuChild.icon" color="secondary" v-if="menuChild.container" v-model="menuChild.active" @click="onMenuItemClick(menu, menuChild)">
+							<template v-slot:activator>
+								<v-list-item-title>{{ $t(menuChild.label) }}</v-list-item-title>
+							</template>
+							<v-list-item v-for="(menuSubChild, menuSubChildIndex) in menuChild.children" :key="menuSubChildIndex" link color="secondary" :to="{ path: menuSubChild.path }" :replace="true">
+								<v-list-item-icon> <v-icon v-text="menuSubChild.icon"></v-icon> </v-list-item-icon>
+								<v-list-item-title v-text="$t(menuSubChild.label)"></v-list-item-title>
+							</v-list-item>
+						</v-list-group>
+						<v-list-item color="secondary" :to="{ path: menuChild.path }" :replace="true" v-if="!menuChild.container && !mini" style="padding-left: 24px" @click="onMenuItemClick(menu, menuChild)">
+							<v-list-item-icon style="margin-right: 16px">
+								<v-icon>{{ menuChild.icon }}</v-icon>
+							</v-list-item-icon>
+							<v-list-item-title v-text="$t(menuChild.label)"></v-list-item-title>
+						</v-list-item>
+					</div>
 				</v-list-group>
 
-				<v-list-group sub-group prepend-icon="mdi-home" color="secondary" v-model="subactive2" @click="subactive1 = false">
-					<template v-slot:activator>
-						<v-list-item-title>{{ $t('parameter.stok') }}</v-list-item-title>
-					</template>
-					<v-list-item v-for="(crud, i) in cruds" :key="i" link color="secondary" :to="{ path: crud[2] }" :replace="true">
-						<v-list-item-icon> <v-icon v-text="crud[1]"></v-icon> </v-list-item-icon>
-						<v-list-item-title v-text="$t(crud[0])"></v-list-item-title>
-					</v-list-item>
-				</v-list-group>
-			</v-list-group>
-
-			<v-list-group no-action append-icon="" color="secondary">
-				<template v-slot:activator>
-					<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }"> <v-icon color="warning">voice_chat</v-icon> </v-list-item-icon>
-					<v-list-item-title>{{ $t('user.operations') }}</v-list-item-title>
-				</template>
-
-				<v-list-group sub-group prepend-icon="chat" color="secondary" v-model="subactive1" @click="subactive2 = false">
-					<template v-slot:activator>
-						<v-list-item-title>{{ $t('parameter.siparis') }}</v-list-item-title>
-					</template>
-					<v-list-item v-for="(admin, i) in admins" :key="i" link color="secondary" :to="{ path: admin[2] }" :replace="true">
-						<v-list-item-icon> <v-icon v-text="admin[1]"></v-icon> </v-list-item-icon>
-						<v-list-item-title v-text="$t(admin[0])"></v-list-item-title>
-					</v-list-item>
-				</v-list-group>
-
-				<v-list-item v-for="(crud, i) in cruds" :key="i" link color="secondary" :to="{ path: crud[2] }" :replace="true">
-					<v-list-item-icon> <v-icon v-text="crud[1]"></v-icon> </v-list-item-icon>
-					<v-list-item-title v-text="$t(crud[0])"></v-list-item-title>
+				<v-list-item color="secondary" :to="{ path: menu.path }" :replace="true" v-if="!menu.container">
+					<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }">
+						<v-icon :color="menu.color">{{ menu.icon }}</v-icon>
+					</v-list-item-icon>
+					<v-list-item-title v-text="$t(menu.label)"></v-list-item-title>
 				</v-list-item>
-			</v-list-group>
-			<v-list-item link color="secondary" :to="{ path: 'profile' }" :replace="true">
-				<v-list-item-icon :style="mini ? { 'margin-right': '0' } : { 'margin-right': '20px' }"> <v-icon color="accent">settings</v-icon> </v-list-item-icon>
-				<v-list-item-title v-text="$t('profile')"></v-list-item-title>
-			</v-list-item>
+			</div>
 		</v-list>
 	</div>
 </template>
 
 <script>
+import menuItems from '@/plugins/router/menu'
+
 export default {
 	props: ['mini'],
 	data: () => ({
-		subactive1: false,
-		subactive2: false,
-		admins: [
-			['parameter.makina', 'settings', 'hello'],
-			['parameter.makina-grup', 'device_hub', 'hello2']
-		],
-		cruds: [['user.create', 'add', 'hello2']]
-	})
+		menuItems: menuItems
+	}),
+	methods: {
+		onMenuItemClick(menu, menuChild) {
+			menu.children.filter(menuItem => {
+				if (menuItem.label != menuChild.label) menuItem.active = false
+			})
+		}
+	}
 }
 </script>
 <style>
@@ -81,28 +67,3 @@ export default {
 	transform: rotate(0) !important;
 }
 </style>
-<i18n>
-tr:
-    parameter:
-        operations: 'Parametre İşlemleri'
-        siparis: 'Sipariş Parametre İşlemleri'
-        makina: 'Makina Parametre İşlemleri'
-        makina-grup: 'Makina Grup Parametre İşlemleri'
-        stok: 'Stok Parametre İşlemleri'
-    user:
-        operations: 'Kullanıcı İşlemleri'
-        create: 'Oluştur'
-    profile: 'Profil İşlemleri'
-en:
-    parameter:
-        operations: 'Parameter Operations'
-        siparis: 'Order Parameter Operations'
-        makina: 'Machine Parameter Operations'
-        makina-grup: 'Machine Group Parameter Operations'
-        stok: 'Stock Parameter Operations'
-    user:
-        operations: 'User Operations'
-        create: 'Create'
-    profile: 'Profile Operations'
-
-</i18n>

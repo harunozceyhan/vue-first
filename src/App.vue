@@ -8,7 +8,20 @@
 				<router-link :to="{ path: '/dashboard' }" replace><v-img src="@/assets/smart_trans.png" max-width="220" max-height="50" style="margin-left: 16px"></v-img></router-link>
 			</div>
 
-			<v-autocomplete :label="$t('base.label.search') + '...'" v-model="selected" dense color="secondary" :clearable="true" append-icon="" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted :items="components"></v-autocomplete>
+			<v-autocomplete v-model="selectedMenuItem" :label="$t('base.label.search') + '...'" dense color="secondary" append-icon="" prepend-inner-icon="search" :clearable="true" :open-on-clear="true" cache-items class="mx-4" flat hide-details solo-inverted return-object  :items="menuItems" :filter="searchMenuFilter" :no-data-text="$t('base.label.no-data-text') + '...'" >
+				<template v-slot:selection="{ attr, on, item, selected }">
+					<v-chip v-bind="attr" :input-value="selected" color="white" class="primary--text" v-on="on">
+						<v-icon left>{{ item.icon }}</v-icon>
+						<span v-text="item.text"></span>
+					</v-chip>
+				</template>
+				<template v-slot:item="{ item }">
+					<v-list-item-icon>
+						<v-icon color="secondary">{{ item.icon }}</v-icon>
+					</v-list-item-icon>
+					<v-list-item-title>{{ item.text }}</v-list-item-title>
+				</template>
+			</v-autocomplete>
 
 			<v-spacer></v-spacer>
 			<div style="min-width: 100px; width: 300px" v-if="oidcIsAuthenticated">
@@ -57,7 +70,7 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer :mini-variant.sync="miniDrawer" app permanent :clipped="true" width="320" mini-variant-width="60">
+		<v-navigation-drawer :mini-variant.sync="miniDrawer" app permanent :clipped="true" width="320" mini-variant-width="60" >
 			<left-menu :mini="miniDrawer" />
 		</v-navigation-drawer>
 
@@ -87,6 +100,7 @@ import Alert from './components/common/layout/Alert'
 import Loading from './components/common/layout/Loading'
 import { mapGetters, mapActions } from 'vuex'
 import Jwt from '@/plugins/common/jwt'
+import menuItems from '@/plugins/router/menu'
 
 export default {
 	name: 'App',
@@ -101,7 +115,7 @@ export default {
 	},
 
 	data: () => ({
-		components: ['Sipariş Parametre İşlemleri - Makina Parametre İşlemleri', 'Sipariş Parametre İşlemleri - Makina Grup Parametre İşlemleri', 'Kullanıcı İşlemleri - Create'],
+		selectedMenuItem: null,
 		chatDrawer: false,
 		settingsDrawer: false,
 		miniDrawer: false,
@@ -109,8 +123,40 @@ export default {
 		show: true,
 		menu: false
 	}),
+	watch: {
+		selectedMenuItem(val) {
+			if (val != undefined) {
+				this.$router.push({ path: val.path })
+			}
+		},
+		// eslint-disable-next-line no-unused-vars
+		$route(to, from) {
+			if (this.selectedMenuItem != null && '/' + this.selectedMenuItem.path != to.path) {
+				this.selectedMenuItem = null
+			}
+		}
+	},
 	computed: {
-		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount'])
+		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount']),
+		menuItems() {
+			let searchItems = []
+			menuItems.filter(menuItem => {
+				if (menuItem.container) {
+					menuItem.children.filter(childMenuItem => {
+						if (childMenuItem.container) {
+							childMenuItem.children.filter(childCMenuItem => {
+								searchItems.push({ text: this.$t(childCMenuItem.label), path: childCMenuItem.path, icon: childCMenuItem.icon, tags: childCMenuItem.tags })
+							})
+						} else {
+							searchItems.push({ text: this.$t(childMenuItem.label), path: childMenuItem.path, icon: childMenuItem.icon, tags: childMenuItem.tags })
+						}
+					})
+				} else {
+					searchItems.push({ text: this.$t(menuItem.label), path: menuItem.path, icon: menuItem.icon, tags: menuItem.tags })
+				}
+			})
+			return searchItems
+		}
 	},
 	methods: {
 		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions']),
@@ -119,6 +165,10 @@ export default {
 			this.setServices(parsedJwt.aud)
 			this.setRoles(parsedJwt.realm_access === undefined ? [] : parsedJwt.realm_access.roles)
 			this.setPermissions(parsedJwt)
+		},
+		searchMenuFilter(item, queryText, itemText) {
+			const query = queryText.toLowerCase()
+			return itemText.toLowerCase().indexOf(query) > -1 || item.tags.toLowerCase().indexOf(query) > -1
 		}
 	},
 	mounted() {
