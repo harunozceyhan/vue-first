@@ -67,19 +67,11 @@ export default {
 		darkMode: null,
 		rtl: null,
 		language: { id: 'tr', text: 'Türkçe' },
-		items: [
-			{ active: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-			{ active: true, title: 'Ranee Carlson', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-			{ active: true, title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-			{ active: true, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
-		],
-		items2: [{ title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' }],
 		languages: [
 			{ id: 'tr', text: 'Türkçe' },
 			{ id: 'en', text: 'English' }
 		]
 	}),
-
 	mounted() {
 		this.language = localStorage.language === undefined ? { id: 'tr', text: 'Türkçe' } : localStorage.language === 'tr' ? { id: 'tr', text: 'Türkçe' } : { id: 'en', text: 'English' }
 		this.darkMode = localStorage.dark === undefined ? false : localStorage.dark === 'true' ? true : false
