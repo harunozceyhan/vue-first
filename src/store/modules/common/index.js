@@ -1,7 +1,8 @@
-import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE } from './mutation-types'
+import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE } from './mutation-types'
 
 export default {
 	state: {
+		tableLoading: false,
 		loading: false,
 		alert: {
 			show: false,
@@ -14,6 +15,9 @@ export default {
 		getLoading: state => {
 			return state.loading
 		},
+		getTableLoading: state => {
+			return state.tableLoading
+		},
 		getAlert: state => {
 			return state.alert
 		}
@@ -21,6 +25,9 @@ export default {
 	mutations: {
 		[SET_LOADING_STATE](state, payload) {
 			state.loading = payload.loading
+		},
+		[SET_TABLE_LOADING_STATE](state, payload) {
+			state.tableLoading = payload.tableLoading
 		},
 		[SET_ALERT_STATE](state, payload) {
 			state.alert.show = payload.show
@@ -35,6 +42,9 @@ export default {
 	actions: {
 		setLoading({ commit }, loading) {
 			commit({ type: SET_LOADING_STATE, loading: loading })
+		},
+		setTableLoading({ commit }, tableLoading) {
+			commit({ type: SET_TABLE_LOADING_STATE, tableLoading: tableLoading })
 		},
 		setAlert({ commit }, alert) {
 			commit({ type: SET_ALERT_STATE, show: alert.show, alertType: alert.type, timeout: alert.timeout, text: alert.text })

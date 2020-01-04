@@ -2,11 +2,9 @@
 	<v-container fluid>
 		<div>{{ $t('text') }}</div>
 		<div>{{ $t('hello.text') }}</div>
-		<div :v-if="getPage.mainList.length > 0" style="width: 220px; height: 80px; margin-top: 10px" v-for="(crud, i) in getPage.mainList" :key="i">
-			id: {{ crud.adi }}
-			<div>pageSize: {{ getPage.pageSize }}</div>
-			totalElements: {{ getPage.totalElements }}
-		</div>
+		<div :v-if="getPage.mainList.length > 0" style="width: 220px; margin-top: 10px" v-for="(crud, i) in getPage.mainList" :key="i">adi: {{ crud.adi }}</div>
+		<div>pageSize: {{ getPage.pageSize }}</div>
+		totalElements: {{ getPage.totalElements }}
 	</v-container>
 </template>
 
@@ -28,7 +26,7 @@ export default {
 		})
 	},
 	mounted() {
-		this.requestEmbeddedMainListOfPage({ requestUri: 'siparis', responseKey: 'siparises' })
+		this.requestEmbeddedMainListOfPage({ requestUri: 'siparis?page=0&size=2&sort=adi,desc', responseKey: 'siparises' })
 	}
 }
 </script>

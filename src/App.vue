@@ -1,7 +1,7 @@
 <template>
 	<!-- App.vue -->
 	<v-app style="height: 100%">
-		<v-app-bar app clipped-left clipped-right color="primary" dark>
+		<v-app-bar app clipped-left clipped-right color="app" dark>
 			<v-app-bar-nav-icon @click="miniDrawer = !miniDrawer"></v-app-bar-nav-icon>
 
 			<div style="width: 260px">
@@ -25,8 +25,8 @@
 
 			<v-spacer></v-spacer>
 			<div style="min-width: 100px; width: 300px" v-if="oidcIsAuthenticated">
-				<router-link :to="{ path: '/profile' }" replace>
-					<v-list-item dense two-line link style="height: 64px;">
+				<router-link :to="{ path: '/profile' }" replace style="text-decoration: none;">
+					<v-list-item dense link two-line style="height: 64px;">
 						<v-list-item-avatar> <v-img src="@/assets/user.png"></v-img> </v-list-item-avatar>
 						<v-list-item-content>
 							<v-list-item-title>{{ oidcUser.name }}</v-list-item-title>

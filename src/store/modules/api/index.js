@@ -3,9 +3,8 @@ import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE
 const page = () => ({
 	metadata: null,
 	mainList: [],
-	pageSize: 0,
+	pageSize: 5,
 	totalElements: 0,
-	totalPages: 0,
 	pageNumber: 0
 })
 
@@ -66,7 +65,6 @@ export default {
 			state.page.mainList = payload.mainList
 			state.page.pageSize = payload.pageSize
 			state.page.totalElements = payload.totalElements
-			state.page.totalPages = payload.totalPages
 			state.page.pageNumber = payload.pageNumber
 		},
 		[SET_STATE_NOTIFICATIONS](state, payload) {
@@ -84,14 +82,14 @@ export default {
 			commit({ type: SET_METADATA_OF_PAGE, metadata: metadata })
 		},
 		requestContentMainListOfPage({ commit }, requestUri) {
-			this._vm.axios.get(requestUri, { loading: true }).then(
-				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data.content, pageSize: response.data.size, totalElements: response.data.totalElements, totalPages: response.data.page.totalPages, pageNumber: response.data.number }),
+			this._vm.axios.get(requestUri, { tableLoading: true }).then(
+				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data.content, pageSize: response.data.size, totalElements: response.data.totalElements, pageNumber: response.data.number }),
 				() => {}
 			)
 		},
 		requestEmbeddedMainListOfPage({ commit }, payload) {
-			this._vm.axios.get(payload.requestUri, { loading: true }).then(
-				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, totalPages: response.data.page.totalPages, pageNumber: response.data.page.number }),
+			this._vm.axios.get(payload.requestUri, { tableLoading: true }).then(
+				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number }),
 				() => {}
 			)
 		},

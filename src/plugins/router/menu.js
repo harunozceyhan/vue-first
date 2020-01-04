@@ -12,11 +12,11 @@ export default [
 				active: false,
 				children: [
 					{
-						label: 'menu.parameter.operation',
+						label: 'menu.parameter.siparis',
 						icon: 'build',
 						container: false,
-						path: 'operation',
-						tags: 'operasyon, operation'
+						path: 'siparis',
+						tags: 'siparis, order'
 					},
 					{
 						label: 'menu.parameter.makina',
@@ -26,11 +26,11 @@ export default [
 						tags: 'home, apple, armut'
 					},
 					{
-						label: 'menu.parameter.makina-grup',
+						label: 'menu.parameter.operation',
 						icon: 'device_hub',
 						container: false,
-						path: 'hello2',
-						tags: ''
+						path: 'operation',
+						tags: 'operation, operasyon'
 					}
 				]
 			},

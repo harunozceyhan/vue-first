@@ -3,6 +3,7 @@ import i18n from '@/plugins/i18n/i18n'
 
 export const successResponseHandler = response => {
 	if (response.config.loading) store.dispatch('setLoading', false)
+	if (response.config.tableLoading) store.dispatch('setTableLoading', false)
 	return response
 }
 
@@ -27,6 +28,7 @@ const getMessageOfResponseStatus = status => {
 
 export const errorResponseHandler = error => {
 	if (error.config.loading) store.dispatch('setLoading', false)
+	if (error.config.tableLoading) store.dispatch('setTableLoading', false)
 	store.dispatch('setErrorAlert', getMessageOfResponseStatus(error.response.status) + '!')
 	return Promise.reject(error)
 }

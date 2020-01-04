@@ -1,8 +1,9 @@
 const themes = {
 	light: {
-		primary: '#607D8B', //#30b1dc
-		accent: '#26A69A',
+		app: '#607D8B',
+		primary: '#30b1dc',
 		secondary: '#30b1dc',
+		accent: '#26A69A',
 		header: '#546E7A',
 		success: '#4CAF50',
 		info: '#2196F3',
@@ -10,9 +11,10 @@ const themes = {
 		error: '#FF5252'
 	},
 	dark: {
-		primary: '#303030',
-		accent: '#26A69A',
+		app: '#303030',
+		primary: '#FFE18D',
 		secondary: '#FFE18D',
+		accent: '#26A69A',
 		header: '#546E7A',
 		success: '#4CAF50',
 		info: '#2196F3',
