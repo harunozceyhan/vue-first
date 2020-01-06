@@ -1,13 +1,13 @@
 <template>
 	<div>
 		<smart-data-table :props="props" />
-		<page-detail :translate="i18n"/>
+		<page-detail :translate="i18n" />
 	</div>
 </template>
 
 <script>
-import SmartDataTable from 'smart-core-plugin/components/page/SmartDataTable'
-import PageDetail from './PageDetail'
+import SmartDataTable from '@/components/page/SmartDataTable'
+import PageDetail from '@/components/page/PageDetail'
 import { mapActions } from 'vuex'
 
 export default {
