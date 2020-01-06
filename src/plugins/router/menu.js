@@ -19,11 +19,11 @@ export default [
 						tags: 'siparis, order'
 					},
 					{
-						label: 'menu.parameter.makina',
+						label: 'menu.parameter.worker',
 						icon: 'settings',
 						container: false,
-						path: 'hello',
-						tags: 'home, apple, armut'
+						path: 'worker',
+						tags: 'worker, çalışan, sipariş'
 					},
 					{
 						label: 'menu.parameter.operation',

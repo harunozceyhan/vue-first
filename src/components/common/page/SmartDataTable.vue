@@ -2,7 +2,7 @@
 	<v-container fluid>
 		<v-card>
 			<v-card-title>
-				<span class="headline secondary--text">{{ props.title }}</span>
+				<span class="headline secondary--text">{{ $parent.$t(props.title) }}</span>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
@@ -10,17 +10,22 @@
 			</v-card-title>
 			<v-card-text>
 				<v-data-table :headers="headers" :items="getPage.mainList" :options.sync="options" :server-items-length="getPage.totalElements" :loading="getTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
-					<template v-slot:body.prepend v-if="showSearch">
-						<tr>
-							<td v-for="(column, index) in tableColumns" :key="index"><v-text-field v-if="column.searchable" dense hide-details single-line v-model="filters[column.searchKey]" type="text" label="Ara..." prepend-inner-icon="search" @input="triggerSearch"></v-text-field></td>
-							<td></td>
-						</tr>
-					</template>
-					<template v-slot:item.active="{ item }">
-						<v-checkbox class="table-checkbox" :input-value="item.active === undefined" hide-details color="accent" readonly></v-checkbox>
-					</template>
-					<template v-slot:item.delete="{ item }">
-						<v-btn fab small icon color="error" @click="sureModel = { show: true, data: item.id }"> <v-icon>delete</v-icon> </v-btn>
+					<template v-slot:body="{ items }">
+						<tbody>
+							<tr v-show="showSearch">
+								<td v-for="(column, index) in tableColumns" :key="index"><v-text-field v-if="column.searchable" dense hide-details single-line v-model="filters[column.searchKey]" type="text" label="Ara..." prepend-inner-icon="search" @input="triggerSearch"></v-text-field></td>
+								<td></td>
+							</tr>
+							<tr v-for="item in items" :key="item.id">
+								<td v-for="(column, index) in tableColumns" :key="index">
+									<span v-if="column.type === 'text'">{{ resolve(column.value, item) }}</span>
+									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value] === undefined" hide-details color="accent" readonly></v-checkbox> </span>
+								</td>
+								<td>
+									<v-btn fab small icon color="error" @click="sureModel = { show: true, data: item.id }"> <v-icon>delete</v-icon> </v-btn>
+								</td>
+							</tr>
+						</tbody>
 					</template>
 				</v-data-table>
 			</v-card-text>
@@ -57,10 +62,10 @@ export default {
 			let headers = []
 			this.tableColumns.filter(column => {
 				if (column.showInTable) {
-					headers.push({ text: column.text, align: column.type === 'text' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
+					headers.push({ text: this.$parent.$t(column.text), align: column.type === 'text' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
 				}
 			})
-			headers.push({ text: 'Sil', align: 'center', sortable: false, value: 'delete', width: '5%' })
+			headers.push({ text: this.$t('base.label.delete'), align: 'center', sortable: false, value: 'delete', width: '5%' })
 			return headers
 		}
 	},
@@ -91,6 +96,7 @@ export default {
 			return filterString
 		},
 		revertToDefaultFilter() {
+			//TODO: boolean searchable will be add. Default null.
 			this.filters = {}
 			this.props.columns.filter(column => {
 				if (column.showInTable && column.searchable) {
@@ -108,6 +114,11 @@ export default {
 		},
 		deleteItem(id) {
 			this.axios.delete(this.props.baseUrl + '/' + id, { loading: true }).then(() => this.getPageList())
+		},
+		resolve(path, obj) {
+			return path.split('.').reduce(function(prev, curr) {
+				return prev ? prev[curr] : null
+			}, obj || self)
 		}
 	},
 	mounted() {

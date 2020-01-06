@@ -4,7 +4,7 @@ import OidcCallback from '@/components/common/oidc/OidcCallback'
 import OidcCallbackError from '@/components/common/oidc/OidcCallbackError'
 import Operation from '../../components/parameters/Operation'
 import Siparis from '../../components/parameters/Siparis'
-import HelloWorld from '../../components/HelloWorld'
+import Worker from '../../components/parameters/Worker'
 
 const routes = [
 	{ path: '*', redirect: '/dashboard' },
@@ -13,7 +13,7 @@ const routes = [
 	{ path: '/oidc-callback', component: OidcCallback, name: 'oidcCallback' },
 	{ path: '/oidc-callback-error', component: OidcCallbackError, name: 'oidcCallbackError', meta: { isPublic: true } },
 	{ path: '/operation', component: Operation },
-	{ path: '/hello', component: HelloWorld },
+	{ path: '/worker', component: Worker },
 	{ path: '/siparis', component: Siparis }
 ]
 

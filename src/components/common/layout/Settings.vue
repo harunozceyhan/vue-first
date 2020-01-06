@@ -92,6 +92,7 @@ export default {
 		setLanguage() {
 			localStorage.language = this.language.id
 			this.$i18n.locale = this.language.id
+			this.$vuetify.lang.current = this.language.id
 		},
 		onLanguageChanged() {
 			this.setLanguage()

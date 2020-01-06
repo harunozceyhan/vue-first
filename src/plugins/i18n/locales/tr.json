@@ -3,6 +3,7 @@
 		"parameter": {
 			"operations": "Parametre İşlemleri",
 			"siparis": "Sipariş Parametre İşlemleri",
+			"worker": "Çalışan Parametre İşlemleri",
 			"makina": "Makina Parametre İşlemleri",
 			"makina-grup": "Makina Grup Parametre İşlemleri",
 			"operation": "Operasyon Parametre İşlemleri",

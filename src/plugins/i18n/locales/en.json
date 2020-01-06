@@ -3,6 +3,7 @@
 		"parameter": {
 			"operations": "Parameter Operations",
 			"siparis": "Order Parameter Operations",
+			"worker": "Worker Parameter Operations",
 			"makina": "Machine Parameter Operations",
 			"makina-grup": "Machine Group Parameter Operations",
 			"operation": "Operation Parameter Operations",

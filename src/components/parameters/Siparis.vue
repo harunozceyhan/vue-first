@@ -10,19 +10,31 @@ export default {
 	},
 	data: () => ({
 		props: {
-			title: 'Sipariş Listesi',
+			title: 'siparisList',
 			baseUrl: 'siparis',
 			getUrl: 'siparis/search/siparis',
 			responseKey: 'siparises',
 			columns: [
-				{ text: 'Adı', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 },
-				{ text: 'Kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 25 },
-				{ text: 'Operasyon Adı', value: 'operation.adi', searchKey: 'operationAdi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 }
+				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 },
+				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 25 },
+				{ text: 'operationName', value: 'operation.adi', searchKey: 'operationAdi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 }
 			]
 		}
 	})
 }
 </script>
+<i18n>
+tr:
+    siparisList: 'Sipariş Listesi'
+    adi: 'Adı'
+    kodu: 'Kodu'
+    operationName: 'Operasyon Adı'
+en:
+    siparisList: 'Order List'
+    adi: 'Name'
+    kodu: 'Code'
+    operationName: 'Operation List'
+</i18n>
 
 <!--
 	<v-card class="mt-6 mb-12" v-show="!dialog">
