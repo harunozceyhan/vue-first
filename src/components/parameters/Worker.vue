@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SmartDataTable from '@/components/common/page/SmartDataTable'
+import SmartDataTable from 'smart-core-plugin/components/page/SmartDataTable'
 export default {
 	components: {
 		'smart-data-table': SmartDataTable
@@ -26,7 +26,7 @@ export default {
 <i18n>
 tr:
     workerList: 'Çalışan Listesi'
-    adi: 'Adı'
+    adi: 'Adı' 
     kodu: 'Kodu'
     inHouse: 'İçeride'
     siparisAdi: 'Sipariş Adı'

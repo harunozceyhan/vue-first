@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SmartDataTable from '@/components/common/page/SmartDataTable'
+import SmartDataTable from 'smart-core-plugin/components/page/SmartDataTable'
 export default {
 	components: {
 		'smart-data-table': SmartDataTable
@@ -16,9 +16,8 @@ export default {
 			responseKey: 'operations',
 			columns: [
 				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 60 },
-				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 25 },
-				{ text: 'inHouse', value: 'inHouse', sortable: false, searchable: false, type: 'boolean', showInTable: true, width: 5 },
-				{ text: 'active', value: 'active', sortable: false, searchable: false, type: 'boolean', showInTable: true, width: 5 }
+				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 30 },
+				{ text: 'active', value: 'active', sortable: true, searchable: false, type: 'boolean', showInTable: true, width: 5 }
 			]
 		}
 	})

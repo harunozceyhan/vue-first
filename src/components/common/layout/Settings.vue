@@ -51,6 +51,25 @@
 					></v-switch>
 				</v-list-item-action>
 			</v-list-item>
+			<v-list-item
+				@click="
+					dialog = !dialog
+					setDialog()
+				"
+			>
+				<v-list-item-title>{{ $t('base.label.dialog') }}</v-list-item-title>
+				<v-list-item-action>
+					<v-switch
+						v-model="dialog"
+						class="ma-2"
+						dense
+						@click="
+							dialog = !dialog
+							setDialog()
+						"
+					></v-switch>
+				</v-list-item-action>
+			</v-list-item>
 		</v-list>
 
 		<v-footer color="accent" :absolute="true" style="bottom: 64px">
@@ -66,6 +85,7 @@ export default {
 	data: () => ({
 		darkMode: null,
 		rtl: null,
+		dialog: null,
 		language: { id: 'tr', text: 'Türkçe' },
 		languages: [
 			{ id: 'tr', text: 'Türkçe' },
@@ -76,9 +96,11 @@ export default {
 		this.language = localStorage.language === undefined ? { id: 'tr', text: 'Türkçe' } : localStorage.language === 'tr' ? { id: 'tr', text: 'Türkçe' } : { id: 'en', text: 'English' }
 		this.darkMode = localStorage.dark === undefined ? false : localStorage.dark === 'true' ? true : false
 		this.rtl = localStorage.rtl === undefined ? false : localStorage.rtl === 'true' ? true : false
+		this.dialog = localStorage.dialog === undefined ? false : localStorage.dialog === 'true' ? true : false
 		this.setTheme()
 		this.setRtl()
 		this.setLanguage()
+		this.setDialog()
 	},
 	methods: {
 		setTheme() {
@@ -93,6 +115,9 @@ export default {
 			localStorage.language = this.language.id
 			this.$i18n.locale = this.language.id
 			this.$vuetify.lang.current = this.language.id
+		},
+		setDialog() {
+			localStorage.dialog = this.dialog
 		},
 		onLanguageChanged() {
 			this.setLanguage()

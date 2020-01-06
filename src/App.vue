@@ -99,7 +99,6 @@ import Settings from './components/common/layout/Settings'
 import Alert from './components/common/layout/Alert'
 import Loading from './components/common/layout/Loading'
 import { mapGetters, mapActions } from 'vuex'
-import Jwt from '@/plugins/common/jwt'
 import menuItems from '@/plugins/router/menu'
 
 export default {
@@ -160,7 +159,7 @@ export default {
 	methods: {
 		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions']),
 		userLoaded(user) {
-			const parsedJwt = Jwt.parseJwt(user.detail.access_token)
+			const parsedJwt = this.$parseJwt(user.detail.access_token)
 			this.setServices(parsedJwt.aud)
 			this.setRoles(parsedJwt.realm_access === undefined ? [] : parsedJwt.realm_access.roles)
 			this.setPermissions(parsedJwt)

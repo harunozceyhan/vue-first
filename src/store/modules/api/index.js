@@ -1,11 +1,14 @@
-import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE } from './mutation-types'
 
 const page = () => ({
 	metadata: null,
 	mainList: [],
 	pageSize: 5,
 	totalElements: 0,
-	pageNumber: 0
+	pageNumber: 0,
+	showDetail: false,
+	detailData: null,
+	comboList: {}
 })
 
 export default {
@@ -33,6 +36,9 @@ export default {
 		},
 		getMainListOfPage: state => {
 			return state.page.mainList
+		},
+		getPageComboList: state => {
+			return state.page.comboList
 		},
 		getNotifications: state => {
 			return state.notifications
@@ -67,6 +73,15 @@ export default {
 			state.page.totalElements = payload.totalElements
 			state.page.pageNumber = payload.pageNumber
 		},
+		[SET_COMBOLIST_OF_PAGE_STATE](state, payload) {
+			state.page.comboList = payload.comboList
+		},
+		[SET_SHOW_DETAIL_STATE](state, payload) {
+			state.page.showDetail = payload.showDetail
+		},
+		[SET_DETAIL_DATA_STATE](state, payload) {
+			state.page.detailData = payload.detailData
+		},
 		[SET_STATE_NOTIFICATIONS](state, payload) {
 			state.notifications = payload.notifications
 		},
@@ -80,6 +95,18 @@ export default {
 		},
 		setMetaDataOfPage({ commit }, metadata) {
 			commit({ type: SET_METADATA_OF_PAGE, metadata: metadata })
+		},
+		setShowDetailOfPage({ commit }, showDetail) {
+			window.dispatchEvent(new Event('resize'))
+			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: showDetail })
+		},
+		setDetailDataOfPage({ commit }, detailData) {
+			commit({ type: SET_DETAIL_DATA_STATE, detailData: detailData })
+		},
+		setDetailOfPage({ commit }, payload) {
+			window.dispatchEvent(new Event('resize'))
+			commit({ type: SET_DETAIL_DATA_STATE, detailData: payload.detailData })
+			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: payload.showDetail })
 		},
 		requestContentMainListOfPage({ commit }, requestUri) {
 			this._vm.axios.get(requestUri, { tableLoading: true }).then(

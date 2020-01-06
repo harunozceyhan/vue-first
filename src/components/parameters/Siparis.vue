@@ -1,16 +1,25 @@
 <template>
-	<smart-data-table :props="props" />
+	<div>
+		<smart-data-table :props="props" />
+		<page-detail :translate="i18n"/>
+	</div>
 </template>
 
 <script>
-import SmartDataTable from '@/components/common/page/SmartDataTable'
+import SmartDataTable from 'smart-core-plugin/components/page/SmartDataTable'
+import PageDetail from './PageDetail'
+import { mapActions } from 'vuex'
+
 export default {
 	components: {
-		'smart-data-table': SmartDataTable
+		'smart-data-table': SmartDataTable,
+		'page-detail': PageDetail
 	},
 	data: () => ({
+		i18n: null,
 		props: {
 			title: 'siparisList',
+			detailTitleKey: 'adi',
 			baseUrl: 'siparis',
 			getUrl: 'siparis/search/siparis',
 			responseKey: 'siparises',
@@ -18,9 +27,17 @@ export default {
 				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 },
 				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 25 },
 				{ text: 'operationName', value: 'operation.adi', searchKey: 'operationAdi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 }
-			]
+			],
+			tabs: [{ title: 'Çalışanlar' }, { title: 'Kartlar' }]
 		}
-	})
+	}),
+	created() {
+		this.i18n = this.$i18n
+		this.setMetaDataOfPage(this.props)
+	},
+	methods: {
+		...mapActions(['setMetaDataOfPage'])
+	}
 }
 </script>
 <i18n>
