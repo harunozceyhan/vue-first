@@ -1,4 +1,5 @@
 import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE } from './mutation-types'
+import Vue from 'vue'
 
 export default {
 	state: {
@@ -9,7 +10,8 @@ export default {
 			type: 'success',
 			timeout: 5000,
 			text: ''
-		}
+		},
+		eventHub: new Vue()
 	},
 	getters: {
 		getLoading: state => {
@@ -20,6 +22,9 @@ export default {
 		},
 		getAlert: state => {
 			return state.alert
+		},
+		getEventHub: state => {
+			return state.eventHub
 		}
 	},
 	mutations: {

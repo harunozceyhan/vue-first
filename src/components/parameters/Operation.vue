@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<smart-data-table :props="props" />
+		<smart-data-table />
 		<page-detail :translate="i18n" />
 	</div>
 </template>
@@ -23,9 +23,9 @@ export default {
 			getUrl: 'operation/search/operation',
 			responseKey: 'operations',
 			columns: [
-				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 60 },
-				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 30 },
-				{ text: 'active', value: 'active', sortable: true, searchable: false, type: 'boolean', showInTable: true, width: 5 }
+				{ type: 'text', text: 'adi', value: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 60, min: 1, max: 60 },
+				{ type: 'text', text: 'kodu', value: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 30, min: 1, max: 10 },
+				{ type: 'boolean', text: 'active', value: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 5 }
 			],
 			tabs: []
 		}

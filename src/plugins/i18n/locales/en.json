@@ -44,7 +44,10 @@
 			"authentication-error": "An Error Has Ocuured While Authentication Process! Please Try Again!"
 		},
 		"message": {
-			"fillRequired": "Please Fill All Required Fields"
+			"fillRequired": "Please Fill All Required Fields",
+			"recordUpdated": "Record Successfully Updated",
+			"recordAdded": "Record Successfully Added",
+			"recordDeleted": "Record Successfully Deleted"
 		}
 	},
 	"response": {

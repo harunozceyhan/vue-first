@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<smart-data-table :props="props" />
+		<smart-data-table />
 		<page-detail :translate="i18n" />
 	</div>
 </template>
@@ -24,9 +24,9 @@ export default {
 			getUrl: 'siparis/search/siparis',
 			responseKey: 'siparises',
 			columns: [
-				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 },
-				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 25 },
-				{ text: 'operationName', value: 'operation.adi', searchKey: 'operationAdi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 35 }
+				{ type: 'text', text: 'adi', value: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 60 },
+				{ type: 'text', text: 'kodu', value: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
+				{ type: 'object', text: 'operation', value: 'operation.adi', required: true, sortable: true, searchable: true, searchKey: 'operationAdi', showInTable: true, width: 35 }
 			],
 			tabs: [{ title: 'Çalışanlar' }, { title: 'Kartlar' }]
 		}
@@ -45,12 +45,12 @@ tr:
     siparisList: 'Sipariş Listesi'
     adi: 'Adı'
     kodu: 'Kodu'
-    operationName: 'Operasyon Adı'
+    operation: 'Operasyon'
 en:
     siparisList: 'Order List'
     adi: 'Name'
     kodu: 'Code'
-    operationName: 'Operation List'
+    operation: 'Operation'
 </i18n>
 
 <!--

@@ -1,4 +1,5 @@
 import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE } from './mutation-types'
+import i18n from '@/plugins/i18n/i18n'
 
 const page = () => ({
 	metadata: null,
@@ -7,7 +8,7 @@ const page = () => ({
 	totalElements: 0,
 	pageNumber: 0,
 	showDetail: false,
-	detailData: null,
+	detailData: {},
 	comboList: {}
 })
 
@@ -80,7 +81,7 @@ export default {
 			state.page.showDetail = payload.showDetail
 		},
 		[SET_DETAIL_DATA_STATE](state, payload) {
-			state.page.detailData = payload.detailData
+			state.page.detailData = JSON.parse(JSON.stringify(payload.detailData))
 		},
 		[SET_STATE_NOTIFICATIONS](state, payload) {
 			state.notifications = payload.notifications
@@ -99,6 +100,7 @@ export default {
 		setShowDetailOfPage({ commit }, showDetail) {
 			window.dispatchEvent(new Event('resize'))
 			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: showDetail })
+			if (showDetail === false) commit({ type: SET_DETAIL_DATA_STATE, detailData: {} })
 		},
 		setDetailDataOfPage({ commit }, detailData) {
 			commit({ type: SET_DETAIL_DATA_STATE, detailData: detailData })
@@ -117,6 +119,26 @@ export default {
 		requestEmbeddedMainListOfPage({ commit }, payload) {
 			this._vm.axios.get(payload.requestUri, { tableLoading: true }).then(
 				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number }),
+				() => {}
+			)
+		},
+		requestPostMainOfPage({ commit, rootState }, payload) {
+			this._vm.axios.post(payload.requestUri, payload.data, { loading: true }).then(
+				response => {
+					commit({ type: SET_DETAIL_DATA_STATE, detailData: response.data })
+					this.dispatch('setSuccessAlert', i18n.t('base.message.recordAdded') + '!')
+					rootState.common.eventHub.$emit('refreshPageList')
+				},
+				() => {}
+			)
+		},
+		requestPutMainOfPage({ commit, rootState }, payload) {
+			this._vm.axios.put(payload.requestUri + '/' + payload.data.id, payload.data, { loading: true }).then(
+				response => {
+					commit({ type: SET_DETAIL_DATA_STATE, detailData: response.data })
+					this.dispatch('setSuccessAlert', i18n.t('base.message.recordUpdated') + '!')
+					rootState.common.eventHub.$emit('refreshPageList')
+				},
 				() => {}
 			)
 		},
