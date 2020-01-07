@@ -23,9 +23,9 @@ export default {
 			getUrl: 'operation/search/operation',
 			responseKey: 'operations',
 			columns: [
-				{ type: 'text', text: 'adi', value: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 60, min: 1, max: 60 },
+				{ type: 'text', text: 'adi', value: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 55, min: 1, max: 60 },
 				{ type: 'text', text: 'kodu', value: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 30, min: 1, max: 10 },
-				{ type: 'boolean', text: 'active', value: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 5 }
+				{ type: 'boolean', text: 'active', value: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 10 }
 			],
 			tabs: []
 		}

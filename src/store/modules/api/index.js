@@ -100,15 +100,17 @@ export default {
 		setShowDetailOfPage({ commit }, showDetail) {
 			window.dispatchEvent(new Event('resize'))
 			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: showDetail })
-			if (showDetail === false) commit({ type: SET_DETAIL_DATA_STATE, detailData: {} })
+			if (showDetail === false) this.dispatch('setDetailDataOfPage', {})
 		},
 		setDetailDataOfPage({ commit }, detailData) {
+			// TODO: Do it here: PageDetailForm TODO
 			commit({ type: SET_DETAIL_DATA_STATE, detailData: detailData })
 		},
+		// eslint-disable-next-line no-unused-vars
 		setDetailOfPage({ commit }, payload) {
 			window.dispatchEvent(new Event('resize'))
-			commit({ type: SET_DETAIL_DATA_STATE, detailData: payload.detailData })
-			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: payload.showDetail })
+			this.dispatch('setDetailDataOfPage', payload.detailData)
+			this.dispatch('setShowDetailOfPage', payload.showDetail)
 		},
 		requestContentMainListOfPage({ commit }, requestUri) {
 			this._vm.axios.get(requestUri, { tableLoading: true }).then(

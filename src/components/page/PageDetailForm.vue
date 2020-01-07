@@ -4,8 +4,9 @@
 			<v-card-text>
 				<v-container grid-list-md pb-0>
 					<v-layout row wrap>
-						<v-flex :class="'xs6 sm6 md6 lg6'"> <v-text-field v-model="data.adi" :label="translate.t('adi')" :rules="[v => !!v || $t('base.label.required')]" required outlined dense></v-text-field> </v-flex>
-						<v-flex xs6 sm6 md6 lg6> <v-text-field v-model="data.kodu" :label="translate.t('kodu')" :rules="[v => !!v || $t('base.label.required')]" required outlined dense></v-text-field> </v-flex>
+						<v-flex :class="'xs12 sm12 md12 lg12'"> <v-text-field v-model="data.adi" :label="translate.t('adi')" :rules="[v => !!v || $t('base.label.required')]" required outlined dense></v-text-field> </v-flex>
+						<v-flex :class="'xs12 sm12 md12 lg12'"> <v-text-field v-model="data.kodu" :label="translate.t('kodu')" :rules="[v => !!v || $t('base.label.required')]" required outlined dense></v-text-field> </v-flex>
+						<v-flex :class="'xs12 sm12 md12 lg12 '"> <v-checkbox v-model="data.active" class="form-checkbox" color="accent" :label="translate.t('active')" /> </v-flex>
 					</v-layout>
 				</v-container>
 			</v-card-text>
@@ -28,6 +29,8 @@ export default {
 		'getPage.detailData': {
 			handler() {
 				this.data = JSON.parse(JSON.stringify(this.getPage.detailData))
+				// TODO: Check if boolean column exists and if it is, put default true value
+				// TODO: Maybe do it in store when creating default detailData
 			},
 			deep: true
 		}
@@ -35,7 +38,6 @@ export default {
 	methods: {
 		...mapActions(['requestPostMainOfPage', 'requestPutMainOfPage']),
 		submitMainForm() {
-			this.data.active = true
 			this.data.id == undefined ? this.requestPostMainOfPage({ requestUri: this.getPage.metadata.baseUrl, data: this.data }) : this.requestPutMainOfPage({ requestUri: this.getPage.metadata.baseUrl, data: this.data })
 		}
 	},
