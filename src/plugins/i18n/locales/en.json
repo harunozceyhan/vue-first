@@ -16,6 +16,11 @@
 		"profile": "Profile Operations"
 	},
 	"base": {
+        "form": {
+			"required": "Required Field",
+			"min": "Minimum {0} Characters Required",
+			"max": "Maximum {0} Characters Allowed"
+		},
 		"label": {
 			"cancel": "Cancel",
 			"ok": "Ok",
@@ -36,7 +41,6 @@
 			"dark-mode": "Dark Mode",
 			"select-language": "Select Language",
 			"users": "Users",
-			"required": "Required Field",
 			"no-data-text": "No Data Available",
 			"online-users": "Online Users",
 			"offline-users": "Offline Users",

@@ -102,8 +102,11 @@ export default {
 			commit({ type: SET_SHOW_DETAIL_STATE, showDetail: showDetail })
 			if (showDetail === false) this.dispatch('setDetailDataOfPage', {})
 		},
-		setDetailDataOfPage({ commit }, detailData) {
-			// TODO: Do it here: PageDetailForm TODO
+		setDetailDataOfPage({ commit, state }, detailData) {
+			if (state.page.metadata != null && detailData.id == undefined)
+				state.page.metadata.columns.forEach(column => {
+					if (column.type === 'boolean') detailData[column.value] = true
+				})
 			commit({ type: SET_DETAIL_DATA_STATE, detailData: detailData })
 		},
 		// eslint-disable-next-line no-unused-vars

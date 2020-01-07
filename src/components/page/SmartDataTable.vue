@@ -1,12 +1,12 @@
 <template>
 	<v-container fluid v-if="getPage.metadata != null">
-		<v-card>
+		<v-card id="table-card">
 			<v-card-title>
 				<span class="headline secondary--text">{{ $parent.$t(getPage.metadata.title) }}</span>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
-				<v-btn class="mx-2" fab dark small color="success" @click="setDetailOfPage({ showDetail: true, detailData: {} })"> <v-icon dark>add</v-icon> </v-btn>
+				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})"> <v-icon dark>add</v-icon> </v-btn>
 			</v-card-title>
 			<v-card-text>
 				<v-data-table :headers="headers" :items="getPage.mainList" :options.sync="options" :server-items-length="getPage.totalElements" :loading="getTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
@@ -16,22 +16,13 @@
 								<td v-for="(column, index) in tableColumns" :key="index"><v-text-field v-if="column.searchable" dense hide-details single-line v-model="filters[column.searchKey]" type="text" label="Ara..." prepend-inner-icon="search" @input="triggerSearch"></v-text-field></td>
 								<td></td>
 							</tr>
-							<tr v-for="item in items" :key="item.id" @click="setDetailOfPage({ showDetail: true, detailData: item })" style="cursor: pointer">
+							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<span v-if="column.type === 'text' || column.type === 'object'">{{ resolve(column.value, item) }}</span>
-									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value]" hide-details color="accent" readonly></v-checkbox> </span>
+									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.tableValue, item) }}</span>
+									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly></v-checkbox> </span>
 								</td>
 								<td>
-									<v-btn
-										fab
-										small
-										icon
-										color="error"
-										@click="
-											sureModel = { show: true, data: item.id }
-											$event.stopPropagation()
-										"
-									>
+									<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
 										<v-icon>delete</v-icon>
 									</v-btn>
 								</td>
@@ -60,7 +51,7 @@ export default {
 		filters: {}
 	}),
 	computed: {
-		...mapGetters(['getPage', 'getTableLoading', 'getEventHub']),
+		...mapGetters(['getPage', 'getTableLoading', 'getEventHub', 'getDialog']),
 		tableColumns() {
 			return this.getPage.metadata.columns.filter(column => {
 				if (column.showInTable) {
@@ -72,7 +63,7 @@ export default {
 			let headers = []
 			this.tableColumns.filter(column => {
 				if (column.showInTable) {
-					headers.push({ text: this.$parent.$t(column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
+					headers.push({ text: this.$parent.$t(column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.tableValue, width: column.width + '%' })
 				}
 			})
 			headers.push({ text: this.$t('base.label.delete'), align: 'center', sortable: false, value: 'delete', width: '5%' })
@@ -120,7 +111,11 @@ export default {
 		},
 		getPageList() {
 			const { sortBy, sortDesc, page, itemsPerPage } = this.options
-			this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'asc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })
+			this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })
+		},
+		openDeleteModel(event, itemId) {
+			this.sureModel = { show: true, data: itemId }
+			event.stopPropagation()
 		},
 		deleteItem(id) {
 			this.axios.delete(this.getPage.metadata.baseUrl + '/' + id, { loading: true }).then(() => {
@@ -129,20 +124,27 @@ export default {
 				this.setShowDetailOfPage(false)
 			})
 		},
+		openDetailCard(item) {
+			this.setDetailOfPage({ showDetail: true, detailData: item })
+			if (!this.getDialog)
+				setTimeout(() => {
+					document.getElementById('router-view').scrollTop = document.getElementById('table-card').clientHeight
+				}, 100)
+		},
 		resolve(path, obj) {
 			return path.split('.').reduce(function(prev, curr) {
 				return prev ? prev[curr] : null
 			}, obj || self)
 		}
-    },
-    beforeDestroy() {
+	},
+	beforeDestroy() {
 		this.getEventHub.$off('refreshPageList')
 		this.getEventHub.$off('clearMainForm')
 	},
 	mounted() {
 		this.revertToDefaultFilter()
-        this.getPageList()
-        this.getEventHub.$on('refreshPageList', () => this.getPageList())
+		this.getPageList()
+		this.getEventHub.$on('refreshPageList', () => this.getPageList())
 	}
 }
 </script>

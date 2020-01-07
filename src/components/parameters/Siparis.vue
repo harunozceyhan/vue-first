@@ -24,9 +24,9 @@ export default {
 			getUrl: 'siparis/search/siparis',
 			responseKey: 'siparises',
 			columns: [
-				{ type: 'text', text: 'adi', value: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 60 },
-				{ type: 'text', text: 'kodu', value: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
-				{ type: 'object', text: 'operation', value: 'operation.adi', required: true, sortable: true, searchable: true, searchKey: 'operationAdi', showInTable: true, width: 35 }
+				{ type: 'text', text: 'adi', value: 'adi', tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 60 },
+				{ type: 'text', text: 'kodu', value: 'kodu', tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
+                { type: 'object', text: 'operation', value: 'operation', tableValue: 'operation.adi', required: true, sortable: true, searchable: true, searchKey: 'operationAdi', showInTable: true, width: 35 }
 			],
 			tabs: [{ title: 'Çalışanlar' }, { title: 'Kartlar' }]
 		}

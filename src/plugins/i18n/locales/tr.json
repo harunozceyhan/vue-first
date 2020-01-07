@@ -16,6 +16,11 @@
 		"profile": "Profil İşlemleri"
 	},
 	"base": {
+		"form": {
+			"required": "Zorunlu Alan",
+			"min": "Minimum {0} Karakter Girilmelidir",
+			"max": "En Fazla {0} Karakter Girilebilir"
+		},
 		"label": {
 			"cancel": "İptal",
 			"ok": "Tamam",
@@ -36,7 +41,6 @@
 			"dark-mode": "Karanlık Mod",
 			"select-language": "Dil Seçiniz",
 			"users": "Kullanıcılar",
-			"required": "Zorunlu Alan",
 			"no-data-text": "Hiç Kayıt Bulunamadı",
 			"online-users": "Çevrimiçi Kullanıcılar",
 			"offline-users": "Çevrimdışı Kullanıcılar",

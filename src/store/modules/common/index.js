@@ -1,10 +1,11 @@
-import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE } from './mutation-types'
+import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE, SET_DIALOG_STATE } from './mutation-types'
 import Vue from 'vue'
 
 export default {
 	state: {
 		tableLoading: false,
 		loading: false,
+		dialog: localStorage.dialog === 'true' ? true : false,
 		alert: {
 			show: false,
 			type: 'success',
@@ -23,6 +24,9 @@ export default {
 		getAlert: state => {
 			return state.alert
 		},
+		getDialog: state => {
+			return state.dialog
+		},
 		getEventHub: state => {
 			return state.eventHub
 		}
@@ -40,6 +44,9 @@ export default {
 			state.alert.timeout = payload.timeout
 			state.alert.text = payload.text
 		},
+		[SET_DIALOG_STATE](state, payload) {
+			state.dialog = payload.dialog
+		},
 		[SET_ALERT_SHOW_STATE](state, payload) {
 			state.alert.show = payload.show
 		}
@@ -53,6 +60,9 @@ export default {
 		},
 		setAlert({ commit }, alert) {
 			commit({ type: SET_ALERT_STATE, show: alert.show, alertType: alert.type, timeout: alert.timeout, text: alert.text })
+		},
+		setDialog({ commit }, dialog) {
+			commit({ type: SET_DIALOG_STATE, dialog: dialog })
 		},
 		setErrorAlert({ commit }, text) {
 			commit({ type: SET_ALERT_STATE, show: true, alertType: 'error', timeout: 7000, text: text })

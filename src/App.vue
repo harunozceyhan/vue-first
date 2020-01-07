@@ -75,7 +75,7 @@
 		</v-navigation-drawer>
 
 		<v-content style="height: 100%">
-			<router-view style="overflow-y: auto; height: 100%"></router-view>
+			<router-view style="overflow-y: auto; height: 100%" id="router-view"></router-view>
 		</v-content>
 
 		<v-navigation-drawer app v-model="settingsDrawer" temporary right :clipped="true">
