@@ -5,8 +5,8 @@
 	</div>
 </template>
 <script>
-import SmartDataTable from '@/components/page/SmartDataTable'
-import PageDetail from '@/components/page/PageDetail'
+import SmartDataTable from '@/components/common/page/SmartDataTable'
+import PageDetail from '@/components/common/page/PageDetail'
 import { mapActions } from 'vuex'
 
 export default {

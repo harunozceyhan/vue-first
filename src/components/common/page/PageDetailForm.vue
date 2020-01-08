@@ -6,9 +6,8 @@
 					<v-layout row wrap>
 						<v-flex :class="formClass" v-for="(column, columnIndex) in getPage.metadata.columns" :key="columnIndex">
 							<v-text-field v-if="column.type === 'text' || column.type === 'number'" v-model="data[column.value]" :label="translate.t(column.text)" :rules="[v => !column.required || !!v || $t('base.form.required'), v => !v || v.length <= column.max || $t('base.form.max', [column.max]), v => !v || v.length >= column.min || $t('base.form.min', [column.min])]" :required="column.required" :maxLength="column.max" outlined dense></v-text-field>
-                            <v-checkbox v-if="column.type === 'boolean'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="translate.t(column.text)" />
-                        </v-flex>
-						
+							<v-checkbox v-if="column.type === 'boolean'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="translate.t(column.text)" />
+						</v-flex>
 					</v-layout>
 				</v-container>
 			</v-card-text>
