@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<smart-data-table />
-		<page-detail :translate="i18n" />
+		<smart-data-table translate="operation" />
+		<page-detail translate="operation" />
 	</div>
 </template>
 <script>
@@ -15,7 +15,6 @@ export default {
 		'page-detail': PageDetail
 	},
 	data: () => ({
-		i18n: null,
 		props: {
 			title: 'operationList',
 			detailTitleKey: 'adi',
@@ -23,15 +22,14 @@ export default {
 			getUrl: 'operation/search/operation',
 			responseKey: 'operations',
 			columns: [
-				{ type: 'text', text: 'adi', value: 'adi', tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 55, min: 1, max: 60 },
-				{ type: 'text', text: 'kodu', value: 'kodu', tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 30, min: 1, max: 10 },
-				{ type: 'boolean', text: 'active', value: 'active', tableValue: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 10 }
+				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 55, min: 1, max: 60 },
+				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 30, min: 1, max: 10 },
+				{ type: 'boolean', formType: 'checkbox', text: 'active', value: 'active', url: null, responseKey: null, itemText: null, tableValue: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 10 }
 			],
 			tabs: []
 		}
 	}),
 	created() {
-		this.i18n = this.$i18n
 		this.setMetaDataOfPage(this.props)
 	},
 	methods: {
@@ -39,17 +37,3 @@ export default {
 	}
 }
 </script>
-<i18n>
-tr:
-    operationList: 'Operasyon Listesi'
-    adi: 'Adı'
-    kodu: 'Kodu'
-    inHouse: 'İçeride'
-    active: 'Aktif'
-en:
-    operationList: 'Operation List'
-    adi: 'Name'
-    kodu: 'Code'
-    inHouse: 'In House'
-    active: 'Active'
-</i18n>

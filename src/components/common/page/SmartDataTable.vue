@@ -2,7 +2,7 @@
 	<v-container fluid v-if="getPage.metadata != null">
 		<v-card id="table-card">
 			<v-card-title>
-				<span class="headline secondary--text">{{ $parent.$t(getPage.metadata.title) }}</span>
+				<span class="headline secondary--text">{{ $t(translate + "." + getPage.metadata.title) }}</span>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
@@ -18,8 +18,8 @@
 							</tr>
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.tableValue, item) }}</span>
-									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly></v-checkbox> </span>
+									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.itemText == null ? column.value : column.value + '.' + column.itemText, item) }}</span>
+									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value]" hide-details color="accent" readonly></v-checkbox> </span>
 								</td>
 								<td>
 									<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
@@ -41,6 +41,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
+    props: ['translate'],
 	components: {
 		'sure-model': SureModel
 	},
@@ -63,7 +64,7 @@ export default {
 			let headers = []
 			this.tableColumns.filter(column => {
 				if (column.showInTable) {
-					headers.push({ text: this.$parent.$t(column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.tableValue, width: column.width + '%' })
+					headers.push({ text: this.$t(this.translate + "." + column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
 				}
 			})
 			headers.push({ text: this.$t('base.label.delete'), align: 'center', sortable: false, value: 'delete', width: '5%' })

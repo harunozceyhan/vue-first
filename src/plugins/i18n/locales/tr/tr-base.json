@@ -19,13 +19,16 @@
 		"form": {
 			"required": "Zorunlu Alan",
 			"min": "Minimum {0} Karakter Girilmelidir",
-			"max": "En Fazla {0} Karakter Girilebilir"
+			"max": "En Fazla {0} Karakter Girilebilir",
+            "select": "Seçiniz",
+            "select-combobox": "{0} Seçiniz"
 		},
 		"label": {
 			"cancel": "İptal",
 			"ok": "Tamam",
 			"delete": "Sil",
 			"update": "Güncelle",
+			"new": "Yeni",
 			"new-record": "Yeni Kayıt",
 			"add": "Ekle",
 			"date": "Tarih",
@@ -36,7 +39,7 @@
 			"notifications": "Bildirimler",
 			"language": "Dil",
 			"rtl": "Sağdan Sola",
-			"dialog": "Dialog",
+			"dialog": "Formları Pencerede Aç",
 			"view": "Görünüm",
 			"dark-mode": "Karanlık Mod",
 			"select-language": "Dil Seçiniz",

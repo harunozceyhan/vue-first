@@ -19,13 +19,16 @@
         "form": {
 			"required": "Required Field",
 			"min": "Minimum {0} Characters Required",
-			"max": "Maximum {0} Characters Allowed"
+			"max": "Maximum {0} Characters Allowed",
+            "select": "Select",
+            "select-combobox": "Select {0}"
 		},
 		"label": {
 			"cancel": "Cancel",
 			"ok": "Ok",
 			"delete": "Delete",
 			"update": "Update",
+			"new": "New",
 			"new-record": "New Record",
 			"add": "Add",
 			"date": "Date",
@@ -36,7 +39,7 @@
 			"notifications": "Notifications",
 			"language": "Language",
 			"rtl": "Right To Left",
-			"dialog": "Dialog",
+			"dialog": "Open Forms in Dialog",
 			"view": "View",
 			"dark-mode": "Dark Mode",
 			"select-language": "Select Language",

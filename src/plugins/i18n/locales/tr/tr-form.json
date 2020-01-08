@@ -1,0 +1,23 @@
+{
+    "siparis": {
+        "siparis": "Sipariş",
+        "siparisList": "Sipariş Listesi",
+        "adi": "Adı",
+        "kodu": "Kodu",
+        "operation": "Operasyon"
+    },
+    "operation": {
+        "operation": "Operasyon",
+        "operationList": "Operasyon Listesi",
+        "adi": "Adı",
+        "kodu": "Kodu",
+        "active": "Aktif"
+    },
+    "worker": {
+        "worker": "Çalışan",
+        "workerList": "Çalışan Listesi",
+        "adi": "Adı" ,
+        "kodu": "Kodu",
+        "siparis": "Sipariş"
+    }
+}

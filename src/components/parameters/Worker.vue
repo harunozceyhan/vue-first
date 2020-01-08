@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<smart-data-table :props="props" />
-		<page-detail :translate="i18n" />
+		<smart-data-table translate="worker" />
+		<page-detail translate="worker" />
 	</div>
 </template>
 
@@ -24,9 +24,9 @@ export default {
 			getUrl: 'worker/search/worker',
 			responseKey: 'workers',
 			columns: [
-				{ text: 'adi', value: 'adi', searchKey: 'adi', sortable: true, searchable: true, type: 'text', showInTable: true, width: 40 },
-				{ text: 'kodu', value: 'kodu', searchKey: 'kodu', sortable: true, searchable: true, type: 'text', showInTable: true, width: 20 },
-				{ text: 'siparisAdi', value: 'siparis.adi', searchKey: '', sortable: true, searchable: false, type: 'text', showInTable: true, width: 35 }
+				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 60 },
+				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
+				{ type: 'object', formType: 'autocomplete', text: 'siparis', value: 'siparis', url: 'siparis', responseKey: 'siparises', itemText: 'adi', tableValue: 'siparis.adi', required: true, sortable: true, searchable: true, searchKey: 'siparisAdi', showInTable: true, width: 35 }
 			],
 			tabs: []
 		}
@@ -40,16 +40,3 @@ export default {
 	}
 }
 </script>
-<i18n>
-tr:
-    workerList: 'Çalışan Listesi'
-    adi: 'Adı' 
-    kodu: 'Kodu'
-    inHouse: 'İçeride'
-    siparisAdi: 'Sipariş Adı'
-en:
-    workerList: 'Worker List'
-    adi: 'Name'
-    kodu: 'Code'
-    siparisAdi: 'Order Name'
-</i18n>
