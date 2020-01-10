@@ -20,8 +20,8 @@
 			"required": "Zorunlu Alan",
 			"min": "Minimum {0} Karakter Girilmelidir",
 			"max": "En Fazla {0} Karakter Girilebilir",
-            "select": "Seçiniz",
-            "select-combobox": "{0} Seçiniz"
+			"select": "Seçiniz",
+			"select-combobox": "{0} Seçiniz"
 		},
 		"label": {
 			"cancel": "İptal",
@@ -47,6 +47,7 @@
 			"no-data-text": "Hiç Kayıt Bulunamadı",
 			"online-users": "Çevrimiçi Kullanıcılar",
 			"offline-users": "Çevrimdışı Kullanıcılar",
+			"no-data": "Hiç Kayıt Bulunmamaktadır",
 			"standby": "Lütfen İstek Yapılırken Beklemede Kalınız",
 			"authentication-error": "Kimlik Yetkilendirmesi Sırasında Hata Oluştu! Lütfen Tekrar Deneyiniz!"
 		},

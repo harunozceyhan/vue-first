@@ -2,7 +2,7 @@
 	<v-container fluid v-if="getPage.metadata != null">
 		<v-card id="table-card">
 			<v-card-title>
-				<span class="headline secondary--text">{{ $t(translate + "." + getPage.metadata.title) }}</span>
+				<span class="headline secondary--text">{{ $t(translate + '.' + getPage.metadata.title) }}</span>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
@@ -27,6 +27,9 @@
 									</v-btn>
 								</td>
 							</tr>
+							<tr v-if="items.length === 0">
+								<td :colspan="tableColumns.length + 1" class="text-center">{{ $t('base.label.no-data') }}...</td>
+							</tr>
 						</tbody>
 					</template>
 				</v-data-table>
@@ -41,7 +44,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
-    props: ['translate'],
+	props: ['translate'],
 	components: {
 		'sure-model': SureModel
 	},
@@ -64,7 +67,7 @@ export default {
 			let headers = []
 			this.tableColumns.filter(column => {
 				if (column.showInTable) {
-					headers.push({ text: this.$t(this.translate + "." + column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
+					headers.push({ text: this.$t(this.translate + '.' + column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
 				}
 			})
 			headers.push({ text: this.$t('base.label.delete'), align: 'center', sortable: false, value: 'delete', width: '5%' })

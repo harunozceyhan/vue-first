@@ -1,23 +1,26 @@
 {
-    "siparis": {
-        "siparis": "Order",
-        "siparisList": "Order List",
-        "adi": "Name",
-        "kodu": "Code",
-        "operation": "Operation"
-    },
-    "operation": {
-        "operation": "Operation",
-        "operationList": "Operation List",
-        "adi": "Name",
-        "kodu": "Code",
-        "active": "Active"
-    },
-    "worker": {
-        "worker": "Worker",
-        "workerList": "Worker List",
-        "adi": "Name" ,
-        "kodu": "Code",
-        "siparis": "Order"
-    }
+	"siparis": {
+		"siparis": "Order",
+		"siparisList": "Order List",
+		"adi": "Name",
+		"kodu": "Code",
+		"operation": "Operation",
+		"orderDate": "Order Date"
+	},
+	"operation": {
+		"operation": "Operation",
+		"operationList": "Operation List",
+		"adi": "Name",
+		"kodu": "Code",
+		"active": "Active",
+		"operationDate": "Operation Date"
+	},
+	"worker": {
+		"worker": "Worker",
+		"workerList": "Worker List",
+		"adi": "Name",
+		"kodu": "Code",
+		"siparis": "Order",
+		"workDate": "Work Date"
+	}
 }

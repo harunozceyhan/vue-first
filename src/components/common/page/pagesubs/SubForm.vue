@@ -18,6 +18,20 @@
 									<v-text-field v-if="column.formType === 'text'" v-model="data[column.value]" :label="$t(translate + '.' + column.text)" :rules="[v => !column.required || !!v || $t('base.form.required'), v => !v || v.length <= column.max || $t('base.form.max', [column.max]), v => !v || v.length >= column.min || $t('base.form.min', [column.min])]" :required="column.required" :maxLength="column.max" outlined dense></v-text-field>
 									<v-checkbox v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" />
 									<smart-selection v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" />
+									<v-menu v-if="column.formType === 'datepicker'" :close-on-content-click="false" v-model="data[column.value + 'Opened']" :nudge-right="40" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+										<template v-slot:activator="{ on }"> <v-text-field slot="activator" v-model="data[column.value]" :label="$t(translate + '.' + column.text)" prepend-inner-icon="event" clearable readonly :rules="[v => !column.required || !!v || $t('base.form.required')]" v-on="on" dense outlined></v-text-field> </template>
+										<v-date-picker :value="data[column.value] != undefined ? data[column.value].split('-')[2] + '-' + data[column.value].split('-')[1] + '-' + data[column.value].split('-')[0] : null" :locale="$i18n.locale" @input="onDatePickerInput(column.value, $event)" :first-day-of-week="1"></v-date-picker>
+									</v-menu>
+									<div v-if="column.formType === 'datetimepicker'">
+										<v-menu :close-on-content-click="false" v-model="data[column.value + 'Opened']" :nudge-right="40" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+											<template v-slot:activator="{ on }"> <v-text-field style="width: 49%; float: left" slot="activator" :value="data[column.value] != undefined ? data[column.value].split(' ')[0] : ''" :label="$t(translate + '.' + column.text)" prepend-inner-icon="event" clearable readonly :rules="[v => !column.required || !!v || $t('base.form.required')]" v-on="on" dense outlined></v-text-field> </template>
+											<v-date-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[0].split('-')[2] + '-' + data[column.value].split(' ')[0].split('-')[1] + '-' + data[column.value].split(' ')[0].split('-')[0] : null" :locale="$i18n.locale" @input="onDateTimeDatePickerInput(column.value, $event)" :first-day-of-week="1"></v-date-picker>
+										</v-menu>
+										<v-menu v-model="data[column.value + 'TimeOpened']" :close-on-content-click="false" :nudge-right="40" :return-value.sync="data[column.value + 'Time']" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+											<template v-slot:activator="{ on }"> <v-text-field style="width: 49%; float: left; margin-left: 2%" :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : ''" :label="$t(translate + '.' + column.text)" prepend-inner-icon="access_time" clearable readonly :rules="[v => !column.required || !!v || $t('base.form.required')]" v-on="on" dense outlined></v-text-field> </template>
+											<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
+										</v-menu>
+									</div>
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -33,7 +47,7 @@ import SmartSelection from '@/components/common/page/elements/SmartSelection'
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'sub-form',
+	name: 'sub-form',
 	props: ['translate', 'url', 'show'],
 	components: { 'smart-selection': SmartSelection },
 	data: () => ({
@@ -66,6 +80,19 @@ export default {
 		},
 		onItemChange(item) {
 			this.data[item.model] = item.val
+		},
+		onDatePickerInput(value, event) {
+			this.data[value + 'Opened'] = false
+			this.data[value] = this.$moment(new Date(event)).format('DD-MM-YYYY')
+		},
+		onDateTimeDatePickerInput(value, event) {
+			this.data[value + 'Opened'] = false
+			const timeValue = this.data[value] === undefined ? '00:00:00' : this.data[value].split(' ')[1]
+			this.data[value] = this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')
+		},
+		onTimePickerInput(value, event) {
+			this.data[value + 'TimeOpened'] = false
+			this.data[value] = this.data[value].split(' ')[0] + ' ' + event + ':00'
 		}
 	},
 	mounted() {
@@ -76,8 +103,9 @@ export default {
 			getUrl: 'operation/search/operation',
 			responseKey: 'operations',
 			columns: [
-				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 55, min: 1, max: 60 },
-				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 30, min: 1, max: 10 },
+				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 45, min: 1, max: 60 },
+				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
+				{ type: 'text', formType: 'datepicker', text: 'operationDate', value: 'operationDate', url: null, responseKey: null, itemText: null, tableValue: 'operationDate', required: false, sortable: true, searchable: false, searchKey: 'operationDate', showInTable: true, width: 20 },
 				{ type: 'boolean', formType: 'checkbox', text: 'active', value: 'active', url: null, responseKey: null, itemText: null, tableValue: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 10 }
 			],
 			tabs: []

@@ -16,12 +16,12 @@
 		"profile": "Profile Operations"
 	},
 	"base": {
-        "form": {
+		"form": {
 			"required": "Required Field",
 			"min": "Minimum {0} Characters Required",
 			"max": "Maximum {0} Characters Allowed",
-            "select": "Select",
-            "select-combobox": "Select {0}"
+			"select": "Select",
+			"select-combobox": "Select {0}"
 		},
 		"label": {
 			"cancel": "Cancel",
@@ -47,6 +47,7 @@
 			"no-data-text": "No Data Available",
 			"online-users": "Online Users",
 			"offline-users": "Offline Users",
+			"no-data": "No Results Found",
 			"standby": "Please Stand by While Request and Response",
 			"authentication-error": "An Error Has Ocuured While Authentication Process! Please Try Again!"
 		},

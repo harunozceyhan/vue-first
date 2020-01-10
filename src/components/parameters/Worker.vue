@@ -24,8 +24,9 @@ export default {
 			getUrl: 'worker/search/worker',
 			responseKey: 'workers',
 			columns: [
-				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 60 },
+				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 40 },
 				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
+				{ type: 'text', formType: 'datepicker', text: 'workDate', value: 'workDate', url: null, responseKey: null, itemText: null, tableValue: 'workDate', required: true, sortable: true, searchable: false, searchKey: 'workDate', showInTable: true, width: 20 },
 				{ type: 'object', formType: 'autocomplete', text: 'siparis', value: 'siparis', url: 'siparis', responseKey: 'siparises', itemText: 'adi', tableValue: 'siparis.adi', required: true, sortable: true, searchable: true, searchKey: 'siparisAdi', showInTable: true, width: 35 }
 			],
 			tabs: []
