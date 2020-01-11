@@ -19,7 +19,7 @@
 								</v-menu>
 								<v-menu v-model="data[column.value + 'TimeOpened']" :close-on-content-click="false" :nudge-right="40" :return-value.sync="data[column.value + 'Time']" transition="scale-transition" offset-y max-width="290px" min-width="290px">
 									<template v-slot:activator="{ on }"> <v-text-field style="width: 49%; float: left; margin-left: 2%" :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : ''" :label="$t(translate + '.' + column.text)" prepend-inner-icon="access_time" clearable readonly :rules="[v => !column.required || !!v || $t('base.form.required')]" v-on="on" dense outlined></v-text-field> </template>
-									<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
+									<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width ></v-time-picker>
 								</v-menu>
 							</div>
 						</v-flex>
@@ -43,7 +43,7 @@ export default {
 	computed: {
 		...mapGetters(['getPage', 'getEventHub']),
 		formClass() {
-			return this.getPage.metadata.columns.length < 7 ? 'xs6 sm6 md6 lg6' : 'xs6 sm6 md6 lg6'
+			return this.getPage.metadata.columns.length < 7 ? 'xs12 sm12 md12 lg12' : 'xs6 sm6 md6 lg6'
 		}
 	},
 	watch: {
@@ -68,11 +68,12 @@ export default {
 		},
 		onDateTimeDatePickerInput(value, event) {
 			this.data[value + 'Opened'] = false
-			const timeValue = this.data[value] === undefined ? '00:00:00' : this.data[value].split(' ')[1]
-			this.data[value] = this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')
+			const timeValue = this.data[value] === undefined ? '' : (this.data[value].split(' ').length === 2) ? this.data[value].split(' ')[1] : ''
+			this.data[value] = timeValue === '' ? this.$moment(new Date(event)).format('DD-MM-YYYY') : this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')      
 		},
 		onTimePickerInput(value, event) {
-			this.data[value + 'TimeOpened'] = false
+            this.data[value + 'TimeOpened'] = false
+            this.data[value] = this.data[value] === undefined ? this.$moment(new Date()).format('DD-MM-YYYY') : this.data[value]
 			this.data[value] = this.data[value].split(' ')[0] + ' ' + event + ':00'
 		}
 	},

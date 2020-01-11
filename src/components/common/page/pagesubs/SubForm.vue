@@ -87,11 +87,12 @@ export default {
 		},
 		onDateTimeDatePickerInput(value, event) {
 			this.data[value + 'Opened'] = false
-			const timeValue = this.data[value] === undefined ? '00:00:00' : this.data[value].split(' ')[1]
-			this.data[value] = this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')
+			const timeValue = this.data[value] === undefined ? '' : (this.data[value].split(' ').length === 2) ? this.data[value].split(' ')[1] : ''
+			this.data[value] = timeValue === '' ? this.$moment(new Date(event)).format('DD-MM-YYYY') : this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')      
 		},
 		onTimePickerInput(value, event) {
-			this.data[value + 'TimeOpened'] = false
+            this.data[value + 'TimeOpened'] = false
+            this.data[value] = this.data[value] === undefined ? this.$moment(new Date()).format('DD-MM-YYYY') : this.data[value]
 			this.data[value] = this.data[value].split(' ')[0] + ' ' + event + ':00'
 		}
 	},
