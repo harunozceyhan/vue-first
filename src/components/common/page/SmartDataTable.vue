@@ -13,7 +13,55 @@
 					<template v-slot:body="{ items }">
 						<tbody>
 							<tr v-show="showSearch">
-								<td v-for="(column, index) in tableColumns" :key="index"><v-text-field v-if="column.searchable" dense hide-details single-line v-model="filters[column.searchKey]" type="text" label="Ara..." prepend-inner-icon="search" @input="triggerSearch"></v-text-field></td>
+								<td v-for="(column, index) in tableColumns" :key="index">
+									<v-text-field v-if="column.searchable && column.formType === 'text'" dense hide-details single-line v-model="filters[column.searchKey]" type="text" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
+									<div v-if="column.searchable && (column.formType === 'datepicker' || column.formType === 'datetimepicker')">
+										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													style="width: 49%; float: left"
+													slot="activator"
+													v-model="filters['start' + column.searchKey]"
+													:label="$t('base.label.startDate')"
+													prepend-inner-icon="event"
+													hide-details
+													single-line
+													clearable
+													readonly
+													v-on="on"
+													dense
+													@click:clear="
+														filters['start' + column.searchKey] = ''
+														dates['start' + column.searchKey] = undefined
+													"
+												></v-text-field>
+											</template>
+											<v-date-picker v-model="dates['start' + column.searchKey]" :locale="$i18n.locale" @input="filters['start' + column.searchKey] = $moment(new Date($event)).format('DD-MM-YYYY')" :first-day-of-week="1"></v-date-picker>
+										</v-menu>
+										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													style="width: 49%; float: left; margin-left: 2%"
+													slot="activator"
+													v-model="filters['end' + column.searchKey]"
+													:label="$t('base.label.endDate')"
+													prepend-inner-icon="event"
+													hide-details
+													single-line
+													clearable
+													readonly
+													v-on="on"
+													dense
+													@click:clear="
+														filters['end' + column.searchKey] = ''
+														dates['end' + column.searchKey] = undefined
+													"
+												></v-text-field>
+											</template>
+											<v-date-picker v-model="dates['end' + column.searchKey]" :locale="$i18n.locale" @input="filters['end' + column.searchKey] = $moment(new Date($event)).format('DD-MM-YYYY')" :first-day-of-week="1"></v-date-picker>
+										</v-menu>
+									</div>
+								</td>
 								<td></td>
 							</tr>
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
@@ -52,6 +100,7 @@ export default {
 		sureModel: { show: false, data: null },
 		showSearch: false,
 		options: {},
+		dates: {},
 		filters: {}
 	}),
 	computed: {
@@ -86,6 +135,12 @@ export default {
 				this.getPageList()
 			},
 			deep: true
+		},
+		dates: {
+			handler() {
+				this.getPageList()
+			},
+			deep: true
 		}
 	},
 	methods: {
@@ -96,7 +151,7 @@ export default {
 		filterString() {
 			let filterString = ''
 			for (let key in this.filters) {
-				filterString += key + '=' + this.filters[key] + '&'
+				filterString += key + '=' + (this.filters[key] === null ? '' : this.filters[key]) + '&'
 			}
 			return filterString
 		},
@@ -105,7 +160,9 @@ export default {
 			this.filters = {}
 			this.getPage.metadata.columns.filter(column => {
 				if (column.showInTable && column.searchable) {
-					this.filters[column.searchKey] = ''
+					if (column.formType === 'text') {
+						this.filters[column.searchKey] = ''
+					}
 				}
 			})
 		},

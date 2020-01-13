@@ -35,6 +35,8 @@
 			"close": "Close",
 			"settings": "Settings",
 			"search": "Search",
+            "startDate": "Start Date",
+			"endDate": "End Date",
 			"please-wait": "Please Wait",
 			"notifications": "Notifications",
 			"language": "Language",

@@ -22,9 +22,9 @@ export default {
 			getUrl: 'operation/operation',
 			responseKey: 'operations',
 			columns: [
-				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 45, min: 1, max: 60 },
+				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 35, min: 1, max: 60 },
 				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
-				{ type: 'text', formType: 'datepicker', text: 'operationDate', value: 'operationDate', url: null, responseKey: null, itemText: null, tableValue: 'operationDate', required: false, sortable: true, searchable: true, searchKey: 'OperationDate', showInTable: true, width: 20 },
+				{ type: 'text', formType: 'datepicker', text: 'operationDate', value: 'operationDate', url: null, responseKey: null, itemText: null, tableValue: 'operationDate', required: false, sortable: true, searchable: true, searchKey: 'OperationDate', showInTable: true, width: 30 },
 				{ type: 'boolean', formType: 'checkbox', text: 'active', value: 'active', url: null, responseKey: null, itemText: null, tableValue: 'active', required: true, sortable: true, searchable: false, searchKey: null, showInTable: true, width: 10 }
 			],
 			tabs: []
