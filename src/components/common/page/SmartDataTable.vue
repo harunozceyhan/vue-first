@@ -18,47 +18,15 @@
 									<div v-if="column.searchable && (column.formType === 'datepicker' || column.formType === 'datetimepicker')">
 										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
 											<template v-slot:activator="{ on }">
-												<v-text-field
-													style="width: 49%; float: left"
-													slot="activator"
-													v-model="filters['start' + column.searchKey]"
-													:label="$t('base.label.startDate')"
-													prepend-inner-icon="event"
-													hide-details
-													single-line
-													clearable
-													readonly
-													v-on="on"
-													dense
-													@click:clear="
-														filters['start' + column.searchKey] = ''
-														dates['start' + column.searchKey] = undefined
-													"
-												></v-text-field>
+												<v-text-field style="width: 49%; float: left" slot="activator" v-model="filters['start' + column.searchKey]" :label="$t('base.label.startDate')" prepend-inner-icon="event" hide-details single-line clearable readonly v-on="on" dense @click:clear="dates['start' + column.searchKey] = null"></v-text-field>
 											</template>
-											<v-date-picker v-model="dates['start' + column.searchKey]" :locale="$i18n.locale" @input="filters['start' + column.searchKey] = $moment(new Date($event)).format('DD-MM-YYYY')" :first-day-of-week="1"></v-date-picker>
+											<v-date-picker v-model="dates['start' + column.searchKey]" :locale="$i18n.locale" :first-day-of-week="1"></v-date-picker>
 										</v-menu>
 										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
 											<template v-slot:activator="{ on }">
-												<v-text-field
-													style="width: 49%; float: left; margin-left: 2%"
-													slot="activator"
-													v-model="filters['end' + column.searchKey]"
-													:label="$t('base.label.endDate')"
-													prepend-inner-icon="event"
-													hide-details
-													single-line
-													clearable
-													readonly
-													v-on="on"
-													dense
-													@click:clear="
-														filters['end' + column.searchKey] = ''
-														dates['end' + column.searchKey] = undefined
-													"
-												></v-text-field>
+												<v-text-field style="width: 49%; float: left; margin-left: 2%" slot="activator" v-model="filters['end' + column.searchKey]" :label="$t('base.label.endDate')" prepend-inner-icon="event" hide-details single-line clearable readonly v-on="on" dense @click:clear="dates['end' + column.searchKey] = null"></v-text-field>
 											</template>
-											<v-date-picker v-model="dates['end' + column.searchKey]" :locale="$i18n.locale" @input="filters['end' + column.searchKey] = $moment(new Date($event)).format('DD-MM-YYYY')" :first-day-of-week="1"></v-date-picker>
+											<v-date-picker v-model="dates['end' + column.searchKey]" :locale="$i18n.locale" :first-day-of-week="1"></v-date-picker>
 										</v-menu>
 									</div>
 								</td>
@@ -138,6 +106,11 @@ export default {
 		},
 		dates: {
 			handler() {
+				for (var prop in this.dates) {
+					if (this.dates.hasOwnProperty(prop)) {
+						this.filters[prop] = this.dates[prop] == null ? '' : this.$moment(new Date(this.dates[prop])).format('DD-MM-YYYY')
+					}
+				}
 				this.getPageList()
 			},
 			deep: true
