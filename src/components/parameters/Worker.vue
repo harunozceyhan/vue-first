@@ -1,43 +1,26 @@
 <template>
 	<div>
-		<smart-data-table translate="worker" />
-		<page-detail translate="worker" />
+		<smart-data-table translate="worker" v-if="getMetadataOfPage != null" metadata="worker" />
+		<page-detail translate="worker" v-if="getMetadataOfPage != null" />
 	</div>
 </template>
-
 <script>
+import Vue from 'vue'
+import { mapGetters, mapActions } from 'vuex'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'
-import { mapActions } from 'vuex'
+Vue.component('smart-data-table', SmartDataTable)
+Vue.component('page-detail', PageDetail)
 
 export default {
-	components: {
-		'smart-data-table': SmartDataTable,
-		'page-detail': PageDetail
-	},
-	data: () => ({
-		i18n: null,
-		props: {
-			title: 'workerList',
-			detailTitleKey: 'adi',
-			baseUrl: 'worker',
-			getUrl: 'worker/search/worker',
-			responseKey: 'workers',
-			columns: [
-				{ type: 'text', formType: 'text', text: 'adi', value: 'adi', url: null, responseKey: null, itemText: null, tableValue: 'adi', required: true, sortable: true, searchable: true, searchKey: 'adi', showInTable: true, width: 40, min: 1, max: 40 },
-				{ type: 'text', formType: 'text', text: 'kodu', value: 'kodu', url: null, responseKey: null, itemText: null, tableValue: 'kodu', required: true, sortable: true, searchable: true, searchKey: 'kodu', showInTable: true, width: 20, min: 1, max: 10 },
-				{ type: 'text', formType: 'datepicker', text: 'workDate', value: 'workDate', url: null, responseKey: null, itemText: null, tableValue: 'workDate', required: true, sortable: true, searchable: false, searchKey: 'workDate', showInTable: true, width: 20 },
-				{ type: 'object', formType: 'autocomplete', text: 'siparis', value: 'siparis', url: 'siparis', responseKey: 'siparises', itemText: 'adi', tableValue: 'siparis.adi', required: true, sortable: true, searchable: true, searchKey: 'siparisAdi', showInTable: true, width: 35 }
-			],
-			tabs: []
-		}
-	}),
 	created() {
-		this.i18n = this.$i18n
-		this.setMetaDataOfPage(this.props)
+		this.requestMetaDataOfPage('metadata/worker')
 	},
 	methods: {
-		...mapActions(['setMetaDataOfPage'])
+		...mapActions(['requestMetaDataOfPage'])
+	},
+	computed: {
+		...mapGetters(['getMetadataOfPage'])
 	}
 }
 </script>

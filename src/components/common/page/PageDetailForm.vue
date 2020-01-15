@@ -17,10 +17,10 @@
 								</v-menu>
 								<v-menu v-model="data[column.value + 'TimeOpened']" :close-on-content-click="false" :nudge-right="40" :return-value.sync="data[column.value + 'Time']" transition="scale-transition" offset-y max-width="290px" min-width="290px">
 									<template v-slot:activator="{ on }"> <v-text-field style="width: 49%; float: left; margin-left: 2%" :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : ''" :label="$t(translate + '.' + column.text)" prepend-inner-icon="access_time" clearable readonly :rules="[v => !column.required || !!v || $t('base.form.required')]" v-on="on" dense outlined></v-text-field> </template>
-									<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width ></v-time-picker>
+									<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
 								</v-menu>
 							</div>
-							<smart-selection v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" />
+							<smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" />
 							<v-checkbox v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" />
 						</v-flex>
 					</v-layout>
@@ -31,12 +31,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import SmartSelection from '@/components/common/page/elements/SmartSelection'
+Vue.component('smart-selection', SmartSelection)
 
 export default {
 	props: ['translate'],
-	components: { 'smart-selection': SmartSelection },
 	data: () => ({
 		data: {}
 	}),
@@ -68,12 +69,12 @@ export default {
 		},
 		onDateTimeDatePickerInput(value, event) {
 			this.data[value + 'Opened'] = false
-			const timeValue = this.data[value] === undefined ? '' : (this.data[value].split(' ').length === 2) ? this.data[value].split(' ')[1] : ''
-			this.data[value] = timeValue === '' ? this.$moment(new Date(event)).format('DD-MM-YYYY') : this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')      
+			const timeValue = this.data[value] === undefined ? '' : this.data[value].split(' ').length === 2 ? this.data[value].split(' ')[1] : ''
+			this.data[value] = timeValue === '' ? this.$moment(new Date(event)).format('DD-MM-YYYY') : this.$moment(new Date(event + ' ' + timeValue)).format('DD-MM-YYYY HH:mm:ss')
 		},
 		onTimePickerInput(value, event) {
-            this.data[value + 'TimeOpened'] = false
-            this.data[value] = this.data[value] === undefined ? this.$moment(new Date()).format('DD-MM-YYYY') : this.data[value]
+			this.data[value + 'TimeOpened'] = false
+			this.data[value] = this.data[value] === undefined ? this.$moment(new Date()).format('DD-MM-YYYY') : this.data[value]
 			this.data[value] = this.data[value].split(' ')[0] + ' ' + event + ':00'
 		}
 	},

@@ -6,20 +6,23 @@
 				<v-autocomplete v-if="type === 'autocomplete'" :loading="loading" :items="items" :search-input.sync="search" @change="change" :label="$t('base.form.select-combobox', [label]) + '...'" :no-filter="true" item-value="id" :item-text="itemText" :value="value" :required="required" :rules="[v => !required || !!v || $t('base.form.required')]" outlined dense return-object></v-autocomplete>
 			</v-flex>
 			<v-flex class="xs4 sm3 md2 lg1 text-center">
-				<v-btn icon @click="showAdd = true" color="secondary"> <v-icon large>add_circle_outline</v-icon> </v-btn>
+				<v-btn icon @click="showAdd = true" color="secondary">
+					<v-icon large>add_circle_outline</v-icon>
+				</v-btn>
 			</v-flex>
 		</v-layout>
-		<sub-form :show="showAdd" :translate="translate" url="" @closeSubForm="closeSubForm" />
+		<sub-form :show="showAdd" :translate="translate" url="" @closeSubForm="closeSubForm" :sub-metadata="subMetadata" />
 	</div>
 </template>
 
 <script>
+import Vue from 'vue'
 import SubForm from '@/components/common/page/pagesubs/SubForm'
+Vue.component('sub-form', SubForm)
 
 export default {
 	name: 'smart-selection',
-	props: ['type', 'label', 'model', 'itemText', 'url', 'responseKey', 'value', 'required', 'translate'],
-	components: { 'sub-form': SubForm },
+	props: ['type', 'label', 'model', 'itemText', 'url', 'responseKey', 'value', 'required', 'translate', 'subMetadata'],
 	data: () => ({
 		items: [],
 		showAdd: false,

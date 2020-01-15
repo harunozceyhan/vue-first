@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid v-if="getPage.metadata != null">
+	<v-container fluid>
 		<v-card id="table-card">
 			<v-card-title>
 				<span class="headline secondary--text">{{ $t(translate + '.' + getPage.metadata.title) }}</span>
@@ -14,7 +14,7 @@
 						<tbody>
 							<tr v-show="showSearch">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<v-text-field v-if="column.searchable && column.formType === 'text'" dense hide-details single-line v-model="filters[column.searchKey]" type="text" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
+									<v-text-field v-if="column.searchable && (column.formType === 'text' || column.formType === 'combobox' || column.formType === 'autocomplete')" dense hide-details single-line v-model="filters[column.searchKey]" type="text" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
 									<div v-if="column.searchable && (column.formType === 'datepicker' || column.formType === 'datetimepicker')">
 										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
 											<template v-slot:activator="{ on }">
@@ -34,7 +34,7 @@
 							</tr>
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.itemText == null ? column.value : column.value + '.' + column.itemText, item) }}</span>
+									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.itemText == '' ? column.value : column.value + '.' + column.itemText, item) }}</span>
 									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value]" hide-details color="accent" readonly></v-checkbox> </span>
 								</td>
 								<td>
@@ -60,7 +60,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
-	props: ['translate'],
+	props: ['translate', 'metadata'],
 	components: {
 		'sure-model': SureModel
 	},
@@ -100,7 +100,7 @@ export default {
 		},
 		filters: {
 			handler() {
-				this.getPageList()
+				if (this.showSearch) this.getPageList()
 			},
 			deep: true
 		},
@@ -133,7 +133,7 @@ export default {
 			this.filters = {}
 			this.getPage.metadata.columns.filter(column => {
 				if (column.showInTable && column.searchable) {
-					if (column.formType === 'text') {
+					if (column.formType === 'text' || column.formType === 'combobox' || column.formType === 'autocomplete') {
 						this.filters[column.searchKey] = ''
 					}
 				}
@@ -141,11 +141,16 @@ export default {
 		},
 		toggleSearch() {
 			this.showSearch = !this.showSearch
-			if (!this.showSearch) this.revertToDefaultFilter()
+			if (!this.showSearch) {
+				this.revertToDefaultFilter()
+				this.getPageList()
+			}
 		},
 		getPageList() {
-			const { sortBy, sortDesc, page, itemsPerPage } = this.options
-			this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })
+			if (this.getPage.metadata != null && this.metadata === this.getPage.metadata.value) {
+				const { sortBy, sortDesc, page, itemsPerPage } = this.options
+				this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })
+			}
 		},
 		openDeleteModel(event, itemId) {
 			this.sureModel = { show: true, data: itemId }
@@ -177,7 +182,6 @@ export default {
 	},
 	mounted() {
 		this.revertToDefaultFilter()
-		this.getPageList()
 		this.getEventHub.$on('refreshPageList', () => this.getPageList())
 	}
 }

@@ -1,5 +1,6 @@
 import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE } from './mutation-types'
 import i18n from '@/plugins/i18n/i18n'
+import axios from 'axios'
 
 const page = () => ({
 	metadata: null,
@@ -11,6 +12,10 @@ const page = () => ({
 	detailData: {},
 	comboList: {}
 })
+
+let CancelToken = axios.CancelToken
+let source = CancelToken.source()
+let isInRequest = false
 
 export default {
 	state: {
@@ -91,6 +96,15 @@ export default {
 		}
 	},
 	actions: {
+		refreshRequestToken() {
+			if (isInRequest) {
+				source.cancel()
+				CancelToken = axios.CancelToken
+				source = CancelToken.source()
+			} else {
+				isInRequest = true
+			}
+		},
 		clearPage({ commit }) {
 			commit({ type: CLEAR_PAGE_STATE })
 		},
@@ -115,15 +129,19 @@ export default {
 			this.dispatch('setDetailDataOfPage', payload.detailData)
 			this.dispatch('setShowDetailOfPage', payload.showDetail)
 		},
-		requestContentMainListOfPage({ commit }, requestUri) {
-			this._vm.axios.get(requestUri, { tableLoading: true }).then(
-				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data.content, pageSize: response.data.size, totalElements: response.data.totalElements, pageNumber: response.data.number }),
+		requestMetaDataOfPage({ commit }, requestUri) {
+			this._vm.axios.get(requestUri, { loading: true }).then(
+				response => commit({ type: SET_METADATA_OF_PAGE, metadata: response.data }),
 				() => {}
 			)
 		},
 		requestEmbeddedMainListOfPage({ commit }, payload) {
-			this._vm.axios.get(payload.requestUri, { tableLoading: true }).then(
-				response => commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number }),
+			this.dispatch('refreshRequestToken')
+			this._vm.axios.get(payload.requestUri, { tableLoading: true, cancelToken: source.token }).then(
+				response => {
+					isInRequest = false
+					commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number })
+				},
 				() => {}
 			)
 		},
