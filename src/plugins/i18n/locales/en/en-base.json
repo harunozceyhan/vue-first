@@ -7,7 +7,8 @@
 			"makina": "Machine Parameter Operations",
 			"makina-grup": "Machine Group Parameter Operations",
 			"operation": "Operation Parameter Operations",
-			"stok": "Stock Parameter Operations"
+			"stok": "Stock Parameter Operations",
+			"card": "Card Parameter Operations"
 		},
 		"user": {
 			"operations": "User Operations",
@@ -35,7 +36,7 @@
 			"close": "Close",
 			"settings": "Settings",
 			"search": "Search",
-            "startDate": "Start Date",
+			"startDate": "Start Date",
 			"endDate": "End Date",
 			"please-wait": "Please Wait",
 			"notifications": "Notifications",
@@ -46,6 +47,7 @@
 			"dark-mode": "Dark Mode",
 			"select-language": "Select Language",
 			"users": "Users",
+			"generalInfo": "BASE INFO",
 			"no-data-text": "No Data Available",
 			"online-users": "Online Users",
 			"offline-users": "Offline Users",

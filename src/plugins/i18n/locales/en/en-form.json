@@ -22,5 +22,12 @@
 		"kodu": "Code",
 		"siparis": "Order",
 		"workDate": "Work Date"
+	},
+	"card": {
+		"card": "Card",
+		"cardList": "Card List",
+		"adi": "Name",
+		"kodu": "Code",
+		"worker": "Worker"
 	}
 }

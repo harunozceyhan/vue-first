@@ -7,7 +7,8 @@
 			"makina": "Makina Parametre İşlemleri",
 			"makina-grup": "Makina Grup Parametre İşlemleri",
 			"operation": "Operasyon Parametre İşlemleri",
-			"stok": "Stok Parametre İşlemleri"
+			"stok": "Stok Parametre İşlemleri",
+			"card": "Kart Parametre İşlemleri"
 		},
 		"user": {
 			"operations": "Kullanıcı İşlemleri",
@@ -46,6 +47,7 @@
 			"dark-mode": "Karanlık Mod",
 			"select-language": "Dil Seçiniz",
 			"users": "Kullanıcılar",
+			"generalInfo": "GENEL BİLGİLER",
 			"no-data-text": "Hiç Kayıt Bulunamadı",
 			"online-users": "Çevrimiçi Kullanıcılar",
 			"offline-users": "Çevrimdışı Kullanıcılar",

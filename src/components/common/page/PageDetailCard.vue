@@ -1,8 +1,8 @@
 <template>
 	<div :class="getPage.metadata.tabs.length === 0 ? 'not-tabbed' : ''">
 		<v-tabs v-model="tab" class="elevation-6" grow>
-			<v-tab href="#tab-0"> GENEL BİLGİLER </v-tab>
-			<v-tab v-for="(item, i) in getPage.metadata.tabs" :key="i" :href="`#tab-${i + 1}`"> {{ item.title }} </v-tab>
+			<v-tab href="#tab-0"> {{ $t('base.label.generalInfo') }} </v-tab>
+			<v-tab v-for="(item, i) in getPage.metadata.tabs" :key="i" :href="`#tab-${i + 1}`"> {{ $t(item.value + '.' + item.title) }} </v-tab>
 			<v-tabs-items v-model="tab">
 				<v-tab-item value="tab-0">
 					<page-detail-form :translate="translate" />

@@ -12,6 +12,13 @@ export default [
 				active: false,
 				children: [
 					{
+						label: 'menu.parameter.operation',
+						icon: 'device_hub',
+						container: false,
+						path: 'operation',
+						tags: 'operation, operasyon'
+					},
+					{
 						label: 'menu.parameter.siparis',
 						icon: 'build',
 						container: false,
@@ -26,11 +33,11 @@ export default [
 						tags: 'worker, çalışan, sipariş'
 					},
 					{
-						label: 'menu.parameter.operation',
+						label: 'menu.parameter.card',
 						icon: 'device_hub',
 						container: false,
-						path: 'operation',
-						tags: 'operation, operasyon'
+						path: 'card',
+						tags: 'card, kart'
 					}
 				]
 			},

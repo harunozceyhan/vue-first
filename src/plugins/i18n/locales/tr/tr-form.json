@@ -1,7 +1,7 @@
 {
 	"siparis": {
 		"siparis": "Sipariş",
-		"siparisList": "Sipariş Listesi",
+		"siparisList": "SİPARİŞ LİSTESİ",
 		"adi": "Adı",
 		"kodu": "Kodu",
 		"operation": "Operasyon",
@@ -9,7 +9,7 @@
 	},
 	"operation": {
 		"operation": "Operasyon",
-		"operationList": "Operasyon Listesi",
+		"operationList": "OPERASYON LİSTESİ",
 		"adi": "Adı",
 		"kodu": "Kodu",
 		"active": "Aktif",
@@ -17,10 +17,17 @@
 	},
 	"worker": {
 		"worker": "Çalışan",
-		"workerList": "Çalışan Listesi",
+		"workerList": "ÇALIŞAN LİSTESİ",
 		"adi": "Adı",
 		"kodu": "Kodu",
 		"siparis": "Sipariş",
 		"workDate": "Çalışma Tarihi"
+	},
+	"card": {
+		"card": "Kart",
+		"cardList": "KART LİSTESİ",
+		"adi": "Adı",
+		"kodu": "Kodu",
+		"worker": "Çalışan"
 	}
 }
