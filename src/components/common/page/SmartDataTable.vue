@@ -35,8 +35,9 @@
 							</tr>
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'float' || column.type === 'integer'">{{ resolve(column.itemText == '' ? column.value : column.value + '.' + column.itemText, item) }}</span>
-									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value]" hide-details color="accent" readonly></v-checkbox> </span>
+									<span v-if="column.type === 'text' || column.type === 'object'">{{ resolve(column.tableValue, item) }}</span>
+									<span v-if="column.type === 'float' || column.type === 'integer'">{{ resolve(column.tableValue, item) }}</span>
+									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly></v-checkbox> </span>
 								</td>
 								<td>
 									<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
@@ -85,7 +86,7 @@ export default {
 			let headers = []
 			this.tableColumns.filter(column => {
 				if (column.showInTable) {
-					headers.push({ text: this.$t(this.translate + '.' + column.text), align: column.type === 'text' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
+					headers.push({ text: this.$t(this.translate + '.' + column.text), align: column.type === 'text' || column.type === 'integer' || column.type === 'float' || column.type === 'object' ? 'left' : 'center', sortable: column.sortable, value: column.value, width: column.width + '%' })
 				}
 			})
 			headers.push({ text: this.$t('base.label.delete'), align: 'center', sortable: false, value: 'delete', width: '5%' })

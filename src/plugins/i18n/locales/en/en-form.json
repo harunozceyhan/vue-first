@@ -68,5 +68,19 @@
 		"student": "Student",
 		"lesson": "Lesson",
 		"grade": "Grade"
+	},
+	"teacherLesson": {
+		"studentLesson": "Teacher Lessons",
+		"teacherLessonList": "TEACHER LESSON LIST",
+		"teacher": "Teacher",
+		"lesson": "Lesson"
+	},
+	"classInventory": {
+		"classInventory": "Class Inventory",
+		"classInventoryList": "CLASS INVENTORY LIST",
+		"name": "Name",
+		"code": "Code",
+		"count": "Count",
+		"classroom": "Class"
 	}
 }

@@ -26,6 +26,8 @@ export default {
 	}),
 	watch: {
 		search(val) {
+			// eslint-disable-next-line no-debugger
+			debugger
 			val && this.getAutoCompleteItems(val)
 		},
 		value: {
@@ -38,7 +40,7 @@ export default {
 	methods: {
 		getAutoCompleteItems(val) {
 			this.loading = true
-			this.axios.get(this.url + '?' + this.itemText + '=' + val + '&kodu=&size=10').then(
+			this.axios.get(this.url + '?val=' + val + '&size=10').then(
 				response => {
 					this.items = response.data._embedded[this.responseKey]
 					this.loading = false

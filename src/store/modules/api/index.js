@@ -2,6 +2,16 @@ import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE
 import i18n from '@/plugins/i18n/i18n'
 import axios from 'axios'
 
+const tabPage = () => ({
+	mainList: [],
+	pageSize: 5,
+	totalElements: 0,
+	pageNumber: 0,
+	showDetail: false,
+	detailData: {},
+	comboList: {}
+})
+
 const page = () => ({
 	metadata: null,
 	mainList: [],
@@ -10,7 +20,8 @@ const page = () => ({
 	pageNumber: 0,
 	showDetail: false,
 	detailData: {},
-	comboList: {}
+	comboList: {},
+	tabPageList: []
 })
 
 let CancelToken = axios.CancelToken
@@ -71,7 +82,11 @@ export default {
 			})
 		},
 		[SET_METADATA_OF_PAGE](state, payload) {
+			const tabPageInitial = tabPage()
 			state.page.metadata = payload.metadata
+			payload.metadata.tabs.forEach(() => {
+				state.page.tabPageList.push(tabPageInitial)
+			})
 		},
 		[SET_MAINLIST_OF_PAGE](state, payload) {
 			state.page.mainList = payload.mainList

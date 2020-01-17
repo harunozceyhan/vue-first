@@ -68,5 +68,19 @@
 		"student": "Öğrenci",
 		"lesson": "Ders",
 		"grade": "Puan"
+	},
+	"teacherLesson": {
+		"studentLesson": "Öğretmen Dersleri",
+		"teacherLessonList": "ÖĞRETMEN DERS LİSTESİ",
+		"teacher": "Öğretmen",
+		"lesson": "Ders"
+	},
+	"classInventory": {
+		"classInventory": "Sınıf Envanteri",
+		"classInventoryList": "SINIF ENVANTER LİSTESİ",
+		"name": "Adı",
+		"code": "Kodu",
+		"count": "Sayısı",
+		"classroom": "Sınıf"
 	}
 }

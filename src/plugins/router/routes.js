@@ -1,5 +1,5 @@
-import Dashboard from '@/components/common/pages/Dashboard'
-import Profile from '@/components/common/pages/Profile'
+import Dashboard from '@/components/common/layout/pages/Dashboard'
+import Profile from '@/components/common/layout/pages/Profile'
 import OidcCallback from '@/components/common/oidc/OidcCallback'
 import OidcCallbackError from '@/components/common/oidc/OidcCallbackError'
 import Operation from '../../components/parameters/Operation'

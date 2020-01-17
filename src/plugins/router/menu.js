@@ -40,79 +40,42 @@ export default [
 						tags: 'card, kart'
 					}
 				]
-			},
-			{
-				label: 'menu.parameter.student',
-				icon: 'mdi-home',
-				container: true,
-				active: false,
-				children: [
-					{
-						label: 'menu.student.classroom',
-						icon: 'class',
-						container: false,
-						path: 'classroom',
-						tags: ''
-					},
-					{
-						label: 'menu.student.lesson',
-						icon: 'subtitles',
-						container: false,
-						path: 'lesson',
-						tags: ''
-					},
-					{
-						label: 'menu.student.teacher',
-						icon: 'contactless',
-						container: false,
-						path: 'teacher',
-						tags: ''
-					},
-					{
-						label: 'menu.student.student',
-						icon: 'person_pin',
-						container: false,
-						path: 'student',
-						tags: ''
-					}
-				]
 			}
 		]
 	},
 	{
-		label: 'menu.user.operations',
-		icon: 'voice_chat',
-		color: 'warning',
+		label: 'menu.parameter.student',
+		icon: 'mdi-home',
 		container: true,
+		active: false,
+		color: 'warning',
 		children: [
 			{
-				label: 'menu.parameter.siparis',
-				icon: 'chat',
-				container: true,
-				active: false,
-				children: [
-					{
-						label: 'menu.parameter.makina',
-						icon: 'settings',
-						container: false,
-						path: 'hello',
-						tags: ''
-					},
-					{
-						label: 'menu.parameter.makina-grup',
-						icon: 'device_hub',
-						container: false,
-						path: 'hello2',
-						tags: ''
-					}
-				]
+				label: 'menu.student.classroom',
+				icon: 'class',
+				container: false,
+				path: 'classroom',
+				tags: ''
 			},
 			{
-				label: 'menu.user.create',
-				icon: 'add',
+				label: 'menu.student.lesson',
+				icon: 'subtitles',
 				container: false,
-				active: false,
-				path: 'hello2',
+				path: 'lesson',
+				tags: ''
+			},
+			{
+				label: 'menu.student.teacher',
+				icon: 'contactless',
+				container: false,
+				path: 'teacher',
+				tags: ''
+			},
+			{
+				label: 'menu.student.student',
+				icon: 'person_pin',
+				container: false,
+				path: 'student',
 				tags: ''
 			}
 		]
