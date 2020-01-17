@@ -29,5 +29,44 @@
 		"adi": "Name",
 		"kodu": "Code",
 		"worker": "Worker"
+	},
+	"classroom": {
+		"classroom": "Class",
+		"classroomList": "CLASS LIST",
+		"name": "Name",
+		"code": "Code",
+		"level": "Level"
+	},
+	"lesson": {
+		"lesson": "Lesson",
+		"lessonList": "LESSON LIST",
+		"name": "Name",
+		"code": "Code"
+	},
+	"teacher": {
+		"teacher": "Teacher",
+		"teacherList": "TEACHER LIST",
+		"name": "Name",
+		"surname": "Surname",
+		"code": "Code"
+	},
+	"student": {
+		"student": "Student",
+		"studentList": "STUDENT LIST",
+		"studentNumber": "Student Number",
+		"name": "First Name",
+		"surname": "Last name",
+		"grade": "Grade",
+		"classroom": "Class",
+		"entryDate": "Entry Date",
+		"gender": "Gender",
+		"active": "Active"
+	},
+	"studentLesson": {
+		"studentLesson": "Student Lessons",
+		"studentLessonList": "STUDENT LESSON LIST",
+		"student": "Student",
+		"lesson": "Lesson",
+		"grade": "Grade"
 	}
 }

@@ -14,7 +14,8 @@
 						<tbody>
 							<tr v-show="showSearch">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<v-text-field v-if="column.searchable && (column.formType === 'text' || column.formType === 'combobox' || column.formType === 'autocomplete')" dense hide-details single-line v-model="filters[column.searchKey]" type="text" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
+									<v-text-field v-if="column.searchable && ((column.formType === 'text' && column.type === 'text') || column.formType === 'combobox' || column.formType === 'autocomplete')" dense hide-details single-line v-model="filters[column.searchKey]" type="text" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
+									<v-text-field v-if="column.searchable && column.formType === 'text' && (column.type === 'integer' || column.type === 'float')" type="number" dense hide-details single-line v-model="filters[column.searchKey]" :label="$t('base.label.search') + '...'" prepend-inner-icon="search" @input="triggerSearch"></v-text-field>
 									<div v-if="column.searchable && (column.formType === 'datepicker' || column.formType === 'datetimepicker')">
 										<v-menu :close-on-content-click="true" :nudge-right="40" transition="scale-transition" max-width="290px" min-width="290px">
 											<template v-slot:activator="{ on }">
@@ -34,7 +35,7 @@
 							</tr>
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
-									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'number'">{{ resolve(column.itemText == '' ? column.value : column.value + '.' + column.itemText, item) }}</span>
+									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'float' || column.type === 'integer'">{{ resolve(column.itemText == '' ? column.value : column.value + '.' + column.itemText, item) }}</span>
 									<span v-if="column.type === 'boolean'"> <v-checkbox class="table-checkbox" :input-value="item[column.value]" hide-details color="accent" readonly></v-checkbox> </span>
 								</td>
 								<td>

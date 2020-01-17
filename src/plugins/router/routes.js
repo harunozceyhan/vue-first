@@ -6,6 +6,10 @@ import Operation from '../../components/parameters/Operation'
 import Siparis from '../../components/parameters/Siparis'
 import Worker from '../../components/parameters/Worker'
 import Card from '../../components/parameters/Card'
+import Classroom from '../../components/student/Classroom'
+import Lessson from '../../components/student/Lesson'
+import Teacher from '../../components/student/Teacher'
+import Student from '../../components/student/Student'
 
 const routes = [
 	{ path: '*', redirect: '/dashboard' },
@@ -16,7 +20,11 @@ const routes = [
 	{ path: '/operation', component: Operation },
 	{ path: '/worker', component: Worker },
 	{ path: '/siparis', component: Siparis },
-	{ path: '/card', component: Card }
+	{ path: '/card', component: Card },
+	{ path: '/classroom', component: Classroom },
+	{ path: '/lesson', component: Lessson },
+	{ path: '/teacher', component: Teacher },
+	{ path: '/student', component: Student }
 ]
 
 export default routes

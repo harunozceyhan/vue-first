@@ -7,8 +7,14 @@
 			"makina": "Makina Parametre İşlemleri",
 			"makina-grup": "Makina Grup Parametre İşlemleri",
 			"operation": "Operasyon Parametre İşlemleri",
-			"stok": "Stok Parametre İşlemleri",
+			"student": "Öğrenci İşlemleri",
 			"card": "Kart Parametre İşlemleri"
+		},
+		"student": {
+			"classroom": "Sınıf İşlemleri",
+			"lesson": "Ders İşlemleri",
+			"student": "Öğrenci İşlemleri",
+			"teacher": "Öğretmen İşlemleri"
 		},
 		"user": {
 			"operations": "Kullanıcı İşlemleri",
@@ -20,7 +26,9 @@
 		"form": {
 			"required": "Zorunlu Alan",
 			"min": "Minimum {0} Karakter Girilmelidir",
+			"min-int": "{0} Değerinden Düşük Değer Girilemez",
 			"max": "En Fazla {0} Karakter Girilebilir",
+			"max-int": "{0} Değeri Aşılmamalıdır",
 			"select": "Seçiniz",
 			"select-combobox": "{0} Seçiniz"
 		},

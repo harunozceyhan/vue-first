@@ -7,8 +7,14 @@
 			"makina": "Machine Parameter Operations",
 			"makina-grup": "Machine Group Parameter Operations",
 			"operation": "Operation Parameter Operations",
-			"stok": "Stock Parameter Operations",
+			"student": "Student Operations",
 			"card": "Card Parameter Operations"
+		},
+		"student": {
+			"classroom": "Class Operations",
+			"lesson": "Lesson Operations",
+			"student": "Student Operations",
+			"teacher": "Teacher Operations"
 		},
 		"user": {
 			"operations": "User Operations",
@@ -20,7 +26,9 @@
 		"form": {
 			"required": "Required Field",
 			"min": "Minimum {0} Characters Required",
+			"min-int": "Can't Enter Value Below {0}",
 			"max": "Maximum {0} Characters Allowed",
+			"max-int": "{0} Value Should Not Be Exceeded",
 			"select": "Select",
 			"select-combobox": "Select {0}"
 		},

@@ -42,16 +42,37 @@ export default [
 				]
 			},
 			{
-				label: 'menu.parameter.stok',
+				label: 'menu.parameter.student',
 				icon: 'mdi-home',
 				container: true,
 				active: false,
 				children: [
 					{
-						label: 'menu.user.create',
-						icon: 'add',
+						label: 'menu.student.classroom',
+						icon: 'class',
 						container: false,
-						path: 'hello2',
+						path: 'classroom',
+						tags: ''
+					},
+					{
+						label: 'menu.student.lesson',
+						icon: 'subtitles',
+						container: false,
+						path: 'lesson',
+						tags: ''
+					},
+					{
+						label: 'menu.student.teacher',
+						icon: 'contactless',
+						container: false,
+						path: 'teacher',
+						tags: ''
+					},
+					{
+						label: 'menu.student.student',
+						icon: 'person_pin',
+						container: false,
+						path: 'student',
 						tags: ''
 					}
 				]

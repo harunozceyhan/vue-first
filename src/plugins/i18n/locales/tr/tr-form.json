@@ -29,5 +29,44 @@
 		"adi": "Adı",
 		"kodu": "Kodu",
 		"worker": "Çalışan"
+	},
+	"classroom": {
+		"classroom": "Sınıf",
+		"classroomList": "SINIF LİSTESİ",
+		"name": "Adı",
+		"code": "Kodu",
+		"level": "Derece"
+	},
+	"lesson": {
+		"lesson": "Ders",
+		"lessonList": "DERS LİSTESİ",
+		"name": "Adı",
+		"code": "Kodu"
+	},
+	"teacher": {
+		"teacher": "Öğretmen",
+		"teacherList": "ÖĞRETMEN LİSTESİ",
+		"name": "Adı",
+		"surname": "Soyadı",
+		"code": "Kodu"
+	},
+	"student": {
+		"student": "Öğrenci",
+		"studentList": "ÖĞRENCİ LİSTESİ",
+		"studentNumber": "Öğrenci Numarası",
+		"name": "Adı",
+		"surname": "Soyadı",
+		"grade": "Puan",
+		"classroom": "Sınıf",
+		"entryDate": "Giriş Tarihi",
+		"gender": "Cinsiyet",
+		"active": "Aktif"
+	},
+	"studentLesson": {
+		"studentLesson": "Öğrenci Dersleri",
+		"studentLessonList": "ÖĞRENCİ DERS LİSTESİ",
+		"student": "Öğrenci",
+		"lesson": "Ders",
+		"grade": "Puan"
 	}
 }
