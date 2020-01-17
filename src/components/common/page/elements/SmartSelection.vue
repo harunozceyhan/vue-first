@@ -26,8 +26,6 @@ export default {
 	}),
 	watch: {
 		search(val) {
-			// eslint-disable-next-line no-debugger
-			debugger
 			val && this.getAutoCompleteItems(val)
 		},
 		value: {

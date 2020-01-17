@@ -2,14 +2,13 @@
 	<v-container fluid>
 		<v-card id="table-card">
 			<v-card-title>
-				<span class="headline secondary--text">{{ $t(translate + '.' + getPage.metadata.title) }}</span>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})"> <v-icon dark>add</v-icon> </v-btn>
 			</v-card-title>
 			<v-card-text>
-				<v-data-table :headers="headers" :items="getPage.mainList" :options.sync="options" :server-items-length="getPage.totalElements" :loading="getTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
+				<v-data-table :headers="headers" :items="getTabPage(tabIndex).mainList" :options.sync="options" :server-items-length="getTabPage(tabIndex).totalElements" :loading="getTabTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
 					<template v-slot:body="{ items }">
 						<tbody>
 							<tr v-show="showSearch">
@@ -36,7 +35,7 @@
 							<tr v-for="item in items" :key="item.id" @click="openDetailCard(item)" style="cursor: pointer">
 								<td v-for="(column, index) in tableColumns" :key="index">
 									<span v-if="column.type === 'text' || column.type === 'object' || column.type === 'float' || column.type === 'integer'">{{ resolve(column.tableValue, item) }}</span>
-									<span v-if="column.type === 'boolean'"> <v-switch inset class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly/> </span>
+									<span v-if="column.type === 'boolean'"> <v-switch inset class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly /> </span>
 								</td>
 								<td>
 									<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
@@ -61,7 +60,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
-	props: ['translate', 'metadata'],
+	props: ['translate', 'metadata', 'tabIndex'],
 	components: {
 		'sure-model': SureModel
 	},
@@ -73,10 +72,10 @@ export default {
 		filters: {}
 	}),
 	computed: {
-		...mapGetters(['getPage', 'getTableLoading', 'getEventHub', 'getDialog']),
+		...mapGetters(['getPage', 'getTabPage', 'getTabMetadataOfPage', 'getTabTableLoading', 'getEventHub', 'getDialog']),
 		tableColumns() {
-			return this.getPage.metadata.columns.filter(column => {
-				if (column.showInTable) {
+			return this.getTabMetadataOfPage(this.tabIndex).columns.filter(column => {
+				if (column.showInTable && column.metadata != this.getPage.metadata.value) {
 					return column
 				}
 			})
@@ -84,7 +83,7 @@ export default {
 		headers() {
 			let headers = []
 			this.tableColumns.filter(column => {
-				if (column.showInTable) {
+				if (column.showInTable && column.metadata != this.getPage.metadata.value) {
 					headers.push({ text: this.$t(this.translate + '.' + column.text), align: 'left', sortable: column.sortable, value: column.value, width: column.width + '%' })
 				}
 			})
@@ -93,6 +92,9 @@ export default {
 		}
 	},
 	watch: {
+		'getPage.detailData.id': function() {
+			this.getPageList()
+		},
 		options: {
 			handler() {
 				this.getPageList()
@@ -118,7 +120,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['requestEmbeddedMainListOfPage', 'setDetailOfPage', 'setShowDetailOfPage', 'setSuccessAlert']),
+		...mapActions(['requestEmbeddedTabListOfPage', 'setSuccessAlert']),
 		triggerSearch() {
 			this.getPageList()
 		},
@@ -132,7 +134,7 @@ export default {
 		revertToDefaultFilter() {
 			//TODO: boolean searchable will be add. Default null.
 			this.filters = {}
-			this.getPage.metadata.columns.filter(column => {
+			this.getTabMetadataOfPage(this.tabIndex).columns.filter(column => {
 				if (column.showInTable && column.searchable) {
 					if (column.formType === 'text' || column.formType === 'combobox' || column.formType === 'autocomplete') {
 						this.filters[column.searchKey] = ''
@@ -148,9 +150,9 @@ export default {
 			}
 		},
 		getPageList() {
-			if (this.getPage.metadata != null && this.metadata === this.getPage.metadata.value) {
+			if (this.getTabMetadataOfPage(this.tabIndex) != null && this.metadata === this.getTabMetadataOfPage(this.tabIndex).value) {
 				const { sortBy, sortDesc, page, itemsPerPage } = this.options
-				this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })
+				this.requestEmbeddedTabListOfPage({ index: this.tabIndex, requestUri: this.getTabMetadataOfPage(this.tabIndex).baseUrl + '/search/' + this.getPage.metadata.value + '?id=' + this.getPage.detailData.id + '&' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getTabMetadataOfPage(this.tabIndex).responseKey })
 			}
 		},
 		openDeleteModel(event, itemId) {
@@ -158,19 +160,13 @@ export default {
 			event.stopPropagation()
 		},
 		deleteItem(id) {
-			this.axios.delete(this.getPage.metadata.baseUrl + '/' + id, { loading: true }).then(() => {
+			this.axios.delete(this.getTabMetadataOfPage(this.tabIndex).baseUrl + '/' + id, { loading: true }).then(() => {
 				this.setSuccessAlert(this.$t('base.message.recordDeleted') + '!')
 				this.getPageList()
-				this.setShowDetailOfPage(false)
 			})
 		},
-		openDetailCard(item) {
-			this.setDetailOfPage({ showDetail: true, detailData: item })
-			if (!this.getDialog)
-				setTimeout(() => {
-					document.getElementById('router-view').scrollTop = document.getElementById('table-card').clientHeight
-				}, 100)
-		},
+		// eslint-disable-next-line no-unused-vars
+		openDetailCard(item) {},
 		resolve(path, obj) {
 			return path.split('.').reduce(function(prev, curr) {
 				return prev ? prev[curr] : null

@@ -7,15 +7,20 @@
 				<v-tab-item value="tab-0">
 					<page-detail-form :translate="translate" />
 				</v-tab-item>
-				<v-tab-item v-for="(item, i) in getPage.metadata.tabs" :key="i" :value="'tab-' + (i + 1)"> </v-tab-item>
+				<v-tab-item v-for="(item, i) in getPage.metadata.tabs" :key="i" :value="'tab-' + (i + 1)">
+                    <smart-tab-data-table :translate="item.value" :metadata="item.value" :tab-index="i" />
+                </v-tab-item>
 			</v-tabs-items>
 		</v-tabs>
 	</div>
 </template>
 
 <script>
-import SmartForm from './PageDetailForm'
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import SmartForm from './PageDetailForm'
+import SmartTabDataTable from '@/components/common/page/pagesubs/SmartTabDataTable'
+Vue.component('smart-tab-data-table', SmartTabDataTable)
 
 export default {
 	props: ['translate'],

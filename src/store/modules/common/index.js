@@ -1,8 +1,9 @@
-import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE, SET_DIALOG_STATE } from './mutation-types'
+import { SET_LOADING_STATE, SET_ALERT_STATE, SET_ALERT_SHOW_STATE, SET_TABLE_LOADING_STATE, SET_DIALOG_STATE, SET_TAB_TABLE_LOADING_STATE } from './mutation-types'
 import Vue from 'vue'
 
 export default {
 	state: {
+		tabTableLoading: false,
 		tableLoading: false,
 		loading: false,
 		dialog: localStorage.dialog === 'true' ? true : false,
@@ -20,6 +21,9 @@ export default {
 		},
 		getTableLoading: state => {
 			return state.tableLoading
+        },
+        getTabTableLoading: state => {
+			return state.tabTableLoading
 		},
 		getAlert: state => {
 			return state.alert
@@ -37,6 +41,9 @@ export default {
 		},
 		[SET_TABLE_LOADING_STATE](state, payload) {
 			state.tableLoading = payload.tableLoading
+		},
+		[SET_TAB_TABLE_LOADING_STATE](state, payload) {
+			state.tabTableLoading = payload.tabTableLoading
 		},
 		[SET_ALERT_STATE](state, payload) {
 			state.alert.show = payload.show
@@ -57,6 +64,9 @@ export default {
 		},
 		setTableLoading({ commit }, tableLoading) {
 			commit({ type: SET_TABLE_LOADING_STATE, tableLoading: tableLoading })
+		},
+		setTabTableLoading({ commit }, tabTableLoading) {
+			commit({ type: SET_TAB_TABLE_LOADING_STATE, tabTableLoading: tabTableLoading })
 		},
 		setAlert({ commit }, alert) {
 			commit({ type: SET_ALERT_STATE, show: alert.show, alertType: alert.type, timeout: alert.timeout, text: alert.text })

@@ -1,4 +1,4 @@
-import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE, SET_TAB_MAINLIST_OF_PAGE } from './mutation-types'
 import i18n from '@/plugins/i18n/i18n'
 import axios from 'axios'
 
@@ -47,9 +47,15 @@ export default {
 	getters: {
 		getPage: state => {
 			return state.page
+        },
+        getTabPage: (state) => (index) => {
+			return state.page.tabPageList[index]
 		},
 		getMetadataOfPage: state => {
 			return state.page.metadata
+        },
+        getTabMetadataOfPage: (state) => (index) => {
+			return state.page.metadata.tabs[index]
 		},
 		getMainListOfPage: state => {
 			return state.page.mainList
@@ -93,6 +99,12 @@ export default {
 			state.page.pageSize = payload.pageSize
 			state.page.totalElements = payload.totalElements
 			state.page.pageNumber = payload.pageNumber
+        },
+        [SET_TAB_MAINLIST_OF_PAGE](state, payload) {
+			state.page.tabPageList[payload.index].mainList = payload.mainList
+			state.page.tabPageList[payload.index].pageSize = payload.pageSize
+			state.page.tabPageList[payload.index].totalElements = payload.totalElements
+			state.page.tabPageList[payload.index].pageNumber = payload.pageNumber
 		},
 		[SET_COMBOLIST_OF_PAGE_STATE](state, payload) {
 			state.page.comboList = payload.comboList
@@ -156,6 +168,16 @@ export default {
 				response => {
 					isInRequest = false
 					commit({ type: SET_MAINLIST_OF_PAGE, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number })
+				},
+				() => {}
+			)
+        },
+        requestEmbeddedTabListOfPage({ commit }, payload) {
+			this.dispatch('refreshRequestToken')
+			this._vm.axios.get(payload.requestUri, { tabTableLoading: true, cancelToken: source.token }).then(
+				response => {
+					isInRequest = false
+					commit({ type: SET_TAB_MAINLIST_OF_PAGE, index: payload.index, mainList: response.data._embedded[payload.responseKey], pageSize: response.data.page.size, totalElements: response.data.page.totalElements, pageNumber: response.data.page.number })
 				},
 				() => {}
 			)
