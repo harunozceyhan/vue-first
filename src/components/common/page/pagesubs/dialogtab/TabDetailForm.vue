@@ -7,14 +7,14 @@
 					<v-toolbar-title>{{ $t('base.label.new') + ' ' + $t(translate + '.' + translate) }}</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-btn icon dark class="mx-1" @click="submit"> <v-icon>save</v-icon> </v-btn>
-					<v-btn icon dark class="mx-1" @click="setDefaultData"> <v-icon>format_clear</v-icon> </v-btn>
+					<v-btn icon dark class="mx-1" @click="data = JSON.parse(JSON.stringify(getTabPage(tabIndex).detailData))"> <v-icon>format_clear</v-icon> </v-btn>
 					<v-btn icon dark @click="$emit('closeSubForm', false)"> <v-icon>close</v-icon> </v-btn>
 				</v-toolbar>
 				<v-form ref="form" lazy-validation>
 					<v-card-text>
 						<v-container grid-list-md pb-0>
 							<v-layout row wrap>
-								<v-flex :class="formClass" v-for="(column, columnIndex) in metadata.columns" :key="columnIndex">
+								<v-flex :class="formClass" v-for="(column, columnIndex) in columns" :key="columnIndex">
 									<v-text-field v-if="column.formType === 'text' && column.type === 'float'" type="number" v-model.number="data[column.value]" :label="$t(translate + '.' + column.text)" :rules="[v => !column.required || !!v || $t('base.form.required')]" :required="column.required" outlined dense></v-text-field>
 									<v-text-field v-if="column.formType === 'text' && column.type === 'integer'" type="number" v-model.number="data[column.value]" :label="$t(translate + '.' + column.text)" :rules="[v => !column.required || !!v || $t('base.form.required'), v => !v || v <= 2147483647 || $t('base.form.max-int', [2147483647]), v => !v || v >= -2147483647 || $t('base.form.min-int', [2147483647])]" step="1" pattern="[0 - 9]" :required="column.required" outlined dense></v-text-field>
 									<v-text-field v-if="column.formType === 'text' && column.type === 'text'" v-model="data[column.value]" :label="$t(translate + '.' + column.text)" :rules="[v => !column.required || !!v || $t('base.form.required'), v => !v || v.length <= column.max || $t('base.form.max', [column.max]), v => !v || v.length >= column.min || $t('base.form.min', [column.min])]" :required="column.required" :maxLength="column.max" outlined dense></v-text-field>
@@ -33,7 +33,7 @@
 										</v-menu>
 									</div>
 									<smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" />
-                                    <v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px"/>
+									<v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px" />
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -47,56 +47,67 @@
 <script>
 import Vue from 'vue'
 import SmartSelection from '@/components/common/page/elements/SmartSelection'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 Vue.component('smart-selection', SmartSelection)
 
 export default {
 	name: 'sub-form',
-	props: ['translate', 'show', 'subMetadata'],
+	props: ['translate', 'show', 'subMetadata', 'tabIndex'],
 	data: () => ({
 		data: {},
 		metadata: null
 	}),
 	computed: {
+		...mapGetters(['getPage', 'getTabPage', 'getTabMetadataOfPage']),
+		columns() {
+			return this.metadata.columns.filter(column => {
+				if (column.metadata != this.getPage.metadata.value) {
+					return column
+				}
+			})
+		},
 		formClass() {
-			return this.metadata != null ? (this.metadata.columns.length < 7 ? 'xs12 sm12 md12 lg12' : 'xs6 sm6 md6 lg6') : 'xs12 sm12 md12 lg12'
+			return this.metadata != null ? (this.columns.length < 7 ? 'xs12 sm12 md12 lg12' : 'xs6 sm6 md6 lg6') : 'xs12 sm12 md12 lg12'
+		},
+		detailData() {
+			return this.getTabPage(this.tabIndex).detailData
 		}
 	},
 	watch: {
-		metadata: {
+		detailData: {
 			handler() {
-				this.setDefaultData()
+				this.data = JSON.parse(JSON.stringify(this.getTabPage(this.tabIndex).detailData))
+				if (this.data.id === undefined) {
+					this.data[this.getPage.metadata.value] = this.getPage.detailData
+				}
 			},
 			deep: true
 		}
 	},
 	mounted() {
-		if (this.subMetadata != undefined) {
-			this.axios.get('metadata/' + this.subMetadata, { loading: true }).then(
-				response => (this.metadata = response.data),
-				() => {}
-			)
-		}
+		this.metadata = this.getTabMetadataOfPage(this.tabIndex)
 	},
 	methods: {
 		...mapActions(['setSuccessAlert']),
-		setDefaultData() {
-			if (this.metadata != null) {
-				this.data = {}
-				this.metadata.columns.forEach(column => {
-					if (column.type === 'boolean') this.data[column.value] = true
-				})
-			}
-		},
 		submit() {
 			if (this.$refs.form.validate()) {
-				this.axios.post(this.metadata.baseUrl, this.data, { loading: true }).then(
-					() => {
-						this.setSuccessAlert(this.$t('base.message.recordAdded') + '!')
-						this.$emit('closeSubForm', true)
-					},
-					() => {}
-				)
+				if (this.data.id === undefined) {
+					this.axios.post(this.getTabMetadataOfPage(this.tabIndex).baseUrl, this.data, { loading: true }).then(
+						() => {
+							this.setSuccessAlert(this.$t('base.message.recordAdded') + '!')
+							this.$emit('closeSubForm', true)
+						},
+						() => {}
+					)
+				} else {
+					this.axios.put(this.getTabMetadataOfPage(this.tabIndex).baseUrl + '/' + this.data.id, this.data, { loading: true }).then(
+						() => {
+							this.setSuccessAlert(this.$t('base.message.recordUpdated') + '!')
+							this.$emit('closeSubForm', true)
+						},
+						() => {}
+					)
+				}
 			}
 		},
 		onItemChange(item) {

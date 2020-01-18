@@ -6,7 +6,7 @@
 				<v-autocomplete v-if="type === 'autocomplete'" :loading="loading" :items="items" :search-input.sync="search" @change="change" :label="$t('base.form.select-combobox', [label]) + '...'" :no-filter="true" item-value="id" :item-text="itemText" :value="value" :required="required" :rules="[v => !required || !!v || $t('base.form.required')]" outlined dense return-object prepend-inner-icon="add_circle_outline" @click:prepend-inner="showAdd = true"></v-autocomplete>
 			</v-flex>
 		</v-layout>
-		<sub-form :show="showAdd" :translate="translate" url="" @closeSubForm="closeSubForm" :sub-metadata="subMetadata" />
+		<sub-form :show="showAdd" :translate="translate" @closeSubForm="closeSubForm" :sub-metadata="subMetadata" />
 	</div>
 </template>
 
