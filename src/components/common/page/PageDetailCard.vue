@@ -8,8 +8,8 @@
 					<page-detail-form :translate="translate" />
 				</v-tab-item>
 				<v-tab-item v-for="(item, i) in getPage.metadata.tabs" :key="i" :value="'tab-' + (i + 1)">
-					<page-tab-dialog v-if="false" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
-					<page-tab-inline v-if="true" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
+					<page-tab-dialog v-if="item.tab == 'dialog'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
+					<page-tab-inline v-if="item.tab == 'inline'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
 				</v-tab-item>
 			</v-tabs-items>
 		</v-tabs>
