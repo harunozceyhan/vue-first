@@ -6,7 +6,7 @@
 					<v-icon class="mx-2">mdi-pencil</v-icon>
 					<v-toolbar-title>{{ $t('base.label.new') + ' ' + $t(translate + '.' + translate) }}</v-toolbar-title>
 					<v-spacer></v-spacer>
-					<v-btn icon dark class="mx-1" @click="submit"> <v-icon>save</v-icon> </v-btn>
+					<v-btn icon dark class="mx-1" @click="submit" v-permission="permission.split(':')[0] + ':' + metadata.baseUrl + ':post'"> <v-icon>save</v-icon> </v-btn>
 					<v-btn icon dark class="mx-1" @click="setDefaultData"> <v-icon>format_clear</v-icon> </v-btn>
 					<v-btn icon dark @click="$emit('closeSubForm', false)"> <v-icon>close</v-icon> </v-btn>
 				</v-toolbar>
@@ -32,8 +32,8 @@
 											<v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
 										</v-menu>
 									</div>
-									<smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" />
-                                    <v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px"/>
+									<smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" :permission="permission" />
+									<v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px" />
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -52,7 +52,7 @@ Vue.component('smart-selection', SmartSelection)
 
 export default {
 	name: 'sub-form',
-	props: ['translate', 'show', 'subMetadata'],
+	props: ['translate', 'show', 'subMetadata', 'permission'],
 	data: () => ({
 		data: {},
 		metadata: null

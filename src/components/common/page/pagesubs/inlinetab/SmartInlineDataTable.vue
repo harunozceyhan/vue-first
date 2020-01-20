@@ -5,7 +5,7 @@
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
-				<v-btn class="mx-2" fab dark small color="success" @click="openDataRow(null, null)"> <v-icon dark>add</v-icon> </v-btn>
+				<v-btn class="mx-2" fab dark small color="success" @click="openDataRow(null, null)" v-permission="permission + ':post'"> <v-icon dark>add</v-icon> </v-btn>
 			</v-card-title>
             <v-form ref="form" lazy-validation>
                 <v-data-table :headers="headers" :items="tableItems" :options.sync="options" :server-items-length="getTabPage(tabIndex).totalElements" :loading="getTabTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths single-expand >
@@ -39,10 +39,10 @@
                                         <span v-if="column.type === 'boolean'"> <v-switch inset class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly /> </span>
                                     </td>
                                     <td class="text-center">
-                                        <v-btn fab small icon color="info" @click="openDataRow(item, expand)" > <v-icon>edit</v-icon> </v-btn>
+                                        <v-btn fab small icon color="info" @click="openDataRow(item, expand)" v-permission="permission + ':put'"> <v-icon>edit</v-icon> </v-btn>
                                     </td>
                                     <td class="text-center">
-                                        <v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)"> <v-icon>delete</v-icon> </v-btn>
+                                        <v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)" v-permission="permission + ':delete'"> <v-icon>delete</v-icon> </v-btn>
                                     </td>
                                 </template>
                                 <template v-if="isExpanded(item)">
@@ -67,14 +67,14 @@
                                                             <v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
                                                         </v-menu>
                                                     </div>
-                                                    <smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" />
+                                                    <smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" :permission="permission"/>
                                                     <v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px" />
                                                 </v-flex>
                                             </v-layout>
                                         </v-container>
                                     </td>
                                     <td class="text-center">
-                                        <v-btn fab small icon color="success" @click="submit(expand, item)"> <v-icon>save</v-icon> </v-btn>
+                                        <v-btn fab small icon color="success" @click="submit(expand, item)" v-permission="permission + ':put'"> <v-icon>save</v-icon> </v-btn>
                                     </td>
                                     <td class="text-center">
                                         <v-btn fab small icon color="warning" @click=" expand(item, false)"> <v-icon>cancel</v-icon></v-btn>
@@ -103,14 +103,14 @@
                                                         <v-time-picker :value="data[column.value] != undefined ? data[column.value].split(' ')[1] : null" v-if="data[column.value + 'TimeOpened']" format="24hr" :locale="$i18n.locale" @input="onTimePickerInput(column.value, $event)" full-width></v-time-picker>
                                                     </v-menu>
                                                 </div>
-                                                <smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" />
+                                                <smart-selection :name="column.text" v-if="column.formType === 'combobox' || column.formType === 'autocomplete'" :type="column.formType" :label="$t(translate + '.' + column.text)" :value="data[column.value]" :model="column.value" :item-text="column.itemText" @onItemChange="onItemChange" :url="column.url" :response-key="column.responseKey" :required="column.required" :translate="column.text" :sub-metadata="column.metadata" :permission="permission"/>
                                                 <v-switch v-if="column.formType === 'checkbox'" v-model="data[column.value]" class="form-checkbox" color="accent" :label="$t(translate + '.' + column.text)" inset style="margin-top: 4px; margin-left: 4px" />
                                             </v-flex>
                                         </v-layout>
                                     </v-container>
                                 </td>
                                 <td class="text-center">
-                                    <v-btn fab small icon color="success" @click="submit(null, null)"> <v-icon>save</v-icon> </v-btn>
+                                    <v-btn fab small icon color="success" @click="submit(null, null)" v-permission="permission + ':post'"> <v-icon>save</v-icon> </v-btn>
                                 </td>
                                 <td class="text-center">
                                     <v-btn fab small icon color="warning" @click="isNew = false "> <v-icon>cancel</v-icon> </v-btn>
@@ -136,7 +136,7 @@ import SureModel from '@/components/common/layout/Sure'
 Vue.component('smart-selection', SmartSelection)
 
 export default {
-	props: ['translate', 'metadata', 'tabIndex'],
+	props: ['translate', 'metadata', 'tabIndex', 'permission'],
 	components: {
 		'sure-model': SureModel
 	},

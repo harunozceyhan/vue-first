@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<smart-tab-data-table :translate="translate" :metadata="metadata" :tab-index="tabIndex" @openDetailDialog="showAdd = true" />
-		<tab-detail-form :show="showAdd" :translate="translate" @closeSubForm="closeSubForm" :sub-metadata="metadata" :tab-index="tabIndex" />
+		<smart-tab-data-table :translate="translate" :metadata="metadata" :tab-index="tabIndex" @openDetailDialog="showAdd = true" :permission="permission"/>
+		<tab-detail-form :show="showAdd" :translate="translate" @closeSubForm="closeSubForm" :sub-metadata="metadata" :tab-index="tabIndex" :permission="permission"/>
 	</div>
 </template>
 
@@ -14,7 +14,7 @@ Vue.component('smart-tab-data-table', SmartTabDataTable)
 Vue.component('tab-detail-form', TabDetailForm)
 
 export default {
-	props: ['translate', 'metadata', 'tabIndex'],
+	props: ['translate', 'metadata', 'tabIndex', 'permission'],
 	data: () => ({ showAdd: false }),
 	computed: {
 		...mapGetters(['getPage'])

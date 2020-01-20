@@ -1,11 +1,12 @@
 <template>
 	<div>
-		<smart-data-table translate="classroom" v-if="getMetadataOfPage != null" metadata="classroom" />
-		<page-detail translate="classroom" v-if="getMetadataOfPage != null" />
+		<smart-data-table translate="classroom" v-if="getMetadataOfPage != null" metadata="classroom" permission="sbo-service:classroom" />
+		<page-detail translate="classroom" v-if="getMetadataOfPage != null" permission="sbo-service:classroom"/>
 	</div>
 </template>
 <script>
 import Vue from 'vue'
+import AuthService from '@/plugins/auth/AuthService'
 import { mapGetters, mapActions } from 'vuex'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'
@@ -14,7 +15,7 @@ Vue.component('page-detail', PageDetail)
 
 export default {
 	created() {
-		this.requestMetaDataOfPage('metadata/classroom')
+		if (AuthService.checkPermissionForRoute('sbo-service:classroom:get')) this.requestMetaDataOfPage('metadata/classroom')
 	},
 	methods: {
 		...mapActions(['requestMetaDataOfPage'])

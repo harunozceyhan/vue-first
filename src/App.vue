@@ -135,7 +135,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount']),
+		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount', 'getPermissions']),
 		menuItems() {
 			let searchItems = []
 			menuItems.filter(menuItem => {

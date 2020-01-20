@@ -4,8 +4,8 @@
 			<v-card-title>
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
-				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
-				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})"> <v-icon dark>add</v-icon> </v-btn>
+				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon></v-btn>
+				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})" v-permission="permission + ':post'"> <v-icon dark>add</v-icon> </v-btn>
 			</v-card-title>
 			<v-data-table :headers="headers" :items="getTabPage(tabIndex).mainList" :options.sync="options" :server-items-length="getTabPage(tabIndex).totalElements" :loading="getTabTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
 				<template v-slot:body="{ items }">
@@ -37,7 +37,7 @@
 								<span v-if="column.type === 'boolean'"> <v-switch inset class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly /> </span>
 							</td>
 							<td>
-								<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
+								<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)" v-permission="permission + ':delete'">
 									<v-icon>delete</v-icon>
 								</v-btn>
 							</td>
@@ -58,7 +58,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
-	props: ['translate', 'metadata', 'tabIndex'],
+	props: ['translate', 'metadata', 'tabIndex', 'permission'],
 	components: {
 		'sure-model': SureModel
 	},

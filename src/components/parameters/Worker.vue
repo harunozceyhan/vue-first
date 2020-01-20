@@ -1,11 +1,12 @@
 <template>
 	<div>
-		<smart-data-table translate="worker" v-if="getMetadataOfPage != null" metadata="worker" />
-		<page-detail translate="worker" v-if="getMetadataOfPage != null" />
+		<smart-data-table translate="worker" v-if="getMetadataOfPage != null" metadata="worker" permission="sbo-service:worker"/>
+		<page-detail translate="worker" v-if="getMetadataOfPage != null" permission="sbo-service:worker"/>
 	</div>
 </template>
 <script>
 import Vue from 'vue'
+import AuthService from '@/plugins/auth/AuthService'
 import { mapGetters, mapActions } from 'vuex'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'
@@ -14,7 +15,7 @@ Vue.component('page-detail', PageDetail)
 
 export default {
 	created() {
-		this.requestMetaDataOfPage('metadata/worker')
+		if (AuthService.checkPermissionForRoute('sbo-service:worker:get')) this.requestMetaDataOfPage('metadata/worker')
 	},
 	methods: {
 		...mapActions(['requestMetaDataOfPage'])

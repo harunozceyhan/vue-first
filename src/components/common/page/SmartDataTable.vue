@@ -6,7 +6,7 @@
 				<v-spacer></v-spacer>
 				<v-btn class="mx-2" fab dark small color="info" @click="getPageList()"> <v-icon dark>mdi-refresh</v-icon> </v-btn>
 				<v-btn class="mx-2" fab dark small color="warning" @click="toggleSearch"> <v-icon dark>mdi-filter</v-icon> </v-btn>
-				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})"> <v-icon dark>add</v-icon> </v-btn>
+				<v-btn class="mx-2" fab dark small color="success" @click="openDetailCard({})" v-permission="permission + ':post'"> <v-icon dark>add</v-icon> </v-btn>
 			</v-card-title>
 			<v-card-text>
 				<v-data-table :headers="headers" :items="getPage.mainList" :options.sync="options" :server-items-length="getPage.totalElements" :loading="getTableLoading" :footer-props="{ 'items-per-page-options': [5, 10, 20, 50, 100] }" :items-per-page="5" class="elevation-1" calculate-widths>
@@ -39,7 +39,7 @@
 									<span v-if="column.type === 'boolean'"> <v-switch inset class="table-checkbox" :input-value="item[column.tableValue]" hide-details color="accent" readonly /> </span>
 								</td>
 								<td>
-									<v-btn fab small icon color="error" @click="openDeleteModel($event, item.id)">
+									<v-btn v-permission="permission + ':delete'" fab small icon color="error" @click="openDeleteModel($event, item.id)">
 										<v-icon>delete</v-icon>
 									</v-btn>
 								</td>
@@ -61,7 +61,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SureModel from '@/components/common/layout/Sure'
 
 export default {
-	props: ['translate', 'metadata'],
+	props: ['translate', 'metadata', 'permission'],
 	components: {
 		'sure-model': SureModel
 	},

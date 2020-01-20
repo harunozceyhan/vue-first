@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<smart-inline-data-table :translate="translate" :metadata="metadata" :tab-index="tabIndex" />
+		<smart-inline-data-table :translate="translate" :metadata="metadata" :tab-index="tabIndex" :permission="permission"/>
 	</div>
 </template>
 
@@ -10,7 +10,7 @@ import SmartInlineDataTable from '@/components/common/page/pagesubs/inlinetab/Sm
 Vue.component('smart-inline-data-table', SmartInlineDataTable)
 
 export default {
-	props: ['translate', 'metadata', 'tabIndex']
+	props: ['translate', 'metadata', 'tabIndex', 'permission']
 }
 </script>
 <style>
