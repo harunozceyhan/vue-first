@@ -35,6 +35,7 @@
 		"label": {
 			"cancel": "Cancel",
 			"ok": "Ok",
+			"edit": "Edit",
 			"delete": "Delete",
 			"update": "Update",
 			"new": "New",

@@ -148,8 +148,6 @@ export default {
 			}
 		},
 		getPageList() {
-            // eslint-disable-next-line no-debugger
-            debugger
 			if (this.getPage.metadata != null && this.metadata === this.getPage.metadata.value) {
 				const { sortBy, sortDesc, page, itemsPerPage } = this.options
 				this.requestEmbeddedMainListOfPage({ requestUri: this.getPage.metadata.getUrl + '?' + this.filterString() + 'page=' + (page - 1) + '&size=' + itemsPerPage + '&sort=' + (sortBy.length === 0 ? 'updatedAt' : sortBy[0]) + ',' + (sortDesc.length === 0 ? 'desc' : sortDesc[0] ? 'desc' : 'asc'), responseKey: this.getPage.metadata.responseKey })

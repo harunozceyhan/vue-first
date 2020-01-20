@@ -8,7 +8,8 @@
 					<page-detail-form :translate="translate" />
 				</v-tab-item>
 				<v-tab-item v-for="(item, i) in getPage.metadata.tabs" :key="i" :value="'tab-' + (i + 1)">
-					<page-tab-dialog :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
+					<page-tab-dialog v-if="false" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
+					<page-tab-inline v-if="true" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" />
 				</v-tab-item>
 			</v-tabs-items>
 		</v-tabs>
@@ -20,7 +21,9 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import SmartForm from './PageDetailForm'
 import PageTabDialog from '@/components/common/page/pagesubs/dialogtab/PageTabDialog'
+import PageTabInline from '@/components/common/page/pagesubs/inlinetab/PageTabInline'
 Vue.component('page-tab-dialog', PageTabDialog)
+Vue.component('page-tab-inline', PageTabInline)
 
 export default {
 	props: ['translate'],

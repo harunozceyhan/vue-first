@@ -35,6 +35,7 @@
 		"label": {
 			"cancel": "İptal",
 			"ok": "Tamam",
+			"edit": "Düzenle",
 			"delete": "Sil",
 			"update": "Güncelle",
 			"new": "Yeni",

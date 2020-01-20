@@ -137,7 +137,7 @@ export default {
 			//TODO: boolean searchable will be add. Default null.
 			this.filters = {}
 			this.getTabMetadataOfPage(this.tabIndex).columns.filter(column => {
-				if (column.showInTable && column.searchable) {
+				if (column.showInTable && column.searchable && column.metadata != this.getPage.metadata.value) {
 					if (column.formType === 'text' || column.formType === 'combobox' || column.formType === 'autocomplete') {
 						this.filters[column.searchKey] = ''
 					}
