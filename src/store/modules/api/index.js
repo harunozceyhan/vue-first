@@ -1,4 +1,4 @@
-import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_STATE_USERS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE, SET_TAB_MAINLIST_OF_PAGE, SET_TAB_DETAIL_DATA_STATE, CLEAR_TAB_MAINLIST_OF_PAGE } from './mutation-types'
+import { SET_METADATA_OF_PAGE, SET_MAINLIST_OF_PAGE, CLEAR_PAGE_STATE, SET_STATE_NOTIFICATIONS, SET_SHOW_DETAIL_STATE, SET_DETAIL_DATA_STATE, SET_COMBOLIST_OF_PAGE_STATE, SET_TAB_MAINLIST_OF_PAGE, SET_TAB_DETAIL_DATA_STATE, CLEAR_TAB_MAINLIST_OF_PAGE } from './mutation-types'
 import i18n from '@/plugins/i18n/i18n'
 import axios from 'axios'
 
@@ -31,16 +31,9 @@ export default {
 	state: {
 		page: page(),
 		notifications: [
-			{ title: ' Yeni Güncellemeler', subtitle: 'Stok Takibi Eklendi.', read: true },
+			{ title: ' Yeni Güncellemeler', subtitle: 'Stok Takibi Eklendi.', read: false },
 			{ title: 'Recipes', subtitle: 'Jan 17, 2014', read: true },
 			{ title: 'Work', subtitle: 'Jan 28, 2014', read: true }
-		],
-		users: [
-			{ online: false, title: 'Jason Oner' },
-			{ online: false, title: 'Ranee Carlson' },
-			{ online: false, title: 'Cindy Baker' },
-			{ online: false, title: 'Ali Connors' },
-			{ online: false, title: 'Travis Howard' }
 		]
 	},
 	getters: {
@@ -68,14 +61,6 @@ export default {
 		getUnreadNotificationCount: state => {
 			return state.notifications.filter(notification => {
 				return notification.read === false
-			}).length
-		},
-		getUsers: state => {
-			return state.users
-		},
-		getOnlineUserCount: state => {
-			return state.users.filter(user => {
-				return user.online === true
 			}).length
 		}
 	},
@@ -126,9 +111,6 @@ export default {
 		},
 		[SET_STATE_NOTIFICATIONS](state, payload) {
 			state.notifications = payload.notifications
-		},
-		[SET_STATE_USERS](state, payload) {
-			state.users = payload.users
 		}
 	},
 	actions: {
@@ -225,9 +207,6 @@ export default {
 		},
 		setNotifications({ commit }, notifications) {
 			commit({ type: SET_STATE_NOTIFICATIONS, notifications: notifications })
-		},
-		setUsers({ commit }, users) {
-			commit({ type: SET_STATE_USERS, users: users })
 		}
 	}
 }

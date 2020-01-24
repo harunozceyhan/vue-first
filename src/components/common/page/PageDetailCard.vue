@@ -5,11 +5,11 @@
 			<v-tab v-for="(item, i) in tabs" :key="i" :href="`#tab-${i + 1}`" :disabled="getPage.detailData.id === undefined"> {{ $t(item.value + '.' + item.title) }} </v-tab>
 			<v-tabs-items v-model="tab">
 				<v-tab-item value="tab-0">
-					<page-detail-form :translate="translate" :permission="permission"/>
+					<page-detail-form :translate="translate" :permission="permission" />
 				</v-tab-item>
 				<v-tab-item v-for="(item, i) in tabs" :key="i" :value="'tab-' + (i + 1)">
-					<page-tab-dialog v-if="item.tab == 'dialog'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" :permission="permission === undefined ? '' : permission.split(':')[0] + ':' + item.baseUrl"/>
-					<page-tab-inline v-if="item.tab == 'inline'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" :permission="permission === undefined ? '' : permission.split(':')[0] + ':' + item.baseUrl"/>
+					<page-tab-dialog v-if="item.tab == 'dialog'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" :permission="permission === undefined ? '' : permission.split(':')[0] + ':' + item.baseUrl" />
+					<page-tab-inline v-if="item.tab == 'inline'" :translate="item.value" :metadata="item.value" :tab-index="i" :key="i" :permission="permission === undefined ? '' : permission.split(':')[0] + ':' + item.baseUrl" />
 				</v-tab-item>
 			</v-tabs-items>
 		</v-tabs>
@@ -19,7 +19,7 @@
 <script>
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import AuthService from '@/plugins/auth/AuthService'
+import AuthService from '@/plugins/auth/auth-service'
 import SmartForm from './PageDetailForm'
 import PageTabDialog from '@/components/common/page/pagesubs/dialogtab/PageTabDialog'
 import PageTabInline from '@/components/common/page/pagesubs/inlinetab/PageTabInline'

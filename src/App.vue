@@ -157,12 +157,13 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions']),
+		...mapActions(['signOutOidc', 'setServices', 'setRoles', 'setPermissions', 'setUsers']),
 		userLoaded(user) {
 			const parsedJwt = this.$parseJwt(user.detail.access_token)
 			this.setServices(parsedJwt.aud)
 			this.setRoles(parsedJwt.realm_access === undefined ? [] : parsedJwt.realm_access.roles)
 			this.setPermissions(parsedJwt)
+			this.setUsers(user.detail.access_token)
 		},
 		searchMenuFilter(item, queryText, itemText) {
 			const query = queryText.toLowerCase()

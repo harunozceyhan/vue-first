@@ -1,0 +1,1 @@
+export const SET_STATE_USERS = 'SET_STATE_USERS'

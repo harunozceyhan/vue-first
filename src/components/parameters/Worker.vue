@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<smart-data-table translate="worker" v-if="getMetadataOfPage != null" metadata="worker" permission="sbo-service:worker"/>
-		<page-detail translate="worker" v-if="getMetadataOfPage != null" permission="sbo-service:worker"/>
+		<smart-data-table translate="worker" v-if="getMetadataOfPage != null" metadata="worker" permission="sbo-service:worker" />
+		<page-detail translate="worker" v-if="getMetadataOfPage != null" permission="sbo-service:worker" />
 	</div>
 </template>
 <script>
 import Vue from 'vue'
-import AuthService from '@/plugins/auth/AuthService'
+import AuthService from '@/plugins/auth/auth-service'
 import { mapGetters, mapActions } from 'vuex'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'

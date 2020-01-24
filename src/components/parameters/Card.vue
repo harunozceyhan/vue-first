@@ -7,7 +7,7 @@
 <script>
 import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
-import AuthService from '@/plugins/auth/AuthService'
+import AuthService from '@/plugins/auth/auth-service'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'
 Vue.component('smart-data-table', SmartDataTable)

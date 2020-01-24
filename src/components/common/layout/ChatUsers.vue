@@ -11,7 +11,7 @@
 			<v-subheader>{{ $t('base.label.online-users') }}</v-subheader>
 			<v-list-item dense link v-for="item in onlineUsers" :key="item.title">
 				<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
-				<v-list-item-content> <v-list-item-title v-text="item.title"></v-list-item-title> </v-list-item-content>
+				<v-list-item-content> <v-list-item-title v-text="item.name"></v-list-item-title> </v-list-item-content>
 				<v-icon dense color="green accent-4">chat_bubble</v-icon>
 			</v-list-item>
 		</v-list>
@@ -19,7 +19,7 @@
 			<v-subheader>{{ $t('base.label.offline-users') }}</v-subheader>
 			<v-list-item dense link v-for="item in offlineUsers" :key="item.title">
 				<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
-				<v-list-item-content> <v-list-item-title v-text="item.title"></v-list-item-title> </v-list-item-content>
+				<v-list-item-content> <v-list-item-title v-text="item.name"></v-list-item-title> </v-list-item-content>
 				<v-icon dense color="grey">chat_bubble</v-icon>
 			</v-list-item>
 		</v-list>

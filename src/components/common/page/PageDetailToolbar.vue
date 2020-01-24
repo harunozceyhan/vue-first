@@ -12,7 +12,7 @@
 	</v-toolbar>
 </template>
 <script>
-import AuthService from '@/plugins/auth/AuthService'
+import AuthService from '@/plugins/auth/auth-service'
 
 export default {
 	props: ['title', 'expandIcon', 'permission', 'id'],

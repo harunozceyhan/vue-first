@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<smart-data-table translate="lesson" v-if="getMetadataOfPage != null" metadata="lesson" permission="sbo-service:lesson"/>
-		<page-detail translate="lesson" v-if="getMetadataOfPage != null" permission="sbo-service:lesson"/>
+		<smart-data-table translate="lesson" v-if="getMetadataOfPage != null" metadata="lesson" permission="sbo-service:lesson" />
+		<page-detail translate="lesson" v-if="getMetadataOfPage != null" permission="sbo-service:lesson" />
 	</div>
 </template>
 <script>
 import Vue from 'vue'
-import AuthService from '@/plugins/auth/AuthService'
+import AuthService from '@/plugins/auth/auth-service'
 import { mapGetters, mapActions } from 'vuex'
 import SmartDataTable from '@/components/common/page/SmartDataTable'
 import PageDetail from '@/components/common/page/PageDetail'
