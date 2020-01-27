@@ -3,7 +3,8 @@ import store from '@/store'
 import VueSocketIO from 'vue-socket.io'
 
 const socket = new VueSocketIO({
-	connection: 'http://localhost:3000/default',
+	connection: process.env.VUE_APP_NODE_URL + '/chat',
+	options: { autoConnect: false },
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',

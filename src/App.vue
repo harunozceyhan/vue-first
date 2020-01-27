@@ -59,6 +59,9 @@
 					</template>
 					<v-icon>group</v-icon>
 				</v-badge>
+				<v-badge color="red" left bottom dot overlap>
+					<template v-slot:badge dense> <span></span> </template>
+				</v-badge>
 			</v-btn>
 
 			<v-btn icon v-on:click="settingsDrawer = !settingsDrawer">

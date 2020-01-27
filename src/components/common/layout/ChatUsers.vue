@@ -23,6 +23,15 @@
 				<v-icon dense color="grey">chat_bubble</v-icon>
 			</v-list-item>
 		</v-list>
+
+		<v-bottom-sheet inset>
+			<template v-slot:activator="{ on }">
+				<v-btn color="orange" dark v-on="on"> Open Inset </v-btn>
+			</template>
+			<v-sheet class="text-center" height="200px">
+				<div class="my-3">This is a bottom sheet using the inset prop</div>
+			</v-sheet>
+		</v-bottom-sheet>
 	</div>
 </template>
 <script>
