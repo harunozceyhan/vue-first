@@ -79,13 +79,5 @@ export default [
 				tags: ''
 			}
 		]
-	},
-	{
-		label: 'menu.profile',
-		icon: 'settings',
-		color: 'accent',
-		container: false,
-		path: 'profile',
-		tags: 'ad, soyad, doğum, tarih, email'
 	}
 ]
