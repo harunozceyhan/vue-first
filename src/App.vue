@@ -59,7 +59,7 @@
 					</template>
 					<v-icon>group</v-icon>
 				</v-badge>
-				<v-badge color="red" left bottom dot overlap>
+				<v-badge color="red" left bottom dot overlap v-if="getUnreadMessageList.length > 0">
 					<template v-slot:badge dense> <span></span> </template>
 				</v-badge>
 			</v-btn>
@@ -138,7 +138,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount', 'getPermissions']),
+		...mapGetters(['oidcIsAuthenticated', 'oidcUser', 'getUnreadNotificationCount', 'getOnlineUserCount', 'getPermissions', 'getUnreadMessageList']),
 		menuItems() {
 			let searchItems = []
 			menuItems.filter(menuItem => {
