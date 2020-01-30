@@ -132,7 +132,7 @@
 import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import SmartSelection from '@/components/common/page/elements/SmartSelection'
-import SureModel from '@/components/common/layout/Sure'
+import SureModel from '@/components/common/layout/components/Sure'
 Vue.component('smart-selection', SmartSelection)
 
 export default {

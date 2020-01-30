@@ -58,7 +58,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import SureModel from '@/components/common/layout/Sure'
+import SureModel from '@/components/common/layout/components/Sure'
 
 export default {
 	props: ['translate', 'metadata', 'permission'],

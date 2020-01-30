@@ -95,12 +95,12 @@
 </template>
 
 <script>
-import Menu from './components/common/layout/Menu'
-import Notification from './components/common/layout/Notification'
-import ChatUsers from './components/common/layout/ChatUsers'
-import Settings from './components/common/layout/Settings'
-import Alert from './components/common/layout/Alert'
-import Loading from './components/common/layout/Loading'
+import Menu from './components/common/layout/components/Menu'
+import Notification from './components/common/layout/components/Notification'
+import ChatUsers from './components/common/layout/components/ChatUsers'
+import Settings from './components/common/layout/components/Settings'
+import Alert from './components/common/layout/components/Alert'
+import Loading from './components/common/layout/components/Loading'
 import { mapGetters, mapActions } from 'vuex'
 import menuItems from '@/plugins/router/menu'
 
