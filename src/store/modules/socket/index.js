@@ -1,4 +1,4 @@
-import { SET_STATE_USERS, UPDATE_STATE_USER, UPDATE_STATE_USERS, UPDATE_STATE_ROOM_ID, UPDATE_STATE_MESSAGE_LIST, ADD_STATE_TO_MESSAGE_LIST, UPDATE_STATE_UNREAD_MESSAGE_LIST, ADD_STATE_TO_UNREAD_MESSAGE_LIST } from './mutation-types'
+import { SET_STATE_USERS, UPDATE_STATE_USER, UPDATE_STATE_USERS, UPDATE_STATE_ROOM_ID, UPDATE_STATE_MESSAGE_LIST, ADD_STATE_TO_MESSAGE_LIST, UPDATE_STATE_UNREAD_MESSAGE_LIST, ADD_STATE_TO_UNREAD_MESSAGE_LIST, SET_STATE_CONNECTED } from './mutation-types'
 
 export default {
 	state: {
@@ -9,6 +9,9 @@ export default {
 		messageList: []
 	},
 	getters: {
+		getSocketConnected: state => {
+			return state.isConnected
+		},
 		getUsers: state => {
 			return state.users
 		},
@@ -28,6 +31,9 @@ export default {
 		}
 	},
 	mutations: {
+		[SET_STATE_CONNECTED](state, payload) {
+			state.isConnected = payload.isConnected
+		},
 		[SET_STATE_USERS](state, payload) {
 			state.users = payload.users
 		},
@@ -70,8 +76,12 @@ export default {
 		}
 	},
 	actions: {
-		SOCKET_connect() {
+		SOCKET_connect({ commit }) {
+			commit({ type: SET_STATE_CONNECTED, isConnected: true })
 			this._vm.$socket.emit('socketConnected', this.getters.oidcUser.preferred_username)
+		},
+		SOCKET_connect_error({ commit }) {
+			commit({ type: SET_STATE_CONNECTED, isConnected: false })
 		},
 		SOCKET_socketConnected({ commit }, socket) {
 			commit({ type: UPDATE_STATE_USER, username: socket.username, socketId: socket.socketId, online: true })

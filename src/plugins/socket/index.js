@@ -4,7 +4,7 @@ import VueSocketIO from 'vue-socket.io'
 
 const socket = new VueSocketIO({
 	connection: process.env.VUE_APP_NODE_URL + '/chat',
-	options: { autoConnect: false },
+	options: { autoConnect: false, reconnectionAttempts: 4 },
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',

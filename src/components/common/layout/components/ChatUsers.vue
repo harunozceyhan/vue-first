@@ -1,31 +1,41 @@
 <template>
 	<div>
-		<v-list-item>
-			<v-list-item-avatar> <v-img src="@/assets/group.svg"></v-img> </v-list-item-avatar>
-			<v-list-item-title class="title">{{ $t('base.label.users') }}</v-list-item-title>
-		</v-list-item>
-		<v-divider></v-divider>
-		<v-list subheader dense>
-			<v-subheader>{{ $t('base.label.online-users') }}</v-subheader>
-			<v-list-item dense link v-for="item in onlineUsers" :key="item.title" @click="openMessageDialog(item)">
-				<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
-				<v-list-item-content>
-					<v-list-item-title>{{ item.name }} </v-list-item-title>
-				</v-list-item-content>
-				<v-icon dense color="green accent-4">chat_bubble</v-icon>
-				<div class="unread-message-count" v-if="item.messageCount !== 0">{{ item.messageCount }}</div>
+		<template v-if="getSocketConnected">
+			<v-list-item>
+				<v-list-item-avatar> <v-img src="@/assets/group.svg"></v-img> </v-list-item-avatar>
+				<v-list-item-title class="title">{{ $t('base.label.users') }}</v-list-item-title>
 			</v-list-item>
-			<v-subheader>{{ $t('base.label.offline-users') }}</v-subheader>
-			<v-list-item dense link v-for="item in offlineUsers" :key="item.title" @click="openMessageDialog(item)">
-				<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
-				<v-list-item-content>
-					<v-list-item-title>{{ item.name }}</v-list-item-title>
-				</v-list-item-content>
-				<v-icon dense color="grey">chat_bubble</v-icon>
-				<div class="unread-message-count" v-if="item.messageCount !== 0">{{ item.messageCount }}</div>
+			<v-divider></v-divider>
+			<v-list subheader dense>
+				<v-subheader>{{ $t('base.label.online-users') }}</v-subheader>
+				<v-list-item dense link v-for="item in onlineUsers" :key="item.title" @click="openMessageDialog(item)">
+					<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
+					<v-list-item-content>
+						<v-list-item-title>{{ item.name }} </v-list-item-title>
+					</v-list-item-content>
+					<v-icon dense color="green accent-4">chat_bubble</v-icon>
+					<div class="unread-message-count" v-if="item.messageCount !== 0">{{ item.messageCount }}</div>
+				</v-list-item>
+				<v-subheader>{{ $t('base.label.offline-users') }}</v-subheader>
+				<v-list-item dense link v-for="item in offlineUsers" :key="item.title" @click="openMessageDialog(item)">
+					<v-list-item-avatar> <v-img src="@/assets/person.png"></v-img> </v-list-item-avatar>
+					<v-list-item-content>
+						<v-list-item-title>{{ item.name }}</v-list-item-title>
+					</v-list-item-content>
+					<v-icon dense color="grey">chat_bubble</v-icon>
+					<div class="unread-message-count" v-if="item.messageCount !== 0">{{ item.messageCount }}</div>
+				</v-list-item>
+			</v-list>
+			<message-dialog :data="messageDialog" @closeMessageDialog="closeMessageDialog()" />
+		</template>
+		<template v-if="!getSocketConnected">
+			<v-list-item>
+				<v-list-item-avatar> <v-img src="@/assets/group.svg"></v-img> </v-list-item-avatar>
+				<v-list-item-title class="title">{{ $t('base.label.users') }}</v-list-item-title>
 			</v-list-item>
-		</v-list>
-		<message-dialog :data="messageDialog" @closeMessageDialog="closeMessageDialog()" />
+			<v-divider></v-divider>
+			<p class="subtitle-1 text-center grey--text mt-3">{{ $t('base.label.chat-closed') }}...</p>
+		</template>
 	</div>
 </template>
 <script>
@@ -72,7 +82,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['getUsers', 'getUnreadMessageList'])
+		...mapGetters(['getUsers', 'getUnreadMessageList', 'getSocketConnected'])
 	},
 	methods: {
 		...mapActions(['setRoomToNull', 'setMessageList']),

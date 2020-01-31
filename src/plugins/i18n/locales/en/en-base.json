@@ -55,6 +55,7 @@
 			"view": "View",
 			"dark-mode": "Dark Mode",
 			"select-language": "Select Language",
+			"chat-closed": "Chat Not Activated",
 			"users": "Users",
 			"message": "Enter Message...",
 			"generalInfo": "BASE INFO",
