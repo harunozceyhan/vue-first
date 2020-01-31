@@ -47,7 +47,7 @@
 						</v-badge>
 					</v-btn>
 				</template>
-				<v-card>
+				<v-card style="max-height: 400px">
 					<s-notification />
 				</v-card>
 			</v-menu>

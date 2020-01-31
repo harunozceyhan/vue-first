@@ -14,7 +14,10 @@
 							<div id="message-list" class="message-list">
 								<template v-for="message in getMessageList">
 									<div class="message-outer" :key="message.id">
-										<div :class="message.sender === oidcUser.preferred_username ? 'message-inner-right accent' : 'message-inner-left info'" class="px-3 my-2">{{ message.content }}</div>
+										<v-icon :class="message.sender === oidcUser.preferred_username ? 'message-icon-right' : 'message-icon-left'" class="px-1 mt-3" :color="message.sender === oidcUser.preferred_username ? 'accent' : 'info'">mdi-account</v-icon>
+										<div :class="message.sender === oidcUser.preferred_username ? 'message-inner-right accent' : 'message-inner-left info'" class="px-3 my-2">
+											<span>{{ message.content }}</span>
+										</div>
 									</div>
 								</template>
 							</div>
@@ -79,6 +82,12 @@ export default {
 	color: white;
 	border-radius: 8px;
 	max-width: 480px;
+}
+.message-icon-left {
+	float: left;
+}
+.message-icon-right {
+	float: right;
 }
 .message-list {
 	height: 360px;
