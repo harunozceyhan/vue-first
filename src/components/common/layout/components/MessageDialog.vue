@@ -17,6 +17,7 @@
 										<v-icon :class="message.sender === oidcUser.preferred_username ? 'message-icon-right' : 'message-icon-left'" class="px-1 mt-3" :color="message.sender === oidcUser.preferred_username ? 'accent' : 'info'">mdi-account</v-icon>
 										<div :class="message.sender === oidcUser.preferred_username ? 'message-inner-right accent' : 'message-inner-left info'" class="px-3 my-2">
 											<span>{{ message.content }}</span>
+											<span class="message-date">{{ $moment(new Date(parseInt(message.date))).format('DD-MM-YYYY HH:mm') }}</span>
 										</div>
 									</div>
 								</template>
@@ -75,6 +76,7 @@ export default {
 	color: white;
 	border-radius: 8px;
 	max-width: 480px;
+	min-width: 150px;
 }
 .message-inner-right {
 	float: right;
@@ -82,6 +84,14 @@ export default {
 	color: white;
 	border-radius: 8px;
 	max-width: 480px;
+	min-width: 150px;
+}
+.message-date {
+	font-size: 10px;
+	float: right;
+	margin-top: 20px;
+	color: #eeeeee;
+	font-style: italic;
 }
 .message-icon-left {
 	float: left;
@@ -90,8 +100,8 @@ export default {
 	float: right;
 }
 .message-list {
-	height: 360px;
-	max-height: 360px;
+	height: 420px;
+	max-height: 420px;
 	overflow-y: auto;
 	padding: 4px;
 }
