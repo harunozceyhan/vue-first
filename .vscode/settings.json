@@ -1,0 +1,11 @@
+{
+	"editor.fontSize": 12,
+	"terminal.integrated.fontSize": 12,
+	"markdown.preview.fontSize": 12,
+	"vetur.format.options.tabSize": 4,
+	"editor.tabSize": 4,
+	"prettier.printWidth": 99999,
+	"prettier.semi": false,
+	"prettier.singleQuote": true,
+	"editor.detectIndentation": false
+}
